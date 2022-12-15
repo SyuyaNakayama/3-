@@ -20,11 +20,11 @@ bool CollisionManager::CheckBoxCollisionPair(Collider* colliderA, Collider* coll
 	return 0;
 }
 
-void CollisionManager::CheckAllCollisions(Player* player, Enemy* enemy)
+void CollisionManager::CheckAllCollisions(Player* player)
 {
 	list<Collider*> colliders_;
 	colliders_.push_back(player);
-	colliders_.push_back(enemy);
+	//colliders_.push_back(enemy);
 
 	list<Collider*>::iterator itrA = colliders_.begin();
 	for (; itrA != colliders_.end(); ++itrA)

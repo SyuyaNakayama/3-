@@ -7,32 +7,23 @@
 #include "PrimitiveDrawer.h"
 
 // Windowsアプリでのエントリーポイント(main関数)
-int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
-	WinApp* win = nullptr;
-	DirectXCommon* dxCommon = nullptr;
-	// 汎用機能
-	Input* input = nullptr;
-	Audio* audio = nullptr;
-	DebugText* debugText = nullptr;
-	AxisIndicator* axisIndicator = nullptr;
-	PrimitiveDrawer* primitiveDrawer = nullptr;
-	GameScene* gameScene = nullptr;
-
+int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) 
+{	
 	// ゲームウィンドウの作成
-	win = WinApp::GetInstance();
-	win->CreateGameWindow("TD2_Game1");
+	WinApp* win = WinApp::GetInstance();
+	win->CreateGameWindow("2347_箱庭奇譚");
 
 	// DirectX初期化処理
-	dxCommon = DirectXCommon::GetInstance();
+	DirectXCommon* dxCommon = DirectXCommon::GetInstance();
 	dxCommon->Initialize(win);
 
 #pragma region 汎用機能初期化
 	// 入力の初期化
-	input = Input::GetInstance();
+	Input* input = Input::GetInstance();
 	input->Initialize();
 
 	// オーディオの初期化
-	audio = Audio::GetInstance();
+	Audio* audio = Audio::GetInstance();
 	audio->Initialize();
 
 	// テクスチャマネージャの初期化
@@ -42,23 +33,22 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	// スプライト静的初期化
 	Sprite::StaticInitialize(dxCommon->GetDevice(), WinApp::kWindowWidth, WinApp::kWindowHeight);
 
-	// デバッグテキスト初期化
-	debugText = DebugText::GetInstance();
-	debugText->Initialize();
-
 	// 3Dモデル静的初期化
 	Model::StaticInitialize();
 
 	// 軸方向表示初期化
-	axisIndicator = AxisIndicator::GetInstance();
+	AxisIndicator* axisIndicator = AxisIndicator::GetInstance();
 	axisIndicator->Initialize();
 
-	primitiveDrawer = PrimitiveDrawer::GetInstance();
+	PrimitiveDrawer* primitiveDrawer = PrimitiveDrawer::GetInstance();
 	primitiveDrawer->Initialize();
+
+	ViewProjection* viewProjection = ViewProjection::GetInstance();
+	viewProjection->Initialize();
 #pragma endregion
 
 	// ゲームシーンの初期化
-	gameScene = new GameScene();
+	GameScene* gameScene = new GameScene();
 	gameScene->Initialize();
 
 	// メインループ
@@ -72,6 +62,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		input->Update();
 		// ゲームシーンの毎フレーム処理
 		gameScene->Update();
+		viewProjection->UpdateMatrix();
 		// 軸表示の更新
 		axisIndicator->Update();
 

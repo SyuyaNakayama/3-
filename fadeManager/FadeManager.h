@@ -1,6 +1,7 @@
 #pragma once
 #include "Sprite.h"
-#include "enum.h"
+
+enum Scene { Title, Tutorial, Play, Result };
 
 class FadeManager
 {

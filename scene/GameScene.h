@@ -2,7 +2,6 @@
 
 #include "Audio.h"
 #include "DirectXCommon.h"
-#include "DebugText.h"
 #include "DebugCamera.h"
 #include "Input.h"
 #include "Model.h"
@@ -11,9 +10,9 @@
 #include "ViewProjection.h"
 #include "WorldTransform.h"
 #include "player/Player.h"
-#include "enemy/Enemy.h"
 #include "collider/CollisionManager.h"
 #include <vector>
+#include "ImGuiManager.h"
 
 /// <summary>
 /// ゲームシーン
@@ -22,6 +21,8 @@ class GameScene {
 private: // サブクラス
 	enum Scene { Title, HowToPlay, Play, Clear, GameOver };
 public: // メンバ関数
+	~GameScene() { imguiManager->Finalize(); }
+
 	/// <summary>
 	/// 初期化
 	/// </summary>
@@ -37,15 +38,16 @@ public: // メンバ関数
 	/// </summary>
 	void Draw();
 
-  private: // メンバ変数
+private: // メンバ変数
 	DirectXCommon* dxCommon_ = nullptr;
 	Input* input_ = nullptr;
 	Audio* audio_ = nullptr;
-	DebugText* debugText_ = nullptr;
 	DebugCamera* debugCamera_ = nullptr;
 	Model* model_;
-	ViewProjection viewProjection_;
+	ViewProjection* viewProjection_ = ViewProjection::GetInstance();
 	CollisionManager collisionManager;
 	Player player_;
-	Enemy enemy_;
+	WorldTransform blocks[15];
+	bool isDrag = false;
+	ImGuiManager* imguiManager = ImGuiManager::GetInstance();
 };

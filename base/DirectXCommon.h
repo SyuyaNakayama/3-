@@ -72,6 +72,8 @@ class DirectXCommon {
 	/// <returns>バックバッファの高さ</returns>
 	int32_t GetBackBufferHeight() const;
 
+	size_t GetBackBufferCount() { return backBuffers_.size(); }
+
   private: // メンバ変数
 	// ウィンドウズアプリケーション管理
 	WinApp* winApp_;

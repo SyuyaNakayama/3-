@@ -10,14 +10,13 @@ class Player :public Collider
 {
 private:
 	WorldTransform worldTransform_;
-	ViewProjection* viewProjection_;
 	Model* model_ = nullptr;
 	Input* input_ = nullptr;
 	uint32_t texture_ = 0;
 
 	void Move();
 public:
-	void Initialize(ViewProjection* viewProjection);
+	void Initialize();
 	void Update();
 	void Draw();
 

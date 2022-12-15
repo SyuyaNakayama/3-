@@ -45,13 +45,13 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(ProjectDir)lib\fbx_sdk\include;$(ProjectDir)lib\DirectXTex\include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(ProjectDir)lib\fbx_sdk\lib;$(SolutionDir)lib\KamataEngineLib\$(Configuration);$(ProjectDir)lib\DirectXTex\lib\$(Configuration);$(LibraryPath)</LibraryPath>
+    <IncludePath>$(ProjectDir)lib\DirectXTex\include;$(SolutionDir)imgui;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)lib\KamataEngineLib\$(Configuration);$(ProjectDir)lib\DirectXTex\lib\$(Configuration);$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(ProjectDir)lib\fbx_sdk\include;$(ProjectDir)lib\DirectXTex\include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(ProjectDir)lib\fbx_sdk\lib;$(SolutionDir)lib\KamataEngineLib\$(Configuration);$(ProjectDir)lib\DirectXTex\lib\$(Configuration);$(LibraryPath)</LibraryPath>
+    <IncludePath>$(ProjectDir)lib\DirectXTex\include;$(SolutionDir)imgui;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)lib\KamataEngineLib\$(Configuration);$(ProjectDir)lib\DirectXTex\lib\$(Configuration);$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -65,7 +65,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>KamataEngineLib.lib;DirectXTex.lib;libfbxsdk-md.lib;libxml2-md.lib;zlib-md.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>KamataEngineLib.lib;DirectXTex.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <FxCompile>
       <ShaderModel>5.0</ShaderModel>
@@ -89,18 +89,18 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>KamataEngineLib.lib;DirectXTex.lib;libfbxsdk-mt.lib;libxml2-mt.lib;zlib-mt.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>KamataEngineLib.lib;DirectXTex.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <FxCompile>
       <ShaderModel>5.0</ShaderModel>
     </FxCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="2d\ImGuiManager.cpp" />
     <ClCompile Include="base\DirectXCommon.cpp" />
     <ClCompile Include="base\TextureManager.cpp" />
     <ClCompile Include="base\WinApp.cpp" />
     <ClCompile Include="collider\CollisionManager.cpp" />
-    <ClCompile Include="enemy\Enemy.cpp" />
     <ClCompile Include="fadeManager\FadeManager.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="math\Vector3.cpp" />
@@ -108,7 +108,7 @@
     <ClCompile Include="scene\GameScene.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="2d\DebugText.h" />
+    <ClInclude Include="2d\ImGuiManager.h" />
     <ClInclude Include="2d\Sprite.h" />
     <ClInclude Include="3d\AxisIndicator.h" />
     <ClInclude Include="3d\CircleShadow.h" />
@@ -133,7 +133,6 @@
     <ClInclude Include="collider\Collider.h" />
     <ClInclude Include="collider\CollisionConfig.h" />
     <ClInclude Include="collider\CollisionManager.h" />
-    <ClInclude Include="enemy\Enemy.h" />
     <ClInclude Include="fadeManager\FadeManager.h" />
     <ClInclude Include="input\Input.h" />
     <ClInclude Include="math\MathUtility.h" />
@@ -198,6 +197,11 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\shaders\Sprite.hlsli" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="imgui\imgui.vcxproj">
+      <Project>{aeb46ce2-7e04-41a7-9c7d-2dd82e23a1c4}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

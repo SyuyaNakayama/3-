@@ -65,4 +65,13 @@ struct ViewProjection {
 	/// 行列を転送する
 	/// </summary>
 	void TransferMatrix();
+
+	static ViewProjection* GetInstance()
+	{
+		static ViewProjection instance;
+		return &instance;
+	}
+private:
+	ViewProjection() = default;
+	ViewProjection(const ViewProjection& obj) = delete;
 };
