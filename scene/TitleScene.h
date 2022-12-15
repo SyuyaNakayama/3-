@@ -5,6 +5,7 @@
 class TitleScene : public BaseScene
 {
 private:
+	Sprite* sprite = nullptr;
 
 public:
 	void Initialize() override;

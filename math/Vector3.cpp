@@ -1,6 +1,5 @@
 #include "Vector3.h"
 #include <math.h>
-#include "DebugText.h"
 
 Vector3::Vector3()
 {

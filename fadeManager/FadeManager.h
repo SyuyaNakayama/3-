@@ -1,25 +1,21 @@
 #pragma once
 #include "Sprite.h"
 
-enum Scene { Title, Tutorial, Play, Result };
-
 class FadeManager
 {
 private:
-	const int FADE_TIME = 60;
+	const int FADE_TIME = 30;
 	float fadePerFlame = 1.0f / FADE_TIME;
-	Sprite* sprite_ = nullptr;
-	uint32_t texture_ = 0;
-	bool isFade_ = 0;
-	float alpha_ = 0;
-	Scene* nowScene_ = nullptr;
-	Scene nextScene_ = Title;
+	Sprite* sprite = nullptr;
+	bool isFade = 0;
+	float alpha = 0;
+	bool isChange = false;
 
 public:
-	void Initialize(Scene* nowScene);
+	void Initialize();
 	void Update();
-	void Draw();
-
-	void FadeScene();
-	void ChangeScene(Scene nextScene);
+	void Draw() { sprite->Draw(); }
+	bool IsChange() { return isChange; }
+	bool IsFade() { return isFade; }
+	void FadeScene() { isFade = true; }
 };

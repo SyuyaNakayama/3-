@@ -1,27 +1,23 @@
 ﻿#pragma once
 
-#include "Audio.h"
-#include "DirectXCommon.h"
-#include "DebugCamera.h"
-#include "Input.h"
-#include "Model.h"
-#include "SafeDelete.h"
-#include "Sprite.h"
-#include "ViewProjection.h"
-#include "WorldTransform.h"
-#include "player/Player.h"
-#include "collider/CollisionManager.h"
 #include <vector>
 #include "ImGuiManager.h"
+#include "BaseScene.h"
+#include "Audio.h"
+#include "DirectXCommon.h"
+#include "TextureManager.h"
+#include "WinApp.h"
+#include "AxisIndicator.h"
+#include "PrimitiveDrawer.h"
+#include "fadeManager/FadeManager.h"
 
 /// <summary>
 /// ゲームシーン
 /// </summary>
-class GameScene {
-private: // サブクラス
-	enum Scene { Title, HowToPlay, Play, Clear, GameOver };
+class GameScene
+{
 public: // メンバ関数
-	~GameScene() { imguiManager->Finalize(); }
+	~GameScene() { scene_->Finalize(), audio->Finalize(); imguiManager->Finalize(); }
 
 	/// <summary>
 	/// 初期化
@@ -38,16 +34,19 @@ public: // メンバ関数
 	/// </summary>
 	void Draw();
 
+	void SetNextScene(BaseScene* nextScene, bool isUseFade = true);
+	static GameScene* GetInstance();
+	GameScene(const GameScene& obj) = delete;
 private: // メンバ変数
-	DirectXCommon* dxCommon_ = nullptr;
-	Input* input_ = nullptr;
-	Audio* audio_ = nullptr;
-	DebugCamera* debugCamera_ = nullptr;
-	Model* model_;
-	ViewProjection* viewProjection_ = ViewProjection::GetInstance();
-	CollisionManager collisionManager;
-	Player player_;
-	std::vector<WorldTransform> blocks;
-	bool isDrag = false;
+	GameScene() = default;
+
+	FadeManager fadeManager_;
+	BaseScene* scene_ = nullptr ,* nextScene_ = nullptr;
 	ImGuiManager* imguiManager = ImGuiManager::GetInstance();
+	Input* input = Input::GetInstance();
+	Audio* audio = Audio::GetInstance();
+	DirectXCommon* dxCommon = DirectXCommon::GetInstance();
+	AxisIndicator* axisIndicator = AxisIndicator::GetInstance();
+	PrimitiveDrawer* primitiveDrawer = PrimitiveDrawer::GetInstance();
+	ViewProjection* viewProjection = ViewProjection::GetInstance();
 };
