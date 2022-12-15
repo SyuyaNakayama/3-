@@ -47,7 +47,7 @@ private: // メンバ変数
 	ViewProjection* viewProjection_ = ViewProjection::GetInstance();
 	CollisionManager collisionManager;
 	Player player_;
-	WorldTransform blocks[15];
+	std::vector<WorldTransform> blocks;
 	bool isDrag = false;
 	ImGuiManager* imguiManager = ImGuiManager::GetInstance();
 };

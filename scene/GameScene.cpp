@@ -65,6 +65,7 @@ void GameScene::Initialize() {
 	model_ = Model::Create();
 	imguiManager->Initialize();
 
+	blocks.resize(15);
 	blocks[0].scale_.x = 25.0f;
 	blocks[1].translation_ = { 15.0f,2.0f,0 };
 	blocks[2].translation_ = { 13.0f,3.0f,0 };
@@ -101,7 +102,10 @@ void GameScene::Update()
 	// 当たり判定
 	collisionManager.CheckAllCollisions(&player_);
 
-	DragBox(blocks[4], isDrag);
+	for (size_t i = 0; i < blocks.size(); i++)
+	{
+		DragBox(blocks[i], isDrag);
+	}
 
 	for (WorldTransform& w : blocks) { w.Update(); }
 
