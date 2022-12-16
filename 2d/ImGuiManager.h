@@ -4,6 +4,7 @@
 #include <string>
 #include "Vector2.h"
 #include "Vector3.h"
+#include "WinApp.h"
 
 class ImGuiManager final
 {
@@ -22,6 +23,8 @@ public:
 	void Finalize();
 	void PrintVector(std::string str, Vector2 vec);
 	void PrintVector(std::string str, Vector3 vec);
-	void SliderVector(std::string str, Vector2& vec);
-	void SliderVector(std::string str, Vector3& vec);
+	void SliderVector(std::string str, Vector2& vec, int minVal = 0, int maxVal = WinApp::kWindowWidth);
+	void SliderVector(std::string str, Vector3& vec, int minVal = 0, int maxVal = WinApp::kWindowWidth);
+	void DragVector(std::string str, Vector2& vec, float spd = 0.1f);
+	void DragVector(std::string str, Vector3& vec, float spd = 0.1f);
 };

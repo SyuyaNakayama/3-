@@ -33,10 +33,11 @@ void GameScene::Initialize()
 	viewProjection->Initialize();
 
 	// シーンの生成
+	//scene_ = new GamePlayScene;
 	scene_ = new GamePlayScene;
-	//scene_ = new TitleScene;
 	scene_->Initialize();
 	imguiManager->Initialize();
+	fadeManager_.Initialize();
 }
 
 void GameScene::Update()
@@ -83,6 +84,7 @@ void GameScene::Draw()
 	axisIndicator->Draw();
 	// プリミティブ描画のリセット
 	primitiveDrawer->Reset();
+	fadeManager_.Draw();
 	// デバッグの描画(ImGui)
 	imguiManager->Draw();
 	// 描画終了

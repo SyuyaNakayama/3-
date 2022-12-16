@@ -3,6 +3,7 @@
 #include "Audio.h"
 #include "ViewProjection.h"
 #include "DirectXCommon.h"
+#include "ImGuiManager.h"
 
 class GameScene;
 
@@ -13,7 +14,8 @@ protected:
 	Input* input = Input::GetInstance();
 	Audio* audio = Audio::GetInstance();
 	ViewProjection* viewProjection = ViewProjection::GetInstance();
-	//ID3D12GraphicsCommandList* cmdList = DirectXCommon::GetInstance()->GetCommandList();
+	ID3D12GraphicsCommandList* cmdList = DirectXCommon::GetInstance()->GetCommandList();
+	ImGuiManager* imguiManager = ImGuiManager::GetInstance();
 
 public:
 	virtual ~BaseScene() = default;

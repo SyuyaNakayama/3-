@@ -1,5 +1,4 @@
 ﻿#include "GameScene.h"
-#include "SafeDelete.h"
 
 // Windowsアプリでのエントリーポイント(main関数)
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) 
@@ -13,13 +12,11 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	gameScene->Initialize();
 
 	// メインループ
-	while (!win->ProcessMessage()) {
+	while (!win->ProcessMessage())
+	{
 		gameScene->Update();
 		gameScene->Draw();
 	}
-
-	// 各種解放
-	SafeDelete(gameScene);
 
 	// ゲームウィンドウの破棄
 	win->TerminateGameWindow();

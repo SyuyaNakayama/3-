@@ -51,8 +51,8 @@ void DragBox(WorldTransform& w, bool& isDrag)
 		else { isDrag = false; }
 	}
 
-	imguiManager->SliderVector("blockPos", blockPos);
-	imguiManager->PrintVector("mousePos", mousePos);
+	//imguiManager->SliderVector("blockPos", blockPos);
+	//imguiManager->PrintVector("mousePos", mousePos);
 }
 
 void GamePlayScene::Initialize()
@@ -102,10 +102,12 @@ void GamePlayScene::Update()
 
 	for (size_t i = 0; i < blocks.size(); i++)
 	{
-		DragBox(blocks[i], isDrag);
+		//DragBox(blocks[i], isDrag);
 	}
 
 	for (WorldTransform& w : blocks) { w.Update(); }
+
+	imguiManager->DragVector("blocks[4].translation_", blocks[4].translation_);
 
 	debugCamera_->Update();
 	//*viewProjection_ = debugCamera_->GetViewProjection();
@@ -113,11 +115,8 @@ void GamePlayScene::Update()
 
 void GamePlayScene::Draw()
 {
-	// コマンドリストの取得
-	ID3D12GraphicsCommandList* commandList = DirectXCommon::GetInstance()->GetCommandList();
-
 	// 3Dオブジェクト描画前処理
-	Model::PreDraw(commandList);
+	Model::PreDraw(cmdList);
 
 	for (WorldTransform& w : blocks) { model_->Draw(w, *viewProjection); }
 

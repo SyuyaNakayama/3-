@@ -14,7 +14,7 @@ private:
 public:
 	void Initialize();
 	void Update();
-	void Draw() { sprite->Draw(); }
+	void Draw();
 	bool IsChange() { return isChange; }
 	bool IsFade() { return isFade; }
 	void FadeScene() { isFade = true; }

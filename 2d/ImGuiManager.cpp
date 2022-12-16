@@ -24,7 +24,7 @@ void ImGuiManager::Initialize()
 	ImGui::StyleColorsDark();
 
 	ImGui_ImplWin32_Init(winApp->GetHwnd());
-	
+
 	// デスクリプタヒープ設定
 	D3D12_DESCRIPTOR_HEAP_DESC desc{};
 	desc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV;
@@ -90,16 +90,30 @@ void ImGuiManager::PrintVector(std::string str, Vector3 vec)
 	Text(str.c_str(), vec.x, vec.y, vec.z);
 }
 
-void ImGuiManager::SliderVector(std::string str, Vector2& vec)
+void ImGuiManager::SliderVector(std::string str, Vector2& vec, int minVal, int maxVal)
 {
 	float num[2] = { vec.x,vec.y };
-	SliderFloat2(str.c_str(), num, 0, WinApp::kWindowWidth);
+	SliderFloat2(str.c_str(), num, minVal, maxVal);
 	vec = { num[0],num[1] };
 }
 
-void ImGuiManager::SliderVector(std::string str, Vector3& vec)
+void ImGuiManager::SliderVector(std::string str, Vector3& vec, int minVal, int maxVal)
 {
 	float num[3] = { vec.x,vec.y,vec.z };
-	SliderFloat2(str.c_str(), num, 0, WinApp::kWindowWidth);
+	SliderFloat3(str.c_str(), num, minVal, maxVal);
+	vec = { num[0],num[1],num[2] };
+}
+
+void ImGuiManager::DragVector(std::string str, Vector2& vec, float spd)
+{
+	float num[2] = { vec.x,vec.y };
+	DragFloat2(str.c_str(), num, spd);
+	vec = { num[0],num[1] };
+}
+
+void ImGuiManager::DragVector(std::string str, Vector3& vec, float spd)
+{
+	float num[3] = { vec.x,vec.y,vec.z };
+	DragFloat3(str.c_str(), num, spd);
 	vec = { num[0],num[1],num[2] };
 }
