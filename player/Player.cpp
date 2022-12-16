@@ -1,11 +1,16 @@
 #include "Player.h"
 
+Player* Player::GetInstance()
+{
+	static Player instance;
+	return &instance;
+}
+
 void Player::Initialize()
 {
 	model_ = Model::Create();
-	input_ = Input::GetInstance();
-	worldTransform_.Initialize();
-	worldTransform_.translation_.x = -10.0f;
+	worldTransform.Initialize();
+	worldTransform.translation_.x = -10.0f;
 }
 
 void Player::Move()
@@ -16,10 +21,10 @@ void Player::Move()
 void Player::Update()
 {
 	Move();
-	worldTransform_.Update();
+	worldTransform.Update();
 }
 
 void Player::Draw()
 {
-	model_->Draw(worldTransform_, *ViewProjection::GetInstance());
+	model_->Draw(worldTransform, *ViewProjection::GetInstance());
 }

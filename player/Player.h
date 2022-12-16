@@ -1,6 +1,5 @@
 #pragma once
 #include "collider/Collider.h"
-#include "WorldTransform.h"
 #include "Model.h"
 #include "TextureManager.h"
 #include "input.h"
@@ -9,18 +8,17 @@
 class Player :public Collider
 {
 private:
-	WorldTransform worldTransform_;
 	Model* model_ = nullptr;
-	Input* input_ = nullptr;
-	uint32_t texture_ = 0;
 
 	void Move();
+	Player() = default;
 public:
+	Player(const Player& obj) = delete;
+	static Player* GetInstance();
+
 	void Initialize();
 	void Update();
 	void Draw();
 
 	void OnCollision() {};
-	const Vector3 GetWorldPosition() { return worldTransform_.translation_; }
-	const Vector3 GetRadius() { return worldTransform_.scale_; }
 };

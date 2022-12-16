@@ -50,9 +50,6 @@ void DragBox(WorldTransform& w, bool& isDrag)
 		}
 		else { isDrag = false; }
 	}
-
-	//imguiManager->SliderVector("blockPos", blockPos);
-	//imguiManager->PrintVector("mousePos", mousePos);
 }
 
 void GamePlayScene::Initialize()
@@ -90,15 +87,15 @@ void GamePlayScene::Initialize()
 	for (WorldTransform& w : blocks) { w.Initialize(); }
 
 	debugCamera_ = new DebugCamera(WinApp::kWindowWidth, WinApp::kWindowHeight);
-	player_.Initialize();
+	player_->Initialize();
 }
 
 void GamePlayScene::Update()
 {
-	player_.Update();
+	player_->Update();
 
 	// “–‚½‚è”»’è
-	collisionManager.CheckAllCollisions(&player_);
+	collisionManager.CheckAllCollisions(player_);
 
 	for (size_t i = 0; i < blocks.size(); i++)
 	{

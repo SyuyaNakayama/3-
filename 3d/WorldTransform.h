@@ -10,7 +10,7 @@
 struct ConstBufferDataWorldTransform {
 	Matrix4 matWorld;           // ローカル → ワールド変換行列
 };
-
+	
 using namespace MathUtility;
 
 /// <summary>
@@ -44,19 +44,20 @@ struct WorldTransform {
 	/// マッピングする
 	/// </summary>
 	void Map();
+
 	/// <summary>
 	/// 行列を転送する
 	/// </summary>
 	void TransferMatrix();
 
 	void Update() {
-		Matrix4 matScale = MathUtility::Matrix4Scaling(scale_.x, scale_.y, scale_.z),
+		Matrix4 matScale = Matrix4Scaling(scale_.x, scale_.y, scale_.z),
 
-			matRot = MathUtility::Matrix4RotationX(rotation_.x) *
-			MathUtility::Matrix4RotationY(rotation_.y) *
-			MathUtility::Matrix4RotationZ(rotation_.z),
+			matRot = Matrix4RotationX(rotation_.x) *
+			Matrix4RotationY(rotation_.y) *
+			Matrix4RotationZ(rotation_.z),
 
-			matTrans = MathUtility::Matrix4Translation(translation_.x, translation_.y, translation_.z);
+			matTrans = Matrix4Translation(translation_.x, translation_.y, translation_.z);
 
 		matWorld_ = matScale * matRot * matTrans;
 
@@ -64,4 +65,6 @@ struct WorldTransform {
 
 		TransferMatrix();
 	}
+
+	Vector3 GetWorldPosition() { return { matWorld_.m[3][0], matWorld_.m[3][1], matWorld_.m[3][2] }; }
 };

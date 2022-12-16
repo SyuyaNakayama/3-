@@ -14,7 +14,7 @@ private:
 	bool isDrag = false;
 	Model* model_;
 	CollisionManager collisionManager;
-	Player player_;
+	Player* player_ = Player::GetInstance();
 	DebugCamera* debugCamera_ = nullptr;
 
 public:
