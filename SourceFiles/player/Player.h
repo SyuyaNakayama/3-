@@ -1,5 +1,5 @@
 #pragma once
-#include "collider/Collider.h"
+#include "Collider.h"
 #include "Model.h"
 #include "TextureManager.h"
 #include "input.h"

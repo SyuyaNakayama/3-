@@ -9,7 +9,7 @@
 #include "WinApp.h"
 #include "AxisIndicator.h"
 #include "PrimitiveDrawer.h"
-#include "fadeManager/FadeManager.h"
+#include "FadeManager.h"
 
 /// <summary>
 /// ゲームシーン

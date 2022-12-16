@@ -59,7 +59,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)2d;$(ProjectDir)3d;$(ProjectDir)audio;$(ProjectDir)base;$(ProjectDir)input;$(ProjectDir)scene;$(ProjectDir)math;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)SourceFiles\2d;$(ProjectDir)SourceFiles\3d;$(ProjectDir)SourceFiles\audio;$(ProjectDir)SourceFiles\base;$(ProjectDir)SourceFiles\input;$(ProjectDir)SourceFiles\scene;$(ProjectDir)SourceFiles\math;$(ProjectDir)SourceFiles\collider;$(ProjectDir)SourceFiles\Timer;$(ProjectDir)SourceFiles\player;$(ProjectDir)SourceFiles\fadeManager;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
@@ -95,63 +95,6 @@
       <ShaderModel>5.0</ShaderModel>
     </FxCompile>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="2d\ImGuiManager.cpp" />
-    <ClCompile Include="base\DirectXCommon.cpp" />
-    <ClCompile Include="base\TextureManager.cpp" />
-    <ClCompile Include="base\WinApp.cpp" />
-    <ClCompile Include="collider\CollisionManager.cpp" />
-    <ClCompile Include="fadeManager\FadeManager.cpp" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="math\Vector3.cpp" />
-    <ClCompile Include="player\Player.cpp" />
-    <ClCompile Include="scene\Block.cpp" />
-    <ClCompile Include="scene\BlockManager.cpp" />
-    <ClCompile Include="scene\GamePlayScene.cpp" />
-    <ClCompile Include="scene\GameScene.cpp" />
-    <ClCompile Include="scene\TitleScene.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="2d\ImGuiManager.h" />
-    <ClInclude Include="2d\Sprite.h" />
-    <ClInclude Include="3d\AxisIndicator.h" />
-    <ClInclude Include="3d\CircleShadow.h" />
-    <ClInclude Include="3d\DebugCamera.h" />
-    <ClInclude Include="3d\DirectionalLight.h" />
-    <ClInclude Include="3d\LightGroup.h" />
-    <ClInclude Include="3d\Material.h" />
-    <ClInclude Include="3d\Mesh.h" />
-    <ClInclude Include="3d\Model.h" />
-    <ClInclude Include="3d\PointLight.h" />
-    <ClInclude Include="3d\PrimitiveDrawer.h" />
-    <ClInclude Include="3d\SpotLight.h" />
-    <ClInclude Include="3d\Terrain.h" />
-    <ClInclude Include="3d\TerrainCommon.h" />
-    <ClInclude Include="3d\ViewProjection.h" />
-    <ClInclude Include="3d\WorldTransform.h" />
-    <ClInclude Include="audio\Audio.h" />
-    <ClInclude Include="base\DirectXCommon.h" />
-    <ClInclude Include="base\SafeDelete.h" />
-    <ClInclude Include="base\TextureManager.h" />
-    <ClInclude Include="base\WinApp.h" />
-    <ClInclude Include="collider\Collider.h" />
-    <ClInclude Include="collider\CollisionConfig.h" />
-    <ClInclude Include="collider\CollisionManager.h" />
-    <ClInclude Include="fadeManager\FadeManager.h" />
-    <ClInclude Include="input\Input.h" />
-    <ClInclude Include="math\MathUtility.h" />
-    <ClInclude Include="math\Matrix4.h" />
-    <ClInclude Include="math\Vector2.h" />
-    <ClInclude Include="math\Vector3.h" />
-    <ClInclude Include="math\Vector4.h" />
-    <ClInclude Include="player\Player.h" />
-    <ClInclude Include="scene\BaseScene.h" />
-    <ClInclude Include="scene\Block.h" />
-    <ClInclude Include="scene\BlockManager.h" />
-    <ClInclude Include="scene\GamePlayScene.h" />
-    <ClInclude Include="scene\GameScene.h" />
-    <ClInclude Include="scene\TitleScene.h" />
-  </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\shaders\TerrainPS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
@@ -211,6 +154,69 @@
     <ProjectReference Include="imgui\imgui.vcxproj">
       <Project>{aeb46ce2-7e04-41a7-9c7d-2dd82e23a1c4}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="SourceFiles\2d\ImGuiManager.h" />
+    <ClInclude Include="SourceFiles\2d\Sprite.h" />
+    <ClInclude Include="SourceFiles\3d\AxisIndicator.h" />
+    <ClInclude Include="SourceFiles\3d\CircleShadow.h" />
+    <ClInclude Include="SourceFiles\3d\DebugCamera.h" />
+    <ClInclude Include="SourceFiles\3d\DirectionalLight.h" />
+    <ClInclude Include="SourceFiles\3d\LightGroup.h" />
+    <ClInclude Include="SourceFiles\3d\Material.h" />
+    <ClInclude Include="SourceFiles\3d\Mesh.h" />
+    <ClInclude Include="SourceFiles\3d\Model.h" />
+    <ClInclude Include="SourceFiles\3d\PointLight.h" />
+    <ClInclude Include="SourceFiles\3d\PrimitiveDrawer.h" />
+    <ClInclude Include="SourceFiles\3d\SpotLight.h" />
+    <ClInclude Include="SourceFiles\3d\Terrain.h" />
+    <ClInclude Include="SourceFiles\3d\TerrainCommon.h" />
+    <ClInclude Include="SourceFiles\3d\ViewProjection.h" />
+    <ClInclude Include="SourceFiles\3d\WorldTransform.h" />
+    <ClInclude Include="SourceFiles\audio\Audio.h" />
+    <ClInclude Include="SourceFiles\audio\SoundManager.h" />
+    <ClInclude Include="SourceFiles\base\DirectXCommon.h" />
+    <ClInclude Include="SourceFiles\base\SafeDelete.h" />
+    <ClInclude Include="SourceFiles\base\TextureManager.h" />
+    <ClInclude Include="SourceFiles\base\WinApp.h" />
+    <ClInclude Include="SourceFiles\collider\Collider.h" />
+    <ClInclude Include="SourceFiles\collider\CollisionConfig.h" />
+    <ClInclude Include="SourceFiles\collider\CollisionManager.h" />
+    <ClInclude Include="SourceFiles\fadeManager\FadeManager.h" />
+    <ClInclude Include="SourceFiles\input\Input.h" />
+    <ClInclude Include="SourceFiles\math\MathUtility.h" />
+    <ClInclude Include="SourceFiles\math\Matrix4.h" />
+    <ClInclude Include="SourceFiles\math\Vector2.h" />
+    <ClInclude Include="SourceFiles\math\Vector3.h" />
+    <ClInclude Include="SourceFiles\math\Vector4.h" />
+    <ClInclude Include="SourceFiles\particleManager\ParticleManager.h" />
+    <ClInclude Include="SourceFiles\player\Player.h" />
+    <ClInclude Include="SourceFiles\scene\BaseScene.h" />
+    <ClInclude Include="SourceFiles\scene\Block.h" />
+    <ClInclude Include="SourceFiles\scene\BlockManager.h" />
+    <ClInclude Include="SourceFiles\scene\GamePlayScene.h" />
+    <ClInclude Include="SourceFiles\scene\GameScene.h" />
+    <ClInclude Include="SourceFiles\scene\TitleScene.h" />
+    <ClInclude Include="SourceFiles\timer\Timer.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="SourceFiles\2d\ImGuiManager.cpp" />
+    <ClCompile Include="SourceFiles\audio\SoundManager.cpp" />
+    <ClCompile Include="SourceFiles\base\DirectXCommon.cpp" />
+    <ClCompile Include="SourceFiles\base\TextureManager.cpp" />
+    <ClCompile Include="SourceFiles\base\WinApp.cpp" />
+    <ClCompile Include="SourceFiles\collider\CollisionManager.cpp" />
+    <ClCompile Include="SourceFiles\fadeManager\FadeManager.cpp" />
+    <ClCompile Include="SourceFiles\main.cpp" />
+    <ClCompile Include="SourceFiles\math\Vector3.cpp" />
+    <ClCompile Include="SourceFiles\particleManager\ParticleManager.cpp" />
+    <ClCompile Include="SourceFiles\player\Player.cpp" />
+    <ClCompile Include="SourceFiles\scene\Block.cpp" />
+    <ClCompile Include="SourceFiles\scene\BlockManager.cpp" />
+    <ClCompile Include="SourceFiles\scene\GamePlayScene.cpp" />
+    <ClCompile Include="SourceFiles\scene\GameScene.cpp" />
+    <ClCompile Include="SourceFiles\scene\TitleScene.cpp" />
+    <ClCompile Include="SourceFiles\timer\Timer.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

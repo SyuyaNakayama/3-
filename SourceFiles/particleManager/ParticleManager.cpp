@@ -1,7 +1,7 @@
 ﻿#include "ParticleManager.h"
-#include "DebugText.h"
 #include "DirectXCommon.h"
 #include "MathUtility.h"
+#include "Vector4.h"
 #include <d3dcompiler.h>
 #include <DirectXTex.h>
 #include <stdio.h>

@@ -31,9 +31,12 @@ void DragBox(WorldTransform& w, bool& isDrag)
 		fabs(block2DPos.y - (float)mousePos.y) <= fabs(block2DPos.y - block2DRad.y)))
 	{
 		// マウスの左ボタンが押されている場合
-		if (input->IsPressMouse(0))
+		if (input->IsTriggerMouse(0))
 		{
 			isDrag = true;
+		}
+		if (isDrag)
+		{
 			// スクリーン座標
 			Vector3 posNear = { mousePos.x,mousePos.y,0 };
 			Vector3 posFar = { mousePos.x,mousePos.y,1 };
@@ -47,8 +50,11 @@ void DragBox(WorldTransform& w, bool& isDrag)
 			float distanceObject = Vector3Length(viewProjection->eye - blockPos);
 			w.translation_ = posNear + mouseDirection * distanceObject;
 			w.translation_.z = 0;
+			if (!input->IsPressMouse(0))
+			{
+				isDrag = false;
+			}
 		}
-		else { isDrag = false; }
 	}
 }
 

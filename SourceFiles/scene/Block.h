@@ -1,6 +1,6 @@
 #pragma once
 #include "Model.h"
-#include "collider/Collider.h"
+#include "Collider.h"
 
 class Block: Collider
 {

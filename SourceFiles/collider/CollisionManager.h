@@ -2,7 +2,7 @@
 #include <list>
 #include "Collider.h"
 #include <memory>
-#include "player/Player.h"
+#include "Player.h"
 
 class CollisionManager
 {

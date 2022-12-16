@@ -2,8 +2,8 @@
 #include "BaseScene.h"
 #include "Audio.h"
 #include "Model.h"
-#include "player/Player.h"
-#include "collider/CollisionManager.h"
+#include "Player.h"
+#include "CollisionManager.h"
 #include "DebugCamera.h"
 #include "BlockManager.h"
 
