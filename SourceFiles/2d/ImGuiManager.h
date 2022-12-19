@@ -27,4 +27,6 @@ public:
 	void SliderVector(std::string str, Vector3& vec, int minVal = 0, int maxVal = WinApp::kWindowWidth);
 	void DragVector(std::string str, Vector2& vec, float spd = 0.1f);
 	void DragVector(std::string str, Vector3& vec, float spd = 0.1f);
+	void InputVector(std::string str, Vector2& vec);
+	void InputVector(std::string str, Vector3& vec);
 };

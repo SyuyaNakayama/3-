@@ -12,7 +12,7 @@ protected:
 	WorldTransform worldTransform;
 
 public:
-	virtual void OnCollision() {};
+	virtual void OnCollision(Collider* collider) {};
 	virtual Vector3 GetWorldPosition() { return worldTransform.GetWorldPosition(); };
 	virtual Vector3 GetRadius() { return worldTransform.scale_; };
 

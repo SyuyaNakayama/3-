@@ -54,10 +54,7 @@ void ImGuiManager::Begin()
 	ImGui::NewFrame();
 }
 
-void ImGuiManager::End()
-{
-	ImGui::Render();
-}
+void ImGuiManager::End() { ImGui::Render(); }
 
 void ImGuiManager::Draw()
 {
@@ -115,5 +112,19 @@ void ImGuiManager::DragVector(std::string str, Vector3& vec, float spd)
 {
 	float num[3] = { vec.x,vec.y,vec.z };
 	DragFloat3(str.c_str(), num, spd);
+	vec = { num[0],num[1],num[2] };
+}
+
+void ImGuiManager::InputVector(std::string str, Vector2& vec)
+{
+	float num[2] = { vec.x,vec.y };
+	InputFloat2(str.c_str(), num);
+	vec = { num[0],num[1] };
+}
+
+void ImGuiManager::InputVector(std::string str, Vector3& vec)
+{
+	float num[3] = { vec.x,vec.y,vec.z };
+	InputFloat3(str.c_str(), num);
 	vec = { num[0],num[1],num[2] };
 }

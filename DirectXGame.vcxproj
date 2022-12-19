@@ -45,12 +45,12 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(ProjectDir)lib\DirectXTex\include;$(SolutionDir)imgui;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)SourceFiles\scene\play\blocks;$(ProjectDir)lib\DirectXTex\include;$(SolutionDir)imgui;$(SolutionDir)SourceFiles\scene\play;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)lib\KamataEngineLib\$(Configuration);$(ProjectDir)lib\DirectXTex\lib\$(Configuration);$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(ProjectDir)lib\DirectXTex\include;$(SolutionDir)imgui;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)SourceFiles\scene\play\blocks;$(ProjectDir)lib\DirectXTex\include;$(SolutionDir)imgui;$(SolutionDir)SourceFiles\scene\play;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)lib\KamataEngineLib\$(Configuration);$(ProjectDir)lib\DirectXTex\lib\$(Configuration);$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -182,7 +182,6 @@
     <ClInclude Include="SourceFiles\collider\Collider.h" />
     <ClInclude Include="SourceFiles\collider\CollisionConfig.h" />
     <ClInclude Include="SourceFiles\collider\CollisionManager.h" />
-    <ClInclude Include="SourceFiles\fadeManager\FadeManager.h" />
     <ClInclude Include="SourceFiles\input\Input.h" />
     <ClInclude Include="SourceFiles\math\MathUtility.h" />
     <ClInclude Include="SourceFiles\math\Matrix4.h" />
@@ -190,12 +189,13 @@
     <ClInclude Include="SourceFiles\math\Vector3.h" />
     <ClInclude Include="SourceFiles\math\Vector4.h" />
     <ClInclude Include="SourceFiles\particleManager\ParticleManager.h" />
-    <ClInclude Include="SourceFiles\player\Player.h" />
     <ClInclude Include="SourceFiles\scene\BaseScene.h" />
-    <ClInclude Include="SourceFiles\scene\Block.h" />
-    <ClInclude Include="SourceFiles\scene\BlockManager.h" />
-    <ClInclude Include="SourceFiles\scene\GamePlayScene.h" />
+    <ClInclude Include="SourceFiles\scene\FadeManager.h" />
     <ClInclude Include="SourceFiles\scene\GameScene.h" />
+    <ClInclude Include="SourceFiles\scene\play\blocks\Block.h" />
+    <ClInclude Include="SourceFiles\scene\play\blocks\BlockManager.h" />
+    <ClInclude Include="SourceFiles\scene\play\GamePlayScene.h" />
+    <ClInclude Include="SourceFiles\scene\play\Player.h" />
     <ClInclude Include="SourceFiles\scene\TitleScene.h" />
     <ClInclude Include="SourceFiles\timer\Timer.h" />
   </ItemGroup>
@@ -206,15 +206,15 @@
     <ClCompile Include="SourceFiles\base\TextureManager.cpp" />
     <ClCompile Include="SourceFiles\base\WinApp.cpp" />
     <ClCompile Include="SourceFiles\collider\CollisionManager.cpp" />
-    <ClCompile Include="SourceFiles\fadeManager\FadeManager.cpp" />
     <ClCompile Include="SourceFiles\main.cpp" />
     <ClCompile Include="SourceFiles\math\Vector3.cpp" />
     <ClCompile Include="SourceFiles\particleManager\ParticleManager.cpp" />
-    <ClCompile Include="SourceFiles\player\Player.cpp" />
-    <ClCompile Include="SourceFiles\scene\Block.cpp" />
-    <ClCompile Include="SourceFiles\scene\BlockManager.cpp" />
-    <ClCompile Include="SourceFiles\scene\GamePlayScene.cpp" />
+    <ClCompile Include="SourceFiles\scene\FadeManager.cpp" />
     <ClCompile Include="SourceFiles\scene\GameScene.cpp" />
+    <ClCompile Include="SourceFiles\scene\play\blocks\Block.cpp" />
+    <ClCompile Include="SourceFiles\scene\play\blocks\BlockManager.cpp" />
+    <ClCompile Include="SourceFiles\scene\play\GamePlayScene.cpp" />
+    <ClCompile Include="SourceFiles\scene\play\Player.cpp" />
     <ClCompile Include="SourceFiles\scene\TitleScene.cpp" />
     <ClCompile Include="SourceFiles\timer\Timer.cpp" />
   </ItemGroup>

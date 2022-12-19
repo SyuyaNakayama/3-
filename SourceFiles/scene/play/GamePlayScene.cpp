@@ -20,13 +20,10 @@ void GamePlayScene::Initialize()
 void GamePlayScene::Update()
 {
 	player_->Update();
-
-	// 当たり判定
-	collisionManager.CheckAllCollisions(player_);
-
-
 	blockManager->Update();
 
+	// 当たり判定
+	collisionManager.CheckAllCollisions();
 
 	debugCamera_->Update();
 	//*viewProjection_ = debugCamera_->GetViewProjection();
@@ -38,6 +35,7 @@ void GamePlayScene::Draw()
 	Model::PreDraw(cmdList);
 
 	blockManager->Draw();
+	player_->Draw();
 
 	// 3Dオブジェクト描画後処理
 	Model::PostDraw();

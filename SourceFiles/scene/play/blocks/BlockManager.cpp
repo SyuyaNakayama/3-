@@ -11,7 +11,7 @@ void BlockManager::Initialize(UINT16 stage)
 	switch (stage)
 	{
 	case 0:
-		blocks.resize(12);
+		blocks.resize(14);
 		blocks[0].SetScale({ 25,1,1 });
 		blocks[1].SetTranslation({ 15.0f,2.0f,0 });
 		blocks[2].SetTranslation({ 13.0f,3.0f,0 });
@@ -33,6 +33,7 @@ void BlockManager::Initialize(UINT16 stage)
 		blocks[10].SetScale({ 1,4,1 });
 		blocks[11].SetScale({ 25,1,1 });
 		blocks[11].SetTranslation({ 0,22,0 });
+		blocks[12].SetTranslation({ 25.0f,2.0f,0 });
 		break;
 	case 1:
 		break;

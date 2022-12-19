@@ -2,12 +2,13 @@
 #include "Model.h"
 #include "Collider.h"
 
-class Block: Collider
+class Block: public Collider
 {
 private:
 	Model* model;
 	bool isDrag = false;
 
+	void DragBox();
 public:
 	void Initialize();
 	void Update();

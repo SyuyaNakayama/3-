@@ -11,6 +11,7 @@ private:
 public:
 	BlockManager(const BlockManager& obj) = delete;
 	static BlockManager* GetInstance();
+	std::vector<Block> GetBlocks() { return blocks; }
 
 	void Initialize(UINT16 stage);
 	void Update();

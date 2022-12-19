@@ -48,6 +48,12 @@
     <Filter Include="ソース ファイル\debug">
       <UniqueIdentifier>{0369e899-7248-4713-a176-b1b9fa42a3d4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\scene\objects">
+      <UniqueIdentifier>{aef692db-6ec4-4038-b3d0-c5c5e10293fe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\scene\objects">
+      <UniqueIdentifier>{622b371b-fe28-4464-aa41-424366e4aa54}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\shaders\SpritePS.hlsl">
@@ -141,31 +147,10 @@
     <ClInclude Include="SourceFiles\scene\BaseScene.h">
       <Filter>ヘッダー ファイル\scene</Filter>
     </ClInclude>
-    <ClInclude Include="SourceFiles\scene\Block.h">
-      <Filter>ヘッダー ファイル\scene</Filter>
-    </ClInclude>
-    <ClInclude Include="SourceFiles\scene\BlockManager.h">
-      <Filter>ヘッダー ファイル\scene</Filter>
-    </ClInclude>
-    <ClInclude Include="SourceFiles\fadeManager\FadeManager.h">
-      <Filter>ヘッダー ファイル\scene</Filter>
-    </ClInclude>
     <ClInclude Include="SourceFiles\scene\GameScene.h">
       <Filter>ヘッダー ファイル\scene</Filter>
     </ClInclude>
-    <ClInclude Include="SourceFiles\scene\GamePlayScene.h">
-      <Filter>ヘッダー ファイル\scene</Filter>
-    </ClInclude>
-    <ClInclude Include="SourceFiles\player\Player.h">
-      <Filter>ヘッダー ファイル\scene</Filter>
-    </ClInclude>
-    <ClInclude Include="SourceFiles\particleManager\ParticleManager.h">
-      <Filter>ヘッダー ファイル\scene</Filter>
-    </ClInclude>
     <ClInclude Include="SourceFiles\scene\TitleScene.h">
-      <Filter>ヘッダー ファイル\scene</Filter>
-    </ClInclude>
-    <ClInclude Include="SourceFiles\audio\SoundManager.h">
       <Filter>ヘッダー ファイル\scene</Filter>
     </ClInclude>
     <ClInclude Include="SourceFiles\2d\Sprite.h">
@@ -225,6 +210,27 @@
     <ClInclude Include="SourceFiles\3d\AxisIndicator.h">
       <Filter>ヘッダー ファイル\3d</Filter>
     </ClInclude>
+    <ClInclude Include="SourceFiles\particleManager\ParticleManager.h">
+      <Filter>ヘッダー ファイル\scene\objects</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceFiles\scene\play\blocks\Block.h">
+      <Filter>ヘッダー ファイル\scene\objects</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceFiles\scene\play\blocks\BlockManager.h">
+      <Filter>ヘッダー ファイル\scene\objects</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceFiles\scene\play\Player.h">
+      <Filter>ヘッダー ファイル\scene\objects</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceFiles\scene\FadeManager.h">
+      <Filter>ヘッダー ファイル\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceFiles\scene\play\GamePlayScene.h">
+      <Filter>ヘッダー ファイル\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceFiles\audio\SoundManager.h">
+      <Filter>ヘッダー ファイル\audio</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SourceFiles\base\TextureManager.cpp">
@@ -236,34 +242,13 @@
     <ClCompile Include="SourceFiles\base\DirectXCommon.cpp">
       <Filter>ソース ファイル\base</Filter>
     </ClCompile>
-    <ClCompile Include="SourceFiles\scene\Block.cpp">
-      <Filter>ソース ファイル\scene</Filter>
-    </ClCompile>
-    <ClCompile Include="SourceFiles\scene\BlockManager.cpp">
-      <Filter>ソース ファイル\scene</Filter>
-    </ClCompile>
-    <ClCompile Include="SourceFiles\collider\CollisionManager.cpp">
-      <Filter>ソース ファイル\scene</Filter>
-    </ClCompile>
-    <ClCompile Include="SourceFiles\scene\GamePlayScene.cpp">
-      <Filter>ソース ファイル\scene</Filter>
-    </ClCompile>
-    <ClCompile Include="SourceFiles\fadeManager\FadeManager.cpp">
-      <Filter>ソース ファイル\scene</Filter>
-    </ClCompile>
     <ClCompile Include="SourceFiles\scene\GameScene.cpp">
-      <Filter>ソース ファイル\scene</Filter>
-    </ClCompile>
-    <ClCompile Include="SourceFiles\particleManager\ParticleManager.cpp">
       <Filter>ソース ファイル\scene</Filter>
     </ClCompile>
     <ClCompile Include="SourceFiles\audio\SoundManager.cpp">
       <Filter>ソース ファイル\scene</Filter>
     </ClCompile>
     <ClCompile Include="SourceFiles\scene\TitleScene.cpp">
-      <Filter>ソース ファイル\scene</Filter>
-    </ClCompile>
-    <ClCompile Include="SourceFiles\player\Player.cpp">
       <Filter>ソース ファイル\scene</Filter>
     </ClCompile>
     <ClCompile Include="SourceFiles\math\Vector3.cpp">
@@ -277,6 +262,27 @@
     </ClCompile>
     <ClCompile Include="SourceFiles\timer\Timer.cpp">
       <Filter>ソース ファイル\base</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceFiles\collider\CollisionManager.cpp">
+      <Filter>ソース ファイル\scene\objects</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceFiles\particleManager\ParticleManager.cpp">
+      <Filter>ソース ファイル\scene\objects</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceFiles\scene\play\Player.cpp">
+      <Filter>ソース ファイル\scene\objects</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceFiles\scene\play\blocks\BlockManager.cpp">
+      <Filter>ソース ファイル\scene\objects</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceFiles\scene\play\blocks\Block.cpp">
+      <Filter>ソース ファイル\scene\objects</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceFiles\scene\play\GamePlayScene.cpp">
+      <Filter>ソース ファイル\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceFiles\scene\FadeManager.cpp">
+      <Filter>ソース ファイル\scene</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -1,19 +1,13 @@
 #pragma once
 
-namespace CollisionAttribute
+enum class CollisionAttribute
 {
-	enum
-	{
-		Player = 0b1,
-		Enemy = 0b1 << 1,
-	};
-}
+	Player = 0b1,
+	Blocks = 0b1 << 1,
+};
 
-namespace CollisionMask
+enum class CollisionMask
 {
-	enum
-	{
-		Player = ~CollisionAttribute::Player,
-		Enemy = ~CollisionAttribute::Enemy,
-	};
-}
+	Player = ~(int)CollisionAttribute::Player,
+	Blocks = ~(int)CollisionAttribute::Blocks,
+};

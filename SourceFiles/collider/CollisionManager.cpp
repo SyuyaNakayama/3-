@@ -1,5 +1,7 @@
 #include "CollisionManager.h"
 #include "CollisionConfig.h"
+#include "Player.h"
+#include "BlockManager.h"
 
 using namespace std;
 
@@ -20,11 +22,12 @@ bool CollisionManager::CheckBoxCollisionPair(Collider* colliderA, Collider* coll
 	return 0;
 }
 
-void CollisionManager::CheckAllCollisions(Player* player)
+void CollisionManager::CheckAllCollisions()
 {
 	list<Collider*> colliders_;
-	colliders_.push_back(player);
-	//colliders_.push_back(enemy);
+	colliders_.push_back(Player::GetInstance());
+	vector<Block> blocks = BlockManager::GetInstance()->GetBlocks();
+	for (Block& block : blocks) { colliders_.push_back(&block); }
 
 	list<Collider*>::iterator itrA = colliders_.begin();
 	for (; itrA != colliders_.end(); ++itrA)
@@ -38,8 +41,8 @@ void CollisionManager::CheckAllCollisions(Player* player)
 			Collider* colliderB = *itrB;
 			if (CheckBoxCollisionPair(colliderA, colliderB))
 			{
-				colliderA->OnCollision();
-				colliderB->OnCollision();
+				colliderA->OnCollision(colliderB);
+				colliderB->OnCollision(colliderA);
 			}
 		}
 	}

@@ -9,6 +9,8 @@ class Player :public Collider
 {
 private:
 	Model* model_ = nullptr;
+	float spdX = -0.1f;
+	float epsilon = 1.0e-5; // “–‚½‚è”»’è‚Ì‚Æ‚«‚Ì”÷’²®‚Æ‚µ‚Äg‚¤
 
 	void Move();
 	Player() = default;
@@ -20,5 +22,5 @@ public:
 	void Update();
 	void Draw();
 
-	void OnCollision() {};
+	void OnCollision(Collider* collider);
 };
