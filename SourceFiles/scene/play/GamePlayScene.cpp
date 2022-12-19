@@ -19,8 +19,8 @@ void GamePlayScene::Initialize()
 
 void GamePlayScene::Update()
 {
-	player_->Update();
 	blockManager->Update();
+	player_->Update();
 
 	// “–‚½‚è”»’è
 	collisionManager.CheckAllCollisions();

@@ -231,6 +231,9 @@
     <ClInclude Include="SourceFiles\audio\SoundManager.h">
       <Filter>ヘッダー ファイル\audio</Filter>
     </ClInclude>
+    <ClInclude Include="SourceFiles\scene\play\Jump.h">
+      <Filter>ヘッダー ファイル\scene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SourceFiles\base\TextureManager.cpp">
@@ -282,6 +285,9 @@
       <Filter>ソース ファイル\scene</Filter>
     </ClCompile>
     <ClCompile Include="SourceFiles\scene\FadeManager.cpp">
+      <Filter>ソース ファイル\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceFiles\scene\play\Jump.cpp">
       <Filter>ソース ファイル\scene</Filter>
     </ClCompile>
   </ItemGroup>

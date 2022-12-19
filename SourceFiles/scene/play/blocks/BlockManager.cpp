@@ -18,8 +18,8 @@ void BlockManager::Initialize(UINT16 stage)
 		blocks[2].SetScale({ 1,2,1 });
 		blocks[3].SetTranslation({ 11.0f,4.0f,0 });
 		blocks[3].SetScale({ 1,3,1 });
-		blocks[4].SetTranslation({ 5.0f,10.0f,0 });
-		blocks[4].SetScale({ 1,3,1 });
+		//blocks[4].SetTranslation({ 5.0f,10.0f,0 });
+		//blocks[4].SetScale({ 1,3,1 });
 		blocks[5].SetTranslation({ 7.0f,4.0f,0 });
 		blocks[5].SetScale({ 1,3,1 });
 		blocks[6].SetTranslation({ 5.0f,4.0f,0 });
