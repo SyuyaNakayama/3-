@@ -47,4 +47,5 @@ void GamePlayScene::Draw()
 
 void GamePlayScene::Finalize()
 {
+	delete debugCamera_;
 }

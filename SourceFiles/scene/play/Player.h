@@ -4,7 +4,7 @@
 #include "input.h"
 #include "Jump.h"
 
-class Player :public Collider
+class Player : public Collider
 {
 private:
 	Model* model_ = nullptr;
@@ -15,6 +15,7 @@ private:
 
 	void Move();
 public:
+	~Player() { delete model_; }
 	void Initialize();
 	void Update();
 	void Draw();

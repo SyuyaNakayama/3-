@@ -1,12 +1,13 @@
 #pragma once
 #include "Sprite.h"
+#include <memory>
 
 class FadeManager
 {
 private:
 	const int FADE_TIME = 30;
 	float fadePerFlame = 1.0f / FADE_TIME;
-	Sprite* sprite = nullptr;
+	std::unique_ptr<Sprite> sprite;
 	bool isFade = 0;
 	float alpha = 0;
 	bool isChange = false;

@@ -1,10 +1,5 @@
 ﻿#include "GameScene.h"
-#include "TextureManager.h"
 #include <cassert>
-#include "GamePlayScene.h"
-#include "TitleScene.h"
-#include "Sprite.h"
-#include "WinApp.h"
 
 void GameScene::Initialize()
 {
@@ -32,7 +27,7 @@ void GameScene::Initialize()
 
 	viewProjection->Initialize();
 	viewProjection->eye = { 0,0,-500 };
-	viewProjection->fovAngleY= 4.0f * MathUtility::PI / 180.0f;
+	viewProjection->fovAngleY = 4.0f * MathUtility::PI / 180.0f;
 
 	// シーンの生成
 	SetNextScene(Scene::Play, false);
@@ -102,4 +97,12 @@ void GameScene::SetNextScene(Scene nextScene, bool isUseFade)
 {
 	nextScene_ = nextScene;
 	if (isUseFade) { fadeManager_.FadeScene(); }
+}
+
+GameScene::~GameScene()
+{
+	scene_->Finalize();
+	delete scene_;
+	audio->Finalize();
+	imguiManager->Finalize();
 }

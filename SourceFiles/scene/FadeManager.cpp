@@ -5,7 +5,7 @@
 
 void FadeManager::Initialize()
 {
-	sprite = Sprite::Create(TextureManager::Load("white1x1.png"), {});
+	sprite.reset(Sprite::Create(TextureManager::Load("white1x1.png"), {}));
 	sprite->SetSize({ WinApp::kWindowWidth,WinApp::kWindowHeight });
 	sprite->SetColor({});
 }

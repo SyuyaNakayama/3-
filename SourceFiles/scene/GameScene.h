@@ -1,9 +1,7 @@
 ﻿#pragma once
 
 #include <vector>
-#include "ImGuiManager.h"
 #include "BaseScene.h"
-#include "Audio.h"
 #include "DirectXCommon.h"
 #include "TextureManager.h"
 #include "WinApp.h"
@@ -18,7 +16,7 @@
 class GameScene
 {
 public: // メンバ関数
-	~GameScene() { scene_->Finalize(), audio->Finalize(); imguiManager->Finalize(); }
+	~GameScene();
 
 	/// <summary>
 	/// 初期化

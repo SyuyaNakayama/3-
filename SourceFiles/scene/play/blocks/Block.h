@@ -2,7 +2,7 @@
 #include "Model.h"
 #include "Collider.h"
 
-class Block: public Collider
+class Block : public Collider
 {
 private:
 	Model* model;
@@ -15,4 +15,5 @@ public:
 	void Draw();
 	void SetScale(Vector3 scale) { worldTransform.scale_ = scale; }
 	void SetTranslation(Vector3 translation) { worldTransform.translation_ = translation; }
+	~Block() { delete model; }
 };
