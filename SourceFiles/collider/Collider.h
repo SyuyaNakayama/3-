@@ -1,23 +1,41 @@
 #pragma once
 #include "WorldTransform.h"
-#include <cstdint>
+
+enum class CollisionAttribute
+{
+	Player = 0b1,
+	PlayerBullet = 0b1 << 1,
+	Enemy = 0b1 << 2,
+	EnemyBullet = 0b1 << 3,
+	All = -1
+};
+
+enum class CollisionMask
+{
+	Player = ~((int)CollisionAttribute::Player | (int)CollisionAttribute::PlayerBullet),
+	Enemy = ~((int)CollisionAttribute::Enemy | (int)CollisionAttribute::EnemyBullet),
+	All = -1
+};
 
 class Collider
 {
 private:
-	uint32_t collisionAttribute_ = 0xffffffff;
-	uint32_t collisionMask_ = 0xffffffff;
+	CollisionAttribute collisionAttribute_ = CollisionAttribute::All;
+	CollisionMask collisionMask_ = CollisionMask::All;
 
 protected:
 	WorldTransform worldTransform;
 
 public:
+	Collider();
+	~Collider();
+
 	virtual void OnCollision(Collider* collider) {};
 	virtual Vector3 GetWorldPosition() { return worldTransform.GetWorldPosition(); };
 	virtual Vector3 GetRadius() { return worldTransform.scale_; };
 
-	uint32_t GetCollisionAttribute() { return collisionAttribute_; }
-	uint32_t GetCollisionMask() { return collisionMask_; }
-	void SetCollisionAttribute(uint32_t collisionAttribute) { collisionAttribute_ = collisionAttribute; }
-	void SetCollisionMask(uint32_t collisionMask) { collisionMask_ = collisionMask; }
+	CollisionAttribute GetCollisionAttribute() { return collisionAttribute_; }
+	CollisionMask GetCollisionMask() { return collisionMask_; }
+	void SetCollisionAttribute(CollisionAttribute collisionAttribute) { collisionAttribute_ = collisionAttribute; }
+	void SetCollisionMask(CollisionMask collisionMask) { collisionMask_ = collisionMask; }
 };

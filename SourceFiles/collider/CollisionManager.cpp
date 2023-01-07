@@ -1,47 +1,41 @@
 #include "CollisionManager.h"
-#include "CollisionConfig.h"
-#include "Player.h"
-#include "BlockManager.h"
-
+#include <string>
 using namespace std;
+
+std::list<Collider*> CollisionManager::colliders_;
 
 bool CollisionManager::CheckBoxCollisionPair(Collider* colliderA, Collider* colliderB)
 {
-	if (!(colliderA->GetCollisionAttribute() & colliderB->GetCollisionMask()) ||
-		!(colliderB->GetCollisionAttribute() & colliderA->GetCollisionMask()))
+	if (!((UINT)colliderA->GetCollisionAttribute() & (UINT)colliderB->GetCollisionMask()) ||
+		!((UINT)colliderB->GetCollisionAttribute() & (UINT)colliderA->GetCollisionMask()))
 	{
-		return 0;
+		return false;
 	}
 
 	Vector3 vecAB = colliderA->GetWorldPosition() - colliderB->GetWorldPosition();
 	Vector3 radAB = colliderA->GetRadius() + colliderB->GetRadius();
 	vecAB = vecAB.abs();
 
-	if (vecAB <= radAB) { return 1; }
-
-	return 0;
+	return vecAB <= radAB;
 }
 
 void CollisionManager::CheckAllCollisions()
 {
-	list<Collider*> colliders_;
-	colliders_.push_back(Player::GetInstance());
-	vector<Block> blocks = BlockManager::GetInstance()->GetBlocks();
-	for (Block& block : blocks) { colliders_.push_back(&block); }
-
 	list<Collider*>::iterator itrA = colliders_.begin();
-	Collider* colliderA = *itrA;
-	list<Collider*>::iterator itrB = itrA;
-	itrB++;
-
-	for (; itrB != colliders_.end(); ++itrB)
+	for (; itrA != colliders_.end(); ++itrA)
 	{
-		Collider* colliderB = *itrB;
-		if (CheckBoxCollisionPair(colliderA, colliderB))
+		Collider* colliderA = *itrA;
+		list<Collider*>::iterator itrB = itrA;
+		itrB++;
+
+		for (; itrB != colliders_.end(); ++itrB)
 		{
-			colliderA->OnCollision(colliderB);
-			colliderB->OnCollision(colliderA);
-			return;
+			Collider* colliderB = *itrB;
+			if (CheckBoxCollisionPair(colliderA, colliderB))
+			{
+				colliderA->OnCollision(colliderB);
+				colliderB->OnCollision(colliderA);
+			}
 		}
 	}
 }

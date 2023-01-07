@@ -180,7 +180,6 @@
     <ClInclude Include="SourceFiles\base\TextureManager.h" />
     <ClInclude Include="SourceFiles\base\WinApp.h" />
     <ClInclude Include="SourceFiles\collider\Collider.h" />
-    <ClInclude Include="SourceFiles\collider\CollisionConfig.h" />
     <ClInclude Include="SourceFiles\collider\CollisionManager.h" />
     <ClInclude Include="SourceFiles\input\Input.h" />
     <ClInclude Include="SourceFiles\math\MathUtility.h" />
@@ -206,6 +205,7 @@
     <ClCompile Include="SourceFiles\base\DirectXCommon.cpp" />
     <ClCompile Include="SourceFiles\base\TextureManager.cpp" />
     <ClCompile Include="SourceFiles\base\WinApp.cpp" />
+    <ClCompile Include="SourceFiles\collider\Collider.cpp" />
     <ClCompile Include="SourceFiles\collider\CollisionManager.cpp" />
     <ClCompile Include="SourceFiles\main.cpp" />
     <ClCompile Include="SourceFiles\math\Vector3.cpp" />

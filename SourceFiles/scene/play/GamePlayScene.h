@@ -11,7 +11,6 @@ class GamePlayScene : public BaseScene
 {
 private:
 	Model* model_;
-	CollisionManager collisionManager;
 	Player* player_ = Player::GetInstance();
 	DebugCamera* debugCamera_ = nullptr;
 	BlockManager* blockManager = BlockManager::GetInstance();

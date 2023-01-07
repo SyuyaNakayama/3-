@@ -1,6 +1,7 @@
 #include "GamePlayScene.h"
 #include "GameScene.h"
 #include "ImGuiManager.h"
+#include "TitleScene.h"
 
 void GamePlayScene::Initialize()
 {
@@ -23,10 +24,15 @@ void GamePlayScene::Update()
 	player_->Update();
 
 	// “–‚½‚è”»’è
-	collisionManager.CheckAllCollisions();
+	CollisionManager::CheckAllCollisions();
 
 	debugCamera_->Update();
 	//*viewProjection_ = debugCamera_->GetViewProjection();
+	if (input->TriggerKey(DIK_SPACE))
+	{
+		TitleScene* nextScene = new TitleScene();
+		gameScene->SetNextScene(nextScene);
+	}
 }
 
 void GamePlayScene::Draw()

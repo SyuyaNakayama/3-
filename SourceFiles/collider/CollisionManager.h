@@ -1,12 +1,15 @@
 #pragma once
-#include <list>
 #include "Collider.h"
-#include <memory>
+#include <list>
 
-class CollisionManager
+class CollisionManager final
 {
 private:
-	bool CheckBoxCollisionPair(Collider* colliderA, Collider* colliderB);
+	static std::list<Collider*> colliders_;
+
+	static bool CheckBoxCollisionPair(Collider* colliderA, Collider* colliderB);
 public:
-	void CheckAllCollisions();
+	static void PushCollider(Collider* collider) { colliders_.push_back(collider); }
+	static void PopCollider(Collider* collider) { colliders_.remove(collider); }
+	static void CheckAllCollisions();
 };
