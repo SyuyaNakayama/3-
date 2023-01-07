@@ -1,6 +1,7 @@
 #include "Player.h"
 #include "ImGuiManager.h"
 #include "CollisionManager.h"
+#include <imgui.h>
 
 void Player::Initialize()
 {
@@ -76,6 +77,7 @@ void Player::OnCollision(Collider* collider)
 		jump.StartJump(0.5f, blockTopPosition + epsilon + GetRadius().y);
 		return;
 	}
+
 	// ‚»‚êˆÈŠO‚È‚ç›‚Ë•Ô‚é
 	spdX = -spdX;
 }

@@ -35,6 +35,13 @@ void CollisionManager::CheckAllCollisions()
 			{
 				colliderA->OnCollision(colliderB);
 				colliderB->OnCollision(colliderA);
+
+				// ƒvƒŒƒCƒ„[‚ª‰½‚©‚É“–‚½‚Á‚½‚ç“–‚½‚è”»’èˆ—‚ð”²‚¯‚é
+				if (colliderA->GetCollisionAttribute() == CollisionAttribute::Player ||
+					colliderB->GetCollisionAttribute() == CollisionAttribute::Player)
+				{
+					return;
+				}
 			}
 		}
 	}
