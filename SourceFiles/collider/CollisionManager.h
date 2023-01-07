@@ -9,6 +9,7 @@ private:
 
 	static bool CheckBoxCollisionPair(Collider* colliderA, Collider* colliderB);
 public:
+	CollisionManager() = delete;
 	static void PushCollider(Collider* collider) { colliders_.push_back(collider); }
 	static void PopCollider(Collider* collider) { colliders_.remove(collider); }
 	static void CheckAllCollisions();

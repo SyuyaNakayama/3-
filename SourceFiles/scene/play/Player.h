@@ -14,11 +14,7 @@ private:
 	bool isFallCheck = false;
 
 	void Move();
-	Player() = default;
 public:
-	Player(const Player& obj) = delete;
-	static Player* GetInstance();
-
 	void Initialize();
 	void Update();
 	void Draw();

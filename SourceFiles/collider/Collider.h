@@ -4,16 +4,14 @@
 enum class CollisionAttribute
 {
 	Player = 0b1,
-	PlayerBullet = 0b1 << 1,
-	Enemy = 0b1 << 2,
-	EnemyBullet = 0b1 << 3,
+	Block = 0b1 << 1,
 	All = -1
 };
 
 enum class CollisionMask
 {
-	Player = ~((int)CollisionAttribute::Player | (int)CollisionAttribute::PlayerBullet),
-	Enemy = ~((int)CollisionAttribute::Enemy | (int)CollisionAttribute::EnemyBullet),
+	Player = ~(int)CollisionAttribute::Player,
+	Block = ~(int)CollisionAttribute::Block,
 	All = -1
 };
 

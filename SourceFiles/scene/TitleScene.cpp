@@ -18,8 +18,7 @@ void TitleScene::Update()
 {
 	if (input->TriggerKey(DIK_SPACE))
 	{
-		GamePlayScene* nextScene = new GamePlayScene;
-		gameScene->SetNextScene(nextScene);
+		gameScene->SetNextScene(Scene::Play);
 	}
 }
 

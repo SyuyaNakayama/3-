@@ -196,7 +196,9 @@
     <ClInclude Include="SourceFiles\scene\play\GamePlayScene.h" />
     <ClInclude Include="SourceFiles\scene\play\Jump.h" />
     <ClInclude Include="SourceFiles\scene\play\Player.h" />
+    <ClInclude Include="SourceFiles\scene\SceneFactory.h" />
     <ClInclude Include="SourceFiles\scene\TitleScene.h" />
+    <ClInclude Include="SourceFiles\SharePtr.h" />
     <ClInclude Include="SourceFiles\timer\Timer.h" />
   </ItemGroup>
   <ItemGroup>
@@ -217,7 +219,9 @@
     <ClCompile Include="SourceFiles\scene\play\GamePlayScene.cpp" />
     <ClCompile Include="SourceFiles\scene\play\Jump.cpp" />
     <ClCompile Include="SourceFiles\scene\play\Player.cpp" />
+    <ClCompile Include="SourceFiles\scene\SceneFactory.cpp" />
     <ClCompile Include="SourceFiles\scene\TitleScene.cpp" />
+    <ClCompile Include="SourceFiles\SharePtr.cpp" />
     <ClCompile Include="SourceFiles\timer\Timer.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -6,7 +6,7 @@
 #include "Sprite.h"
 #include "WinApp.h"
 
-void GameScene::Initialize() 
+void GameScene::Initialize()
 {
 	// 入力の初期化
 	input->Initialize();
@@ -33,9 +33,7 @@ void GameScene::Initialize()
 	viewProjection->Initialize();
 
 	// シーンの生成
-	//scene_ = new GamePlayScene;
-	scene_ = new GamePlayScene;
-	scene_->Initialize();
+	SetNextScene(Scene::Play, false);
 	imguiManager->Initialize();
 	fadeManager_.Initialize();
 }
@@ -44,14 +42,14 @@ void GameScene::Update()
 {
 	// 入力関連の毎フレーム処理
 	input->Update();
-	
+
 	imguiManager->Begin();
 	// ゲームシーンの毎フレーム処理
 	fadeManager_.Update();
-	
+
 	if (fadeManager_.IsChange() || !scene_)
 	{
-		if (nextScene_)
+		if (nextScene_ != Scene::Null)
 		{
 			if (scene_)
 			{
@@ -59,8 +57,9 @@ void GameScene::Update()
 				delete scene_;
 			}
 
-			scene_ = nextScene_;
-			nextScene_ = nullptr;
+			scene_ = sceneFactory_->CreateScene(nextScene_);
+			nextScene_ = Scene::Null;
+			scene_->SetGameScene(this);
 			scene_->Initialize();
 		}
 	}
@@ -97,7 +96,7 @@ GameScene* GameScene::GetInstance()
 	return &instance;
 }
 
-void GameScene::SetNextScene(BaseScene* nextScene, bool isUseFade)
+void GameScene::SetNextScene(Scene nextScene, bool isUseFade)
 {
 	nextScene_ = nextScene;
 	if (isUseFade) { fadeManager_.FadeScene(); }

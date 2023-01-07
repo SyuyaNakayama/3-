@@ -23,4 +23,5 @@ public:
 	virtual void Finalize() = 0;
 	virtual void Update() = 0;
 	virtual void Draw() = 0;
+	void SetGameScene(GameScene* gameScene_) { gameScene = gameScene_; }
 };

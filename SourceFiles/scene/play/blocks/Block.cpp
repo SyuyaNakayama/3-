@@ -55,6 +55,8 @@ void Block::Initialize()
 {
 	worldTransform.Initialize();
 	model = Model::Create();
+	SetCollisionAttribute(CollisionAttribute::Block);
+	SetCollisionMask(CollisionMask::Block);
 }
 
 void Block::Update()

@@ -2,6 +2,7 @@
 #include "GameScene.h"
 #include "ImGuiManager.h"
 #include "TitleScene.h"
+#include "CollisionManager.h"
 
 void GamePlayScene::Initialize()
 {
@@ -9,19 +10,17 @@ void GamePlayScene::Initialize()
 
 	viewProjection->eye.y = 10.0f;
 	viewProjection->target.y = 10.0f;
-
-	model_ = Model::Create();
-
+	
 	blockManager->Initialize(stage);
 
 	debugCamera_ = new DebugCamera(WinApp::kWindowWidth, WinApp::kWindowHeight);
-	player_->Initialize();
+	player_.Initialize();
 }
 
 void GamePlayScene::Update()
 {
 	blockManager->Update();
-	player_->Update();
+	player_.Update();
 
 	// 当たり判定
 	CollisionManager::CheckAllCollisions();
@@ -30,8 +29,7 @@ void GamePlayScene::Update()
 	//*viewProjection_ = debugCamera_->GetViewProjection();
 	if (input->TriggerKey(DIK_SPACE))
 	{
-		TitleScene* nextScene = new TitleScene();
-		gameScene->SetNextScene(nextScene);
+		gameScene->SetNextScene(Scene::Title);
 	}
 }
 
@@ -41,7 +39,7 @@ void GamePlayScene::Draw()
 	Model::PreDraw(cmdList);
 
 	blockManager->Draw();
-	player_->Draw();
+	player_.Draw();
 
 	// 3Dオブジェクト描画後処理
 	Model::PostDraw();
@@ -49,5 +47,4 @@ void GamePlayScene::Draw()
 
 void GamePlayScene::Finalize()
 {
-	delete model_;
 }

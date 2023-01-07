@@ -10,6 +10,7 @@
 #include "AxisIndicator.h"
 #include "PrimitiveDrawer.h"
 #include "FadeManager.h"
+#include "SceneFactory.h"
 
 /// <summary>
 /// ゲームシーン
@@ -34,14 +35,16 @@ public: // メンバ関数
 	/// </summary>
 	void Draw();
 
-	void SetNextScene(BaseScene* nextScene, bool isUseFade = true);
+	void SetNextScene(Scene nextScene, bool isUseFade = true);
 	static GameScene* GetInstance();
 	GameScene(const GameScene& obj) = delete;
 private: // メンバ変数
 	GameScene() = default;
 
 	FadeManager fadeManager_;
-	BaseScene* scene_ = nullptr ,* nextScene_ = nullptr;
+	BaseScene* scene_ = nullptr;
+	Scene nextScene_ = Scene::Null;
+	SceneFactory* sceneFactory_ = SceneFactory::GetInstance();
 	ImGuiManager* imguiManager = ImGuiManager::GetInstance();
 	Input* input = Input::GetInstance();
 	Audio* audio = Audio::GetInstance();

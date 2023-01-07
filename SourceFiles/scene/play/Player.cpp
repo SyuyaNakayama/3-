@@ -2,12 +2,6 @@
 #include "ImGuiManager.h"
 #include "CollisionManager.h"
 
-Player* Player::GetInstance()
-{
-	static Player instance;
-	return &instance;
-}
-
 void Player::Initialize()
 {
 	model_ = Model::Create();
@@ -15,6 +9,8 @@ void Player::Initialize()
 	worldTransform.scale_.x = 0.9999f;
 	worldTransform.translation_ = { 20.0f ,2.0f + epsilon,0 };
 	jump.SetGravity(0.08f);
+	SetCollisionAttribute(CollisionAttribute::Player);
+	SetCollisionMask(CollisionMask::Player);
 }
 
 void Player::Move()
@@ -30,8 +26,7 @@ void Player::Update()
 		worldTransform.translation_.y -= epsilon;
 		worldTransform.Update();
 		isFallCheck = true;
-		CollisionManager collisionManager;
-		collisionManager.CheckAllCollisions();
+		CollisionManager::CheckAllCollisions();
 		worldTransform.translation_.y += epsilon;
 
 		// ‰º‚É’n–Ê‚ª‚È‚©‚Á‚½‚ç—Ž‰º
