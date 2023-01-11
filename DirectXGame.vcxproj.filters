@@ -237,11 +237,11 @@
     <ClInclude Include="SourceFiles\scene\play\Jump.h">
       <Filter>ヘッダー ファイル\objects</Filter>
     </ClInclude>
-    <ClInclude Include="SourceFiles\SharePtr.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="SourceFiles\scene\SceneFactory.h">
       <Filter>ヘッダー ファイル\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceFiles\SharePtr.h">
+      <Filter>ヘッダー ファイル\objects</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -302,11 +302,11 @@
     <ClCompile Include="SourceFiles\collider\Collider.cpp">
       <Filter>ソース ファイル\collider</Filter>
     </ClCompile>
-    <ClCompile Include="SourceFiles\SharePtr.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="SourceFiles\scene\SceneFactory.cpp">
       <Filter>ソース ファイル\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceFiles\SharePtr.cpp">
+      <Filter>ソース ファイル\objects</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

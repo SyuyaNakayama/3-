@@ -5,7 +5,6 @@
 
 void TitleScene::Initialize()
 {
-	sprite = Sprite::Create(TextureManager::Load("Unnamed (13).png"), {});
 	gameScene = GameScene::GetInstance();
 }
 
@@ -25,7 +24,7 @@ void TitleScene::Update()
 void TitleScene::Draw()
 {
 	Sprite::PreDraw(cmdList);
-	sprite->Draw();
+	//sprite->Draw();
 	Sprite::PostDraw();
 
 	DirectXCommon::GetInstance()->ClearDepthBuffer();

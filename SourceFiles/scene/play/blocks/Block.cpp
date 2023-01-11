@@ -4,7 +4,26 @@
 #include "ImGuiManager.h"
 #include "WinApp.h"
 
-void Block::DragBox()
+void BaseBlock::Initialize()
+{
+	model = Model::Create();
+	worldTransform.Initialize();
+	SetCollisionAttribute(CollisionAttribute::Block);
+	SetCollisionMask(CollisionMask::Block);
+}
+
+void BaseBlock::Draw()
+{
+	model->Draw(worldTransform, *ViewProjection::GetInstance(), textureHandle);
+}
+
+void BaseBlock::SetTexture(const std::string& fileName)
+{
+	textureHandle = TextureManager::Load("blockTextures/" + fileName);
+}
+
+
+void MoveBlock::DragBox()
 {
 	// インスタンスの取得
 	ViewProjection* viewProjection = ViewProjection::GetInstance();
@@ -51,21 +70,49 @@ void Block::DragBox()
 	if (!input->IsPressMouse(0)) { isDrag = false; }
 }
 
-void Block::Initialize()
+void MoveBlock::Initialize()
 {
-	worldTransform.Initialize();
-	model = Model::Create();
-	SetCollisionAttribute(CollisionAttribute::Block);
-	SetCollisionMask(CollisionMask::Block);
+	BaseBlock::Initialize();
+	SetTexture("moveBlock.png");
 }
 
-void Block::Update()
+void MoveBlock::Update()
 {
 	DragBox();
 	worldTransform.Update();
 }
 
-void Block::Draw()
+
+void CopyBlock::Initialize()
 {
-	model->Draw(worldTransform, *ViewProjection::GetInstance());
+	BaseBlock::Initialize();
+	//SetTexture("copyBlock.png");
+}
+
+void CopyBlock::Update()
+{
+	worldTransform.Update();
+}
+
+
+void DestroyBlock::Destroy()
+{
+	clickNum += Input::GetInstance()->IsTriggerMouse(0);
+	if (clickNum >= DESTROY_NUM)
+	{
+		delete this; 
+	}
+}
+
+void DestroyBlock::Initialize()
+{
+	BaseBlock::Initialize();
+	//SetTexture("destroyBlock.png");
+	SetTexture("moveBlock.png");
+}
+
+void DestroyBlock::Update()
+{
+	Destroy();
+	worldTransform.Update();
 }

@@ -1,15 +1,17 @@
 #pragma once
 #include "Block.h"
-#include <vector>
+#include <list>
 #include <memory>
 
 class BlockManager
 {
 private:
-	std::vector<std::unique_ptr<Block>> blocks;
+	enum class BlockType { Copy, Move, Destroy };
+
+	std::list<std::unique_ptr<BaseBlock>> blocks;
 
 	BlockManager() = default;
-	void CreateBlock(Vector3 pos, Vector3 scale);
+	void CreateBlock(Vector3 pos, Vector3 scale, BlockType type);
 public:
 	BlockManager(const BlockManager& obj) = delete;
 	static BlockManager* GetInstance();
