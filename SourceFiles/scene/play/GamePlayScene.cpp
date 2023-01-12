@@ -15,10 +15,13 @@ void GamePlayScene::Initialize()
 
 	debugCamera_ = new DebugCamera(WinApp::kWindowWidth, WinApp::kWindowHeight);
 	player_.Initialize();
+
+	mouse->CreateViewPortMatrix();
 }
 
 void GamePlayScene::Update()
 {
+	mouse->Update();
 	blockManager->Update();
 	player_.Update();
 

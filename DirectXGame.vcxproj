@@ -195,6 +195,7 @@
     <ClInclude Include="SourceFiles\scene\play\blocks\BlockManager.h" />
     <ClInclude Include="SourceFiles\scene\play\GamePlayScene.h" />
     <ClInclude Include="SourceFiles\scene\play\Jump.h" />
+    <ClInclude Include="SourceFiles\scene\play\Mouse.h" />
     <ClInclude Include="SourceFiles\scene\play\Player.h" />
     <ClInclude Include="SourceFiles\scene\SceneFactory.h" />
     <ClInclude Include="SourceFiles\scene\TitleScene.h" />
@@ -218,6 +219,7 @@
     <ClCompile Include="SourceFiles\scene\play\blocks\BlockManager.cpp" />
     <ClCompile Include="SourceFiles\scene\play\GamePlayScene.cpp" />
     <ClCompile Include="SourceFiles\scene\play\Jump.cpp" />
+    <ClCompile Include="SourceFiles\scene\play\Mouse.cpp" />
     <ClCompile Include="SourceFiles\scene\play\Player.cpp" />
     <ClCompile Include="SourceFiles\scene\SceneFactory.cpp" />
     <ClCompile Include="SourceFiles\scene\TitleScene.cpp" />

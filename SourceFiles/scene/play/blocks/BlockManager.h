@@ -19,4 +19,5 @@ public:
 	void Initialize(UINT16 stage);
 	void Update();
 	void Draw();
+	const std::list<std::unique_ptr<BaseBlock>>& GetBlocks() { return blocks; }
 };

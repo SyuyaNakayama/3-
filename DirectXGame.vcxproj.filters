@@ -243,6 +243,9 @@
     <ClInclude Include="SourceFiles\SharePtr.h">
       <Filter>ヘッダー ファイル\objects</Filter>
     </ClInclude>
+    <ClInclude Include="SourceFiles\scene\play\Mouse.h">
+      <Filter>ヘッダー ファイル\objects</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SourceFiles\base\TextureManager.cpp">
@@ -306,6 +309,9 @@
       <Filter>ソース ファイル\scene</Filter>
     </ClCompile>
     <ClCompile Include="SourceFiles\SharePtr.cpp">
+      <Filter>ソース ファイル\objects</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceFiles\scene\play\Mouse.cpp">
       <Filter>ソース ファイル\objects</Filter>
     </ClCompile>
   </ItemGroup>
