@@ -1,5 +1,6 @@
 #include "Mouse.h"
 #include "WinApp.h"
+#include "ImGuiManager.h"
 using namespace MathUtility;
 
 Mouse* Mouse::GetInstance()
@@ -10,20 +11,28 @@ Mouse* Mouse::GetInstance()
 
 void Mouse::Update()
 {
+	ImGuiManager* ImGuiManager = ImGuiManager::GetInstance();
 	mousePos = input->GetMousePosition();
-	
+
 	// スクリーン座標
 	posNear = { mousePos.x,mousePos.y,0 };
 	Vector3 posFar = { mousePos.x,mousePos.y,1 };
-	
+	Vector3 posO = { mousePos.x,mousePos.y,50.0f / viewProjection->farZ };
+
 	// ビュー、プロジェクション、ビューポート行列の掛け算
 	mat = viewProjection->matView * viewProjection->matProjection * matViewPort;
 	// スクリーン座標をワールド座標に変換
 	posNear = Vector3TransformCoord(posNear, Matrix4Inverse(mat));
 	posFar = Vector3TransformCoord(posFar, Matrix4Inverse(mat));
+
 	// マウスレイの方向
 	mouseDirection = posFar - posNear;
 	mouseDirection = Vector3Normalize(mouseDirection);
+
+	posO = mouseDirection * 50.0f;
+	ImGuiManager->PrintVector("posNear", posNear);
+	ImGuiManager->PrintVector("posFar", posFar);
+	ImGuiManager->PrintVector("posO", posO);
 }
 
 void Mouse::CreateViewPortMatrix()

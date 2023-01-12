@@ -1,17 +1,22 @@
 #pragma once
 #include "Block.h"
 #include <list>
-#include <memory>
+#include <array>
 
 class BlockManager
 {
 private:
-	enum class BlockType { Copy, Move, Destroy };
+	enum class BlockType { None, Normal, Move, Copy, Destroy, Ladder, Goal };
+	static const UINT16 STAGE_SIZE = 40;
 
-	std::list<std::unique_ptr<BaseBlock>> blocks;
+	std::list<BaseBlock*> blocks;
+	std::array<std::array<BlockType, STAGE_SIZE>, STAGE_SIZE> map{};
 
+	void LoadMap(const std::string& fileName);
 	BlockManager() = default;
 	void CreateBlock(Vector3 pos, Vector3 scale, BlockType type);
+	void CreateBlocks();
+	BlockType IntToBlockType(int num);
 public:
 	BlockManager(const BlockManager& obj) = delete;
 	static BlockManager* GetInstance();
@@ -19,5 +24,5 @@ public:
 	void Initialize(UINT16 stage);
 	void Update();
 	void Draw();
-	const std::list<std::unique_ptr<BaseBlock>>& GetBlocks() { return blocks; }
+	std::list<BaseBlock*>& GetBlocks() { return blocks; }
 };

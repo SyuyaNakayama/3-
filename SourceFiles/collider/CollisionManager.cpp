@@ -1,5 +1,6 @@
 #include "CollisionManager.h"
 #include <string>
+#include <algorithm>
 using namespace std;
 
 std::list<Collider*> CollisionManager::colliders_;
@@ -44,5 +45,6 @@ void CollisionManager::CheckAllCollisions()
 				}
 			}
 		}
+		if (colliderA->GetCollisionAttribute() == CollisionAttribute::Player) { return; }
 	}
 }

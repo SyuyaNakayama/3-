@@ -74,7 +74,7 @@ void MoveBlock::Update()
 void CopyBlock::Initialize()
 {
 	BaseBlock::Initialize();
-	//SetTexture("copyBlock.png");
+	SetTexture("copyBlock.png");
 }
 
 void CopyBlock::Update()
@@ -88,19 +88,29 @@ void DestroyBlock::Destroy()
 	clickNum += Input::GetInstance()->IsTriggerMouse(0);
 	if (clickNum >= DESTROY_NUM)
 	{
-		
+		std::list<BaseBlock*>& blocks = BlockManager::GetInstance()->GetBlocks();
+		auto itr = blocks.begin();
+		for (; itr != blocks.end(); itr++)
+		{
+			if (*itr == this)
+			{
+				//blocks.erase(itr);
+				blocks.emplace_front(this);
+				clickNum = 0;
+				return;
+			}
+		}
 	}
 }
 
 void DestroyBlock::Initialize()
 {
 	BaseBlock::Initialize();
-	//SetTexture("destroyBlock.png");
-	SetTexture("moveBlock.png");
+	SetTexture("destroyBlock.png");
 }
 
 void DestroyBlock::Update()
 {
-	//Destroy();
 	worldTransform.Update();
+	Destroy();
 }
