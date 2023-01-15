@@ -8,9 +8,10 @@ void GamePlayScene::Initialize()
 {
 	gameScene = GameScene::GetInstance();
 
-	viewProjection->eye.y = 10.0f;
-	viewProjection->target.y = 10.0f;
-	
+	viewProjection->eye = {40,-40.0f,-1200};
+	viewProjection->target = {40,-40.0f,0};
+	viewProjection->farZ = 1500.0f;
+
 	blockManager->Initialize(stage);
 
 	debugCamera_ = new DebugCamera(WinApp::kWindowWidth, WinApp::kWindowHeight);
@@ -29,7 +30,7 @@ void GamePlayScene::Update()
 	CollisionManager::CheckAllCollisions();
 
 	debugCamera_->Update();
-	*viewProjection = debugCamera_->GetViewProjection();
+	//*viewProjection = debugCamera_->GetViewProjection();
 	if (input->TriggerKey(DIK_SPACE))
 	{
 		gameScene->SetNextScene(Scene::Title);

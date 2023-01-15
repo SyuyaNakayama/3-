@@ -8,7 +8,7 @@ void Player::Initialize()
 	model_ = Model::Create();
 	worldTransform.Initialize();
 	worldTransform.scale_.x = 0.9999f;
-	worldTransform.translation_ = { 20.0f ,2.0f + epsilon,0 };
+	worldTransform.translation_ = { 76.0f ,-76.0f + epsilon,0 };
 	jump.SetGravity(0.08f);
 	SetCollisionAttribute(CollisionAttribute::Player);
 	SetCollisionMask(CollisionMask::Player);
@@ -44,6 +44,9 @@ void Player::Update()
 		jump.UpdateJump(worldTransform.translation_.y);
 	}
 	worldTransform.Update();
+
+	ImGuiManager::GetInstance()->SliderVector("cameraPos", ViewProjection::GetInstance()->eye, -100, 100);
+	ImGuiManager::GetInstance()->SliderVector("cameraTargetPos", ViewProjection::GetInstance()->target, -100, 100);
 }
 
 void Player::Draw()
@@ -51,7 +54,7 @@ void Player::Draw()
 	model_->Draw(worldTransform, *ViewProjection::GetInstance());
 }
 
-void Player::OnCollision(Collider* collider)
+void Player::OnCollision(BoxCollider* boxCollider)
 {
 	if (isFallCheck)
 	{
@@ -60,7 +63,7 @@ void Player::OnCollision(Collider* collider)
 		return;
 	}
 
-	float blockTopPosition = collider->GetWorldPosition().y + collider->GetRadius().y;
+	float blockTopPosition = boxCollider->GetWorldPosition().y + boxCollider->GetRadius().y;
 	if (jump.IsFall())
 	{
 		// —‰º’†‚É’n–Ê‚É“–‚½‚Á‚½‚ç—‰ºI—¹

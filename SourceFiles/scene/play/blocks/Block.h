@@ -2,7 +2,7 @@
 #include "Model.h"
 #include "Collider.h"
 
-class BaseBlock : public Collider
+class BaseBlock : public BoxCollider
 {
 private:
 	Model* model;
@@ -13,12 +13,11 @@ public:
 	virtual void Update() = 0;
 	virtual void Draw();
 	void SetTexture(const std::string& fileName);
-	void SetScale(Vector3 scale) { worldTransform.scale_ = scale; }
 	void SetTranslation(Vector3 translation) { worldTransform.translation_ = translation; }
 	~BaseBlock() { delete model; }
 };
 
-class MoveBlock : public BaseBlock
+class MoveBlock : public BaseBlock, TriangleCollider
 {
 private:
 	bool isDrag = false;
@@ -27,6 +26,7 @@ private:
 public:
 	void Initialize() override;
 	void Update();
+	void OnCollision(RayCollider* Collider) override;
 };
 
 class CopyBlock : public BaseBlock

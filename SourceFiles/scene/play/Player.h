@@ -4,7 +4,7 @@
 #include "input.h"
 #include "Jump.h"
 
-class Player : public Collider
+class Player : public BoxCollider
 {
 private:
 	Model* model_ = nullptr;
@@ -20,5 +20,5 @@ public:
 	void Update();
 	void Draw();
 
-	void OnCollision(Collider* collider);
+	void OnCollision(BoxCollider* boxCollider);
 };

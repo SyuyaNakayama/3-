@@ -36,9 +36,9 @@ void MoveBlock::DragBox()
 	Matrix4 mat = mouse->GetMatrix();
 	Vector2 mousePos = mouse->GetMousePos();
 	// blockの座標を取得
-	Vector3 blockPos = worldTransform.GetWorldPosition();
+	Vector3 blockPos = BoxCollider::worldTransform.GetWorldPosition();
 	// blockの2D座標、半径を計算
-	Vector3 block2DRad = Vector3TransformCoord(blockPos - worldTransform.scale_, mat);
+	Vector3 block2DRad = Vector3TransformCoord(blockPos - BoxCollider::worldTransform.scale_, mat);
 	Vector3 block2DPos = Vector3TransformCoord(blockPos, mat);
 	// マウス座標がblockの2D座標より内側にあったら
 	bool flag = isDrag || (fabs(block2DPos.x - mousePos.x) <= fabs(block2DPos.x - block2DRad.x) &&
@@ -51,8 +51,8 @@ void MoveBlock::DragBox()
 
 	// カメラからblockの距離
 	float distanceObject = Vector3Length(viewProjection->eye - blockPos);
-	worldTransform.translation_ = mouse->GetNearPos() + mouse->GetMouseDirection() * distanceObject;
-	worldTransform.translation_.z = 0;
+	BoxCollider::worldTransform.translation_ = mouse->GetNearPos() + mouse->GetMouseDirection() * distanceObject;
+	BoxCollider::worldTransform.translation_.z = 0;
 
 	// クリックが離されたとき
 	if (!input->IsPressMouse(0)) { isDrag = false; }
@@ -62,12 +62,23 @@ void MoveBlock::Initialize()
 {
 	BaseBlock::Initialize();
 	SetTexture("moveBlock.png");
+	normal = { 0,0,-1 };
+	vertices[0]= { -1,-1,-1 };
+	vertices[1] = { -1,1,-1 };
+	vertices[2] = { 1,-1,-1 };
 }
 
 void MoveBlock::Update()
 {
 	DragBox();
-	worldTransform.Update();
+	BoxCollider::worldTransform.Update();
+}
+
+#include <imgui.h>
+
+void MoveBlock::OnCollision(RayCollider* Collider)
+{
+	ImGui::Text("Hit!!");
 }
 
 

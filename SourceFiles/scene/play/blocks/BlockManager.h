@@ -14,7 +14,7 @@ private:
 
 	void LoadMap(const std::string& fileName);
 	BlockManager() = default;
-	void CreateBlock(Vector3 pos, Vector3 scale, BlockType type);
+	void CreateBlock(Vector3 pos, BlockType type);
 	void CreateBlocks();
 	BlockType IntToBlockType(int num);
 public:

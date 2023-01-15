@@ -3,8 +3,9 @@
 #include "Matrix4.h"
 #include "ViewProjection.h"
 #include "MathUtility.h"
+#include "Collider.h"
 
-class Mouse final
+class Mouse final : public RayCollider
 {
 private:
 	Input* input = Input::GetInstance();
@@ -26,4 +27,5 @@ public:
 	Vector3 GetMouseDirection() { return mouseDirection; }
 	Matrix4 GetMatrix() { return mat; }
 	Vector3 GetNearPos() { return posNear; }
+	Vector3 GetWorldPosition() { return GetNearPos(); }
 };
