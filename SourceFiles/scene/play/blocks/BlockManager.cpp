@@ -80,8 +80,8 @@ void BlockManager::CreateBlock(Vector3 pos, BlockType type)
 		break;
 	}
 	assert(block);
-	block->Initialize();
 	block->SetTranslation(pos);
+	block->Initialize();
 	blocks.push_back(block);
 }
 

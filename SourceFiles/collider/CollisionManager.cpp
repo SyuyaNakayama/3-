@@ -1,12 +1,11 @@
 #include "CollisionManager.h"
-#include <string>
-#include <algorithm>
+#include <cassert>
 using namespace std;
 
 std::list<BoxCollider*> CollisionManager::boxColliders_;
 std::list<SphereCollider*> CollisionManager::sphereColliders_;
 std::list<PlaneCollider*> CollisionManager::planeColliders_;
-std::list<TriangleCollider*> CollisionManager::triangleColliders_;
+std::list<PolygonCollider*> CollisionManager::triangleColliders_;
 std::list<RayCollider*> CollisionManager::rayColliders_;
 
 bool CollisionManager::CheckCollisionFiltering(BaseCollider* colliderA, BaseCollider* colliderB)
@@ -60,24 +59,26 @@ bool CollisionManager::CheckCollisionRayPlane(RayCollider* colliderA, PlaneColli
 	return true;
 }
 
-bool CollisionManager::CheckCollisionRayTriangle(RayCollider* colliderA, TriangleCollider* colliderB, float* distance, Vector3* inter)
+bool CollisionManager::CheckCollisionRayTriangle(RayCollider* colliderA, PolygonCollider* colliderB, float* distance, Vector3* inter)
 {
 	// 三角形が乗っている平面を算出
-	Plane plane;
 	Vector3 interPlane;
-	plane.normal = colliderB->GetNormal();
-	plane.distance = colliderB->GetNormal().dot(colliderB->GetVertices()[0]);
+	colliderB->ComputeDistance();
 	// レイと平面が当たっていなければ当っていない
 	if (!CheckCollisionRayPlane(colliderA, colliderB, distance, &interPlane)) { return false; }
 	// レイと平面が当たっていたので、距離と座標が書き込まれた
 	// レイと平面の交点が三角形の内側にあるか判定
 	const float epsilon = 1.0e-5f; // 誤差吸収用の微小な値
 
-	for (size_t i = 0; i < 3; i++)
+	size_t vertexSize = colliderB->GetVertices().size();
+	// 頂点数が2つ以下ならエラー
+	assert(vertexSize > 2);
+
+	for (size_t i = 0; i < vertexSize; i++)
 	{
 		// 辺pi_p(i+1)について
 		Vector3 pt_px = colliderB->GetVertices()[i] - interPlane;
-		Vector3 px_py = colliderB->GetVertices()[(i + 1) % 3] - colliderB->GetVertices()[i];
+		Vector3 px_py = colliderB->GetVertices()[(i + 1) % vertexSize] - colliderB->GetVertices()[i];
 		Vector3 m = pt_px.cross(px_py);
 		// 辺の外側であれば当たっていないので判定を打ち切る
 		if (m.dot(colliderB->GetNormal()) < -epsilon) { return false; }
@@ -125,10 +126,10 @@ void CollisionManager::CheckCollisions(std::list<SphereCollider*>& sphereCollide
 	}
 }
 
-void CollisionManager::CheckCollisions(std::list<RayCollider*> rayColliders, std::list<TriangleCollider*> triangleColliders)
+void CollisionManager::CheckCollisions(std::list<RayCollider*> rayColliders, std::list<PolygonCollider*> triangleColliders)
 {
 	for (RayCollider* rayCollider : rayColliders) {
-		for (TriangleCollider* triangleCollider : triangleColliders)
+		for (PolygonCollider* triangleCollider : triangleColliders)
 		{
 			if (!CheckCollisionRayTriangle(rayCollider, triangleCollider)) { continue; }
 

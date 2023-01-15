@@ -1,6 +1,6 @@
 #pragma once
 #include "WorldTransform.h"
-#include <array>
+#include <vector>
 
 enum class CollisionAttribute
 {
@@ -19,7 +19,7 @@ enum class CollisionMask
 class BoxCollider;
 class SphereCollider;
 class PlaneCollider;
-class TriangleCollider;
+class PolygonCollider;
 class RayCollider;
 
 class BaseCollider
@@ -37,7 +37,7 @@ public:
 	virtual void OnCollision(BoxCollider* boxCollider) {}
 	virtual void OnCollision(SphereCollider* sphereCollider) {}
 	virtual void OnCollision(PlaneCollider* boxCollider) {}
-	virtual void OnCollision(TriangleCollider* sphereCollider) {}
+	virtual void OnCollision(PolygonCollider* sphereCollider) {}
 	virtual void OnCollision(RayCollider* sphereCollider) {}
 	virtual Vector3 GetWorldPosition() = 0;
 
@@ -71,7 +71,7 @@ class PlaneCollider : public BaseCollider
 {
 protected:
 	Vector3 normal{};
-	float distance;
+	float distance = 0;
 
 public:
 	PlaneCollider();
@@ -82,19 +82,20 @@ public:
 	virtual float GetDistance() { return distance; }
 };
 
-class TriangleCollider : public PlaneCollider
+class PolygonCollider : public PlaneCollider
 {
 protected:
-	Vector3 normal{};
-	std::array<Vector3, 3> vertices;
+	std::vector<Vector3> vertices;
 
 public:
-	TriangleCollider();
-	~TriangleCollider();
+	PolygonCollider();
+	~PolygonCollider();
 
+	void ComputeDistance() { distance = normal.dot(vertices[0]); }
 	virtual Vector3 GetWorldPosition() { return worldTransform.GetWorldPosition(); }
 	virtual Vector3 GetNormal() { return normal; }
-	virtual std::array<Vector3, 3> GetVertices() { return vertices; }
+	virtual void SetVertices();
+	virtual std::vector<Vector3> GetVertices() { return vertices; }
 };
 
 class RayCollider : public BaseCollider

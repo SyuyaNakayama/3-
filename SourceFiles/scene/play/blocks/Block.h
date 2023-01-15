@@ -17,7 +17,7 @@ public:
 	~BaseBlock() { delete model; }
 };
 
-class MoveBlock : public BaseBlock, TriangleCollider
+class MoveBlock : public BaseBlock, PolygonCollider
 {
 private:
 	bool isDrag = false;

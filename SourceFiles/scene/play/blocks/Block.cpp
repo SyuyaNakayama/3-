@@ -63,9 +63,8 @@ void MoveBlock::Initialize()
 	BaseBlock::Initialize();
 	SetTexture("moveBlock.png");
 	normal = { 0,0,-1 };
-	vertices[0]= { -1,-1,-1 };
-	vertices[1] = { -1,1,-1 };
-	vertices[2] = { 1,-1,-1 };
+	PolygonCollider::worldTransform = BoxCollider::worldTransform;
+	SetVertices();
 }
 
 void MoveBlock::Update()
