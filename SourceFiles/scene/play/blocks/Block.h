@@ -1,6 +1,7 @@
 #pragma once
 #include "Model.h"
 #include "Collider.h"
+#include "Input.h"
 
 class BaseBlock
 {
@@ -19,6 +20,9 @@ public:
 
 class BaseBlockCollider : public virtual BaseBlock, public BoxCollider
 {
+protected:
+	Input* input = Input::GetInstance();
+
 public:
 	virtual void Initialize();
 	~BaseBlockCollider() = default;
@@ -71,4 +75,13 @@ private:
 public:
 	void Initialize();
 	void Update();
+};
+
+class StagePlane : public PlaneCollider
+{
+	StagePlane() = default;
+public:
+	static StagePlane* GetInstance();
+	void Initialize();
+	void OnCollision(RayCollider* Collider);
 };

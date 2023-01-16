@@ -8,8 +8,8 @@ void GamePlayScene::Initialize()
 {
 	gameScene = GameScene::GetInstance();
 
-	viewProjection->eye = {70,-40.0f,-1200};
-	viewProjection->target = {70,-40.0f,0};
+	viewProjection->eye = { 70,-40.0f,-1200 };
+	viewProjection->target = { 70,-40.0f,0 };
 	viewProjection->farZ = 1500.0f;
 
 	blockManager->Initialize(stage);
@@ -17,7 +17,7 @@ void GamePlayScene::Initialize()
 	debugCamera_ = new DebugCamera(WinApp::kWindowWidth, WinApp::kWindowHeight);
 	player_.Initialize();
 
-	mouse->CreateViewPortMatrix();
+	mouse->Initialize();
 }
 
 void GamePlayScene::Update()

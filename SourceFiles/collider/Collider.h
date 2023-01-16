@@ -6,13 +6,17 @@ enum class CollisionAttribute
 {
 	Player = 0b1,
 	Block = 0b1 << 1,
+	MouseRay = 0b1 << 2,
+	StagePlane = 0b1 << 3,
 	All = -1
 };
 
 enum class CollisionMask
 {
-	Player = ~(int)CollisionAttribute::Player,
-	Block = ~(int)CollisionAttribute::Block,
+	Player = (int)CollisionAttribute::Block,
+	Block = (int)CollisionAttribute::Player,
+	MouseRay = (int)CollisionAttribute::StagePlane,
+	StagePlane = (int)CollisionAttribute::MouseRay,
 	All = -1
 };
 
@@ -71,13 +75,16 @@ class PlaneCollider : public virtual BaseCollider
 protected:
 	Vector3 normal{};
 	float distance = 0;
+	Vector3 inter;
 
 public:
 	PlaneCollider();
 	~PlaneCollider();
 
+	virtual void SetInter(const Vector3& inter_) { inter = inter_; }
 	virtual Vector3 GetWorldPosition() { return worldTransform.GetWorldPosition(); }
 	virtual Vector3 GetNormal() { return normal; }
+	virtual Vector3* GetInter() { return &inter; }
 	virtual float GetDistance() { return distance; }
 };
 

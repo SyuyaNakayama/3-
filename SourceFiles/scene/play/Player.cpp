@@ -27,7 +27,7 @@ void Player::Update()
 		worldTransform.translation_.y -= epsilon;
 		worldTransform.Update();
 		isFallCheck = true;
-		CollisionManager::CheckAllCollisions();
+		CollisionManager::CheckBoxCollisions();
 		worldTransform.translation_.y += epsilon;
 
 		// ‰º‚É’n–Ê‚ª‚È‚©‚Á‚½‚ç—Ž‰º
@@ -44,9 +44,6 @@ void Player::Update()
 		jump.UpdateJump(worldTransform.translation_.y);
 	}
 	worldTransform.Update();
-
-	ImGuiManager::GetInstance()->SliderVector("cameraPos", ViewProjection::GetInstance()->eye, -100, 100);
-	ImGuiManager::GetInstance()->SliderVector("cameraTargetPos", ViewProjection::GetInstance()->target, -100, 100);
 }
 
 void Player::Draw()

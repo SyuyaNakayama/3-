@@ -110,6 +110,7 @@ void BlockManager::Initialize(UINT16 stage)
 	case 3:
 		break;
 	}
+	StagePlane::GetInstance()->Initialize();
 }
 
 void BlockManager::Update()
