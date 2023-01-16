@@ -8,8 +8,8 @@ void GamePlayScene::Initialize()
 {
 	gameScene = GameScene::GetInstance();
 
-	viewProjection->eye = {40,-40.0f,-1200};
-	viewProjection->target = {40,-40.0f,0};
+	viewProjection->eye = {70,-40.0f,-1200};
+	viewProjection->target = {70,-40.0f,0};
 	viewProjection->farZ = 1500.0f;
 
 	blockManager->Initialize(stage);

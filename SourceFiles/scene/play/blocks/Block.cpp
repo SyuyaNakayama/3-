@@ -5,23 +5,33 @@
 #include "WinApp.h"
 #include "Mouse.h"
 #include "BlockManager.h"
+#include <imgui.h>
 
-void BaseBlock::Initialize()
+void BaseBlock::Initialize() { model = Model::Create(); }
+void BaseBlock::SetTexture(const std::string& fileName) { textureHandle = TextureManager::Load("blockTextures/" + fileName); }
+
+void BaseBlockCollider::Initialize()
 {
-	model = Model::Create();
-	worldTransform.Initialize();
+	BaseBlock::Initialize();
 	SetCollisionAttribute(CollisionAttribute::Block);
 	SetCollisionMask(CollisionMask::Block);
+	worldTransform.Initialize();
 }
 
-void BaseBlock::Draw()
+void BaseBlockCollider::Draw() { model->Draw(worldTransform, *ViewProjection::GetInstance(), textureHandle); }
+
+
+void NonCollisionNormalBlock::Initialize()
 {
-	model->Draw(worldTransform, *ViewProjection::GetInstance(), textureHandle);
+	BaseBlock::Initialize();
+	worldTransform.Initialize();
+	//SetTexture("normalBlock.png");
 }
 
-void BaseBlock::SetTexture(const std::string& fileName)
+void NormalBlock::Initialize()
 {
-	textureHandle = TextureManager::Load("blockTextures/" + fileName);
+	BaseBlockCollider::Initialize();
+	//SetTexture("normalBlock.png");
 }
 
 
@@ -30,13 +40,12 @@ void MoveBlock::DragBox()
 	// インスタンスの取得
 	ViewProjection* viewProjection = ViewProjection::GetInstance();
 	Input* input = Input::GetInstance();
-	ImGuiManager* imguiManager = ImGuiManager::GetInstance();
 	Mouse* mouse = Mouse::GetInstance();
 
 	Matrix4 mat = mouse->GetMatrix();
 	Vector2 mousePos = mouse->GetMousePos();
 	// blockの座標を取得
-	Vector3 blockPos = BoxCollider::worldTransform.GetWorldPosition();
+	Vector3 blockPos = worldTransform.GetWorldPosition();
 	// blockの2D座標、半径を計算
 	Vector3 block2DRad = Vector3TransformCoord(blockPos - BoxCollider::worldTransform.scale_, mat);
 	Vector3 block2DPos = Vector3TransformCoord(blockPos, mat);
@@ -51,8 +60,8 @@ void MoveBlock::DragBox()
 
 	// カメラからblockの距離
 	float distanceObject = Vector3Length(viewProjection->eye - blockPos);
-	BoxCollider::worldTransform.translation_ = mouse->GetNearPos() + mouse->GetMouseDirection() * distanceObject;
-	BoxCollider::worldTransform.translation_.z = 0;
+	worldTransform.translation_ = mouse->GetNearPos() + mouse->GetMouseDirection() * distanceObject;
+	worldTransform.translation_.z = 0;
 
 	// クリックが離されたとき
 	if (!input->IsPressMouse(0)) { isDrag = false; }
@@ -60,10 +69,9 @@ void MoveBlock::DragBox()
 
 void MoveBlock::Initialize()
 {
-	BaseBlock::Initialize();
+	BaseBlockCollider::Initialize();
 	SetTexture("moveBlock.png");
 	normal = { 0,0,-1 };
-	PolygonCollider::worldTransform = BoxCollider::worldTransform;
 	SetVertices();
 }
 
@@ -73,7 +81,6 @@ void MoveBlock::Update()
 	BoxCollider::worldTransform.Update();
 }
 
-#include <imgui.h>
 
 void MoveBlock::OnCollision(RayCollider* Collider)
 {
@@ -83,7 +90,7 @@ void MoveBlock::OnCollision(RayCollider* Collider)
 
 void CopyBlock::Initialize()
 {
-	BaseBlock::Initialize();
+	BaseBlockCollider::Initialize();
 	SetTexture("copyBlock.png");
 }
 
@@ -115,7 +122,7 @@ void DestroyBlock::Destroy()
 
 void DestroyBlock::Initialize()
 {
-	BaseBlock::Initialize();
+	BaseBlockCollider::Initialize();
 	SetTexture("destroyBlock.png");
 }
 

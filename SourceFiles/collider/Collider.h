@@ -39,7 +39,6 @@ public:
 	virtual void OnCollision(PlaneCollider* boxCollider) {}
 	virtual void OnCollision(PolygonCollider* sphereCollider) {}
 	virtual void OnCollision(RayCollider* sphereCollider) {}
-	virtual Vector3 GetWorldPosition() = 0;
 
 	CollisionAttribute GetCollisionAttribute() { return collisionAttribute_; }
 	CollisionMask GetCollisionMask() { return collisionMask_; }
@@ -47,7 +46,7 @@ public:
 	void SetCollisionMask(CollisionMask collisionMask) { collisionMask_ = collisionMask; }
 };
 
-class BoxCollider : public BaseCollider
+class BoxCollider : public virtual BaseCollider
 {
 public:
 	BoxCollider();
@@ -57,7 +56,7 @@ public:
 	virtual Vector3 GetRadius() { return worldTransform.scale_; }
 };
 
-class SphereCollider : public BaseCollider
+class SphereCollider : public virtual BaseCollider
 {
 public:
 	SphereCollider();
@@ -67,7 +66,7 @@ public:
 	virtual float GetRadius() { return worldTransform.scale_.x; }
 };
 
-class PlaneCollider : public BaseCollider
+class PlaneCollider : public virtual BaseCollider
 {
 protected:
 	Vector3 normal{};
@@ -82,7 +81,7 @@ public:
 	virtual float GetDistance() { return distance; }
 };
 
-class PolygonCollider : public PlaneCollider
+class PolygonCollider : public virtual PlaneCollider
 {
 protected:
 	std::vector<Vector3> vertices;
@@ -98,7 +97,7 @@ public:
 	virtual std::vector<Vector3> GetVertices() { return vertices; }
 };
 
-class RayCollider : public BaseCollider
+class RayCollider : public virtual BaseCollider
 {
 protected:
 	Vector3 direction{};

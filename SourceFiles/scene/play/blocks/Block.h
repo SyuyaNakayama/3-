@@ -2,42 +2,66 @@
 #include "Model.h"
 #include "Collider.h"
 
-class BaseBlock : public BoxCollider
+class BaseBlock
 {
-private:
+protected:
 	Model* model;
 	uint32_t textureHandle = 0;
 
 public:
-	virtual void Initialize() = 0;
-	virtual void Update() = 0;
-	virtual void Draw();
-	void SetTexture(const std::string& fileName);
-	void SetTranslation(Vector3 translation) { worldTransform.translation_ = translation; }
 	~BaseBlock() { delete model; }
+	virtual void Initialize() = 0;
+	virtual void Update() {};
+	virtual void Draw() = 0;
+	void SetTexture(const std::string& fileName);
+	virtual void SetTranslation(Vector3 translation) = 0;
 };
 
-class MoveBlock : public BaseBlock, PolygonCollider
+class BaseBlockCollider : public virtual BaseBlock, public BoxCollider
+{
+public:
+	virtual void Initialize();
+	~BaseBlockCollider() = default;
+	void SetTranslation(Vector3 translation) { worldTransform.translation_ = translation; }
+	void Draw();
+};
+
+class NonCollisionNormalBlock : public BaseBlock
+{
+private:
+	WorldTransform worldTransform;
+
+public:
+	void Initialize();
+	virtual void SetTranslation(Vector3 translation) { worldTransform.translation_ = translation; }
+};
+
+class NormalBlock : public BaseBlockCollider
+{
+	void Initialize();
+	void OnCollision(BoxCollider* Collider);
+};
+
+class MoveBlock : public BaseBlockCollider, public PolygonCollider
 {
 private:
 	bool isDrag = false;
 
 	void DragBox();
 public:
-	void Initialize() override;
+	void Initialize();
 	void Update();
-	void OnCollision(RayCollider* Collider) override;
+	void OnCollision(RayCollider* Collider);
 };
 
-class CopyBlock : public BaseBlock
+class CopyBlock : public BaseBlockCollider
 {
 public:
 	void Initialize();
 	void Update();
-
 };
 
-class DestroyBlock : public BaseBlock
+class DestroyBlock : public BaseBlockCollider
 {
 private:
 	uint32_t clickNum = 0;
