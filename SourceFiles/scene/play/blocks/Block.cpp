@@ -24,13 +24,15 @@ void NonCollisionNormalBlock::Initialize()
 {
 	BaseBlock::Initialize();
 	worldTransform.Initialize();
-	//SetTexture("normalBlock.png");
+	worldTransform.Update();
+	SetTexture("normalBlock.png");
 }
 
 void NormalBlock::Initialize()
 {
 	BaseBlockCollider::Initialize();
-	//SetTexture("normalBlock.png");
+	worldTransform.Update();
+	SetTexture("normalBlock.png");
 }
 
 
@@ -54,14 +56,12 @@ void MoveBlock::Initialize()
 void MoveBlock::Update()
 {
 	DragBox();
-	BoxCollider::worldTransform.Update();
+	worldTransform.Update();
 	SetVertices();
-	ImGuiManager* imguiManager = ImGuiManager::GetInstance();
 }
 
 void MoveBlock::OnCollision(RayCollider* Collider)
 {
-	ImGui::Text("Hit!!");
 	if (Input::GetInstance()->IsTriggerMouse(0)) { isDrag = true; }
 }
 
@@ -78,26 +78,6 @@ void CopyBlock::Update()
 }
 
 
-void DestroyBlock::Destroy()
-{
-	clickNum += input->IsTriggerMouse(0);
-	if (clickNum >= DESTROY_NUM)
-	{
-		std::list<BaseBlock*>& blocks = BlockManager::GetInstance()->GetBlocks();
-		auto itr = blocks.begin();
-		for (; itr != blocks.end(); itr++)
-		{
-			if (*itr == this)
-			{
-				//blocks.erase(itr);
-				blocks.emplace_front(this);
-				clickNum = 0;
-				return;
-			}
-		}
-	}
-}
-
 void DestroyBlock::Initialize()
 {
 	BaseBlockCollider::Initialize();
@@ -107,8 +87,16 @@ void DestroyBlock::Initialize()
 void DestroyBlock::Update()
 {
 	worldTransform.Update();
-	Destroy();
+	SetVertices();
 }
+
+void DestroyBlock::OnCollision(RayCollider* collider)
+{
+	ImGui::Text("clickNum = %d", clickNum);
+	clickNum += input->IsTriggerMouse(0);
+	if (clickNum >= DESTROY_NUM) { isDestroy = true; }
+}
+
 
 StagePlane* StagePlane::GetInstance()
 {
@@ -122,10 +110,4 @@ void StagePlane::Initialize()
 	normal = { 0,0,-1 };
 	SetCollisionAttribute(CollisionAttribute::StagePlane);
 	SetCollisionMask(CollisionMask::StagePlane);
-}
-
-void StagePlane::OnCollision(RayCollider* Collider)
-{
-	ImGui::Text("Hit!!");
-
 }

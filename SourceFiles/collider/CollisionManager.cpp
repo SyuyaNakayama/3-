@@ -37,9 +37,9 @@ bool CollisionManager::CheckCollision2Spheres(SphereCollider* colliderA, SphereC
 	return vecAB.length() <= radAB;
 }
 
-bool CollisionManager::CheckCollisionRayPlane(RayCollider* colliderA, PlaneCollider* colliderB, float* distance, bool isPolygonCollideCheck)
+bool CollisionManager::CheckCollisionRayPlane(RayCollider* colliderA, PlaneCollider* colliderB, float* distance)
 {
-	if (!CheckCollisionFiltering(colliderA, colliderB) && !isPolygonCollideCheck) { return false; }
+	if (!CheckCollisionFiltering(colliderA, colliderB)) { return false; }
 	const float epsilon = 1.0e-5f; // 誤差吸収用の微小な値
 	// 面法線とレイの方向ベクトルの内積
 	float d1 = colliderB->GetNormal().dot(colliderA->GetRayDirection());
@@ -63,10 +63,14 @@ bool CollisionManager::CheckCollisionRayPlane(RayCollider* colliderA, PlaneColli
 
 bool CollisionManager::CheckCollisionRayPolygon(RayCollider* colliderA, PolygonCollider* colliderB, float* distance)
 {
+	if (!CheckCollisionFiltering(colliderA, colliderB)) { return false; }
 	// 三角形が乗っている平面を算出
 	colliderB->ComputeDistance();
 	// レイと平面が当たっていなければ当っていない
-	if (!CheckCollisionRayPlane(colliderA, colliderB, distance, true)) { return false; }
+	PlaneCollider tempColliderB;
+	colliderB->ToPlaneCollider(&tempColliderB);
+
+	if (!CheckCollisionRayPlane(colliderA, &tempColliderB, distance)) { return false; }
 	// レイと平面が当たっていたので、距離と座標が書き込まれた
 	// レイと平面の交点が三角形の内側にあるか判定
 	const float epsilon = 1.0e-5f; // 誤差吸収用の微小な値
@@ -78,7 +82,7 @@ bool CollisionManager::CheckCollisionRayPolygon(RayCollider* colliderA, PolygonC
 	for (size_t i = 0; i < vertexSize; i++)
 	{
 		// 辺pi_p(i+1)について
-		Vector3 pt_px = colliderB->GetVertices()[i] - *colliderB->GetInter();
+		Vector3 pt_px = colliderB->GetVertices()[i] - *tempColliderB.GetInter();
 		Vector3 px_py = colliderB->GetVertices()[(i + 1) % vertexSize] - colliderB->GetVertices()[i];
 		Vector3 m = pt_px.cross(px_py);
 		// 辺の外側であれば当たっていないので判定を打ち切る
@@ -156,7 +160,7 @@ void CollisionManager::CheckAllCollisions()
 	CheckBoxCollisions();
 	CheckRayPlaneCollisions();
 	CheckRayPolygonCollisions();
-	ImGui::Text("%d", boxColliders.size());
-	ImGui::Text("%d", planeColliders.size());
-	ImGui::Text("%d", triangleColliders.size());
+	ImGui::Text("boxColliders.size() = %d", boxColliders.size());
+	ImGui::Text("planeColliders.size() = %d", planeColliders.size());
+	ImGui::Text("triangleColliders.size() = %d", triangleColliders.size());
 }
