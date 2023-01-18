@@ -15,7 +15,7 @@ enum class CollisionMask
 {
 	Player = (int)CollisionAttribute::Block,
 	Block = (int)CollisionAttribute::Player,
-	MouseRay = (int)CollisionAttribute::StagePlane,
+	MouseRay = (int)CollisionAttribute::StagePlane | (int)CollisionAttribute::Block,
 	StagePlane = (int)CollisionAttribute::MouseRay,
 	All = -1
 };
@@ -36,7 +36,7 @@ protected:
 	WorldTransform worldTransform;
 
 public:
-	~BaseCollider() = default;
+	virtual ~BaseCollider() = default;
 
 	virtual void OnCollision(BoxCollider* boxCollider) {}
 	virtual void OnCollision(SphereCollider* sphereCollider) {}
@@ -54,7 +54,7 @@ class BoxCollider : public virtual BaseCollider
 {
 public:
 	BoxCollider();
-	~BoxCollider();
+	virtual ~BoxCollider();
 
 	virtual Vector3 GetWorldPosition() { return worldTransform.GetWorldPosition(); }
 	virtual Vector3 GetRadius() { return worldTransform.scale_; }
@@ -64,7 +64,7 @@ class SphereCollider : public virtual BaseCollider
 {
 public:
 	SphereCollider();
-	~SphereCollider();
+	virtual ~SphereCollider();
 
 	virtual Vector3 GetWorldPosition() { return worldTransform.GetWorldPosition(); }
 	virtual float GetRadius() { return worldTransform.scale_.x; }
@@ -79,25 +79,31 @@ protected:
 
 public:
 	PlaneCollider();
-	~PlaneCollider();
+	virtual ~PlaneCollider();
 
 	virtual void SetInter(const Vector3& inter_) { inter = inter_; }
+	void SetDistance(float distance_) { distance = distance_; }
+	void SetNormal(Vector3 normal_) { normal = normal_; }
 	virtual Vector3 GetWorldPosition() { return worldTransform.GetWorldPosition(); }
 	virtual Vector3 GetNormal() { return normal; }
 	virtual Vector3* GetInter() { return &inter; }
 	virtual float GetDistance() { return distance; }
 };
 
-class PolygonCollider : public virtual PlaneCollider
+class PolygonCollider : public virtual BaseCollider
 {
 protected:
+	// ’¸“_‚ÍŽžŒv‰ñ‚è
 	std::vector<Vector3> vertices;
+	Vector3 normal{};
+	float distance = 0;
 
 public:
 	PolygonCollider();
-	~PolygonCollider();
+	virtual ~PolygonCollider();
 
 	void ComputeDistance() { distance = normal.dot(vertices[0]); }
+	void ToPlaneCollider(PlaneCollider* planeCollider);
 	virtual Vector3 GetWorldPosition() { return worldTransform.GetWorldPosition(); }
 	virtual Vector3 GetNormal() { return normal; }
 	virtual void SetVertices();
@@ -111,7 +117,7 @@ protected:
 
 public:
 	RayCollider();
-	~RayCollider();
+	virtual ~RayCollider();
 
 	virtual Vector3 GetWorldPosition() { return worldTransform.GetWorldPosition(); }
 	virtual Vector3 GetRayDirection() { return direction; }

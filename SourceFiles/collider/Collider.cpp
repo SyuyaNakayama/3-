@@ -22,3 +22,9 @@ void PolygonCollider::SetVertices()
 	vertices.push_back(objPos + Vector3(objRad.x, -objRad.y, -objRad.z));
 	vertices.push_back(objPos - objRad);
 }
+
+void PolygonCollider::ToPlaneCollider(PlaneCollider* planeCollider)
+{
+	planeCollider->SetDistance(distance);
+	planeCollider->SetNormal(normal);
+}

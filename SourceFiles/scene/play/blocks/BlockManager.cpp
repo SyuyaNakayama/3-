@@ -61,7 +61,7 @@ void BlockManager::CreateBlock(Vector3 pos, BlockType type)
 	case BlockManager::BlockType::None:
 		return;
 	case BlockManager::BlockType::Normal:
-		block = new MoveBlock;
+		block = new NormalBlock;
 		break;
 	case BlockManager::BlockType::Move:
 		block = new MoveBlock;
@@ -87,8 +87,7 @@ void BlockManager::CreateBlock(Vector3 pos, BlockType type)
 
 void BlockManager::CreateBlocks()
 {
-	for (UINT16 y = 0; y < STAGE_SIZE; y++)
-	{
+	for (UINT16 y = 0; y < STAGE_SIZE; y++) {
 		for (UINT16 x = 0; x < STAGE_SIZE; x++)
 		{
 			CreateBlock({ 2.0f * x, -2.0f * y, 0 }, map[y][x]);
@@ -115,16 +114,12 @@ void BlockManager::Initialize(UINT16 stage)
 
 void BlockManager::Update()
 {
-	for (BaseBlock* block : blocks)
-	{
-		block->Update();
-	}
+	//blocks.remove_if([](BaseBlock* block) { return block->IsDestroy(); });
+	auto block = blocks.begin();
+	for (BaseBlock* block : blocks) { block->Update(); }
 }
 
 void BlockManager::Draw()
 {
-	for (BaseBlock* block : blocks)
-	{
-		block->Draw();
-	}
+	for (BaseBlock* block : blocks) { block->Draw(); }
 }

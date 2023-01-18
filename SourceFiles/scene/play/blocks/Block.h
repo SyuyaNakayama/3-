@@ -14,6 +14,7 @@ public:
 	virtual void Initialize() = 0;
 	virtual void Update() {};
 	virtual void Draw() = 0;
+	virtual bool IsDestroy() { return false; }
 	void SetTexture(const std::string& fileName);
 	virtual void SetTranslation(Vector3 translation) = 0;
 };
@@ -43,15 +44,14 @@ public:
 class NormalBlock : public BaseBlockCollider
 {
 	void Initialize();
-	void OnCollision(BoxCollider* Collider);
 };
 
 class MoveBlock : public BaseBlockCollider, public PolygonCollider
 {
 private:
 	bool isDrag = false;
-
 	void DragBox();
+
 public:
 	void Initialize();
 	void Update();
@@ -65,16 +65,18 @@ public:
 	void Update();
 };
 
-class DestroyBlock : public BaseBlockCollider
+class DestroyBlock : public BaseBlockCollider, public PolygonCollider
 {
 private:
 	uint32_t clickNum = 0;
 	static const uint32_t DESTROY_NUM = 3;
+	bool isDestroy = false;
 
-	void Destroy();
 public:
 	void Initialize();
 	void Update();
+	bool IsDestroy() { return isDestroy; }
+	void OnCollision(RayCollider* collider) override;
 };
 
 class StagePlane : public PlaneCollider
@@ -83,5 +85,4 @@ class StagePlane : public PlaneCollider
 public:
 	static StagePlane* GetInstance();
 	void Initialize();
-	void OnCollision(RayCollider* Collider);
 };
