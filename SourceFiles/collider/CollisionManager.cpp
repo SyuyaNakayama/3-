@@ -6,7 +6,7 @@ using namespace std;
 list<BoxCollider*> CollisionManager::boxColliders;
 list<SphereCollider*> CollisionManager::sphereColliders;
 list<PlaneCollider*> CollisionManager::planeColliders;
-list<PolygonCollider*> CollisionManager::triangleColliders;
+list<PolygonCollider*> CollisionManager::polygonColliders;
 list<RayCollider*> CollisionManager::rayColliders;
 
 bool CollisionManager::CheckCollisionFiltering(BaseCollider* colliderA, BaseCollider* colliderB)
@@ -145,7 +145,7 @@ void CollisionManager::CheckRayPlaneCollisions()
 void CollisionManager::CheckRayPolygonCollisions()
 {
 	for (RayCollider* rayCollider : rayColliders) {
-		for (PolygonCollider* triangleCollider : triangleColliders)
+		for (PolygonCollider* triangleCollider : polygonColliders)
 		{
 			if (!CheckCollisionRayPolygon(rayCollider, triangleCollider)) { continue; }
 
@@ -162,5 +162,5 @@ void CollisionManager::CheckAllCollisions()
 	CheckRayPolygonCollisions();
 	ImGui::Text("boxColliders.size() = %d", boxColliders.size());
 	ImGui::Text("planeColliders.size() = %d", planeColliders.size());
-	ImGui::Text("triangleColliders.size() = %d", triangleColliders.size());
+	ImGui::Text("polygonColliders.size() = %d", polygonColliders.size());
 }

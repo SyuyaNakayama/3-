@@ -60,6 +60,15 @@
     <Filter Include="ソース ファイル\collider">
       <UniqueIdentifier>{459253f5-8e1a-4275-a733-48b59736380d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\3d">
+      <UniqueIdentifier>{8674ce7c-bb59-40f4-96e1-19c7669b17d8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\functions">
+      <UniqueIdentifier>{55b0f9e6-ac23-4be9-9e41-c29049b8395f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\functions">
+      <UniqueIdentifier>{2e354fcc-3873-46f8-b46b-0e8b851de43b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\shaders\SpritePS.hlsl">
@@ -159,9 +168,6 @@
     <ClInclude Include="SourceFiles\2d\Sprite.h">
       <Filter>ヘッダー ファイル\2d</Filter>
     </ClInclude>
-    <ClInclude Include="SourceFiles\timer\Timer.h">
-      <Filter>ヘッダー ファイル\base</Filter>
-    </ClInclude>
     <ClInclude Include="SourceFiles\2d\ImGuiManager.h">
       <Filter>ヘッダー ファイル\2d</Filter>
     </ClInclude>
@@ -213,9 +219,6 @@
     <ClInclude Include="SourceFiles\3d\AxisIndicator.h">
       <Filter>ヘッダー ファイル\3d</Filter>
     </ClInclude>
-    <ClInclude Include="SourceFiles\particleManager\ParticleManager.h">
-      <Filter>ヘッダー ファイル\objects</Filter>
-    </ClInclude>
     <ClInclude Include="SourceFiles\scene\play\blocks\Block.h">
       <Filter>ヘッダー ファイル\objects</Filter>
     </ClInclude>
@@ -240,17 +243,26 @@
     <ClInclude Include="SourceFiles\scene\SceneFactory.h">
       <Filter>ヘッダー ファイル\scene</Filter>
     </ClInclude>
-    <ClInclude Include="SourceFiles\SharePtr.h">
-      <Filter>ヘッダー ファイル\objects</Filter>
-    </ClInclude>
     <ClInclude Include="SourceFiles\scene\play\Mouse.h">
       <Filter>ヘッダー ファイル\objects</Filter>
     </ClInclude>
+    <ClInclude Include="SourceFiles\3d\ParticleManager.h">
+      <Filter>ヘッダー ファイル\3d</Filter>
+    </ClInclude>
     <ClInclude Include="SourceFiles\collider\Collision.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>ヘッダー ファイル\collider</Filter>
     </ClInclude>
     <ClInclude Include="SourceFiles\collider\CollisionPrimitive.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>ヘッダー ファイル\collider</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceFiles\functions\FadeManager.h">
+      <Filter>ヘッダー ファイル\functions</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceFiles\functions\SharePtr.h">
+      <Filter>ヘッダー ファイル\functions</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceFiles\functions\Timer.h">
+      <Filter>ヘッダー ファイル\functions</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -278,12 +290,6 @@
     <ClCompile Include="SourceFiles\2d\ImGuiManager.cpp">
       <Filter>ソース ファイル\2d</Filter>
     </ClCompile>
-    <ClCompile Include="SourceFiles\timer\Timer.cpp">
-      <Filter>ソース ファイル\base</Filter>
-    </ClCompile>
-    <ClCompile Include="SourceFiles\particleManager\ParticleManager.cpp">
-      <Filter>ソース ファイル\objects</Filter>
-    </ClCompile>
     <ClCompile Include="SourceFiles\scene\play\Player.cpp">
       <Filter>ソース ファイル\objects</Filter>
     </ClCompile>
@@ -294,9 +300,6 @@
       <Filter>ソース ファイル\objects</Filter>
     </ClCompile>
     <ClCompile Include="SourceFiles\scene\play\GamePlayScene.cpp">
-      <Filter>ソース ファイル\scene</Filter>
-    </ClCompile>
-    <ClCompile Include="SourceFiles\scene\FadeManager.cpp">
       <Filter>ソース ファイル\scene</Filter>
     </ClCompile>
     <ClCompile Include="SourceFiles\scene\play\Jump.cpp">
@@ -314,17 +317,26 @@
     <ClCompile Include="SourceFiles\scene\SceneFactory.cpp">
       <Filter>ソース ファイル\scene</Filter>
     </ClCompile>
-    <ClCompile Include="SourceFiles\SharePtr.cpp">
-      <Filter>ソース ファイル\objects</Filter>
-    </ClCompile>
     <ClCompile Include="SourceFiles\scene\play\Mouse.cpp">
       <Filter>ソース ファイル\objects</Filter>
     </ClCompile>
+    <ClCompile Include="SourceFiles\functions\FadeManager.cpp">
+      <Filter>ソース ファイル\3d</Filter>
+    </ClCompile>
     <ClCompile Include="SourceFiles\collider\Collision.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\collider</Filter>
     </ClCompile>
     <ClCompile Include="SourceFiles\collider\CollisionPrimitive.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\collider</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceFiles\3d\ParticleManager.cpp">
+      <Filter>ソース ファイル\functions</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceFiles\functions\SharePtr.cpp">
+      <Filter>ソース ファイル\functions</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceFiles\functions\Timer.cpp">
+      <Filter>ソース ファイル\functions</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
