@@ -1,6 +1,7 @@
 #pragma once
 #include "WorldTransform.h"
 #include <vector>
+#include <array>
 
 enum class CollisionAttribute
 {
@@ -25,6 +26,7 @@ class SphereCollider;
 class PlaneCollider;
 class PolygonCollider;
 class RayCollider;
+class IncludeCollider;
 
 class BaseCollider
 {
@@ -43,6 +45,7 @@ public:
 	virtual void OnCollision(PlaneCollider* boxCollider) {}
 	virtual void OnCollision(PolygonCollider* sphereCollider) {}
 	virtual void OnCollision(RayCollider* sphereCollider) {}
+	virtual void OnCollision(IncludeCollider* sphereCollider) {}
 
 	CollisionAttribute GetCollisionAttribute() { return collisionAttribute_; }
 	CollisionMask GetCollisionMask() { return collisionMask_; }
@@ -58,6 +61,26 @@ public:
 
 	virtual Vector3 GetWorldPosition() { return worldTransform.GetWorldPosition(); }
 	virtual Vector3 GetRadius() { return worldTransform.scale_; }
+};
+
+class IncludeCollider : public BaseCollider
+{
+public:
+	enum class Axis { X, Y, Z };
+
+private:
+	static float includeRadius;
+	// ìñÇΩÇËîªíËÇéÊÇÈÉyÉAÇÃtrueÇ™è≠Ç»Ç¢ÇŸÇ§Ç™åvéZÇ…îΩâfÇ≥ÇÍÇÈ
+	std::array<bool, 3> isUseAxis;
+
+public:
+	IncludeCollider();
+	virtual ~IncludeCollider();
+
+	virtual Vector3 GetWorldPosition() { return worldTransform.GetWorldPosition(); }
+	static float GetIncludeRadius() { return includeRadius; }
+	void SetUseAxis(Axis axis, bool isUse) { isUseAxis[(size_t)axis] = isUse; }
+	std::array<bool, 3> GetUseAxis() { return isUseAxis; }
 };
 
 class SphereCollider : public virtual BaseCollider

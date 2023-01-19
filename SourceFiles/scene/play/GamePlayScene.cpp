@@ -31,9 +31,7 @@ void GamePlayScene::Update()
 
 	debugCamera_->Update();
 	
-#ifdef DEBUG
-	*viewProjection = debugCamera_->GetViewProjection(); 
-#endif // DEBUG
+	//*viewProjection = debugCamera_->GetViewProjection(); 
 
 	if (input->TriggerKey(DIK_SPACE))
 	{

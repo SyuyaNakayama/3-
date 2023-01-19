@@ -14,10 +14,7 @@ void Player::Initialize()
 	SetCollisionMask(CollisionMask::Player);
 }
 
-void Player::Move()
-{
-	worldTransform.translation_.x += spdX;
-}
+void Player::Move() { worldTransform.translation_.x += spdX; }
 
 void Player::Update()
 {
@@ -43,13 +40,11 @@ void Player::Update()
 		Move();
 		jump.UpdateJump(worldTransform.translation_.y);
 	}
+
 	worldTransform.Update();
 }
 
-void Player::Draw()
-{
-	model_->Draw(worldTransform, *ViewProjection::GetInstance());
-}
+void Player::Draw() { model_->Draw(worldTransform, *ViewProjection::GetInstance()); }
 
 void Player::OnCollision(BoxCollider* boxCollider)
 {

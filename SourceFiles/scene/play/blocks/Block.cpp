@@ -1,11 +1,9 @@
 #include "Block.h"
 #include "ViewProjection.h"
 #include "ImGuiManager.h"
-#include "WinApp.h"
-#include "Mouse.h"
-#include "BlockManager.h"
 #include <imgui.h>
 
+#pragma region BaseBlock
 void BaseBlock::Initialize() { model = Model::Create(); }
 void BaseBlock::SetTexture(const std::string& fileName) { textureHandle = TextureManager::Load("blockTextures/" + fileName); }
 
@@ -18,8 +16,9 @@ void BaseBlockCollider::Initialize()
 }
 
 void BaseBlockCollider::Draw() { model->Draw(worldTransform, *ViewProjection::GetInstance(), textureHandle); }
+#pragma endregion
 
-
+#pragma region NormalBlock
 void NonCollisionNormalBlock::Initialize()
 {
 	BaseBlock::Initialize();
@@ -35,7 +34,16 @@ void NormalBlock::Initialize()
 	worldTransform.Update();
 	SetTexture("normalBlock.png");
 }
+#pragma endregion
 
+#pragma region MoveBlock
+void MoveBlock::Initialize()
+{
+	BaseBlockCollider::Initialize();
+	SetVertices();
+	SetTexture("moveBlock.png");
+	normal = { 0,0,-1 };
+}
 
 void MoveBlock::DragBox()
 {
@@ -45,14 +53,6 @@ void MoveBlock::DragBox()
 
 	// ƒNƒŠƒbƒN‚ª—£‚³‚ê‚½‚Æ‚«
 	if (!input->IsPressMouse(0)) { isDrag = false; }
-}
-
-void MoveBlock::Initialize()
-{
-	BaseBlockCollider::Initialize();
-	SetVertices();
-	SetTexture("moveBlock.png");
-	normal = { 0,0,-1 };
 }
 
 void MoveBlock::Update()
@@ -66,12 +66,27 @@ void MoveBlock::OnCollision(RayCollider* Collider)
 {
 	if (Input::GetInstance()->IsTriggerMouse(0)) { isDrag = true; }
 }
+#pragma endregion
 
-
+#pragma region CopyBlock
 void CopyBlock::Initialize()
 {
 	BaseBlockCollider::Initialize();
 	SetTexture("copyBlock.png");
+	SetVertices();
+	normal = { 0,0,-1 };
+}
+
+std::unique_ptr<BaseBlock> CopyBlock::NewBlockCreate()
+{
+	if (!isCopyMode) { return nullptr; }
+	if (!input->IsTriggerMouse(0)) { return nullptr; }
+	isCopyMode = false;
+
+	std::unique_ptr<BaseBlock> newBlock = std::make_unique<CopyBlock>();
+	newBlock->SetTranslation(*StagePlane::GetInstance()->GetInter());
+	newBlock->Initialize();
+	return newBlock;
 }
 
 void CopyBlock::Update()
@@ -79,7 +94,10 @@ void CopyBlock::Update()
 	worldTransform.Update();
 }
 
+void CopyBlock::OnCollision(RayCollider* Collider) { if (input->IsTriggerMouse(0)) { isCopyMode = true; } }
+#pragma endregion
 
+#pragma region DestroyBlock
 void DestroyBlock::Initialize()
 {
 	BaseBlockCollider::Initialize();
@@ -97,12 +115,20 @@ void DestroyBlock::Update()
 void DestroyBlock::OnCollision(RayCollider* collider)
 {
 	clickNum += input->IsTriggerMouse(0);
-	if (clickNum >= DESTROY_NUM) {
-		isDestroy = true;
-	}
+	if (clickNum >= DESTROY_NUM) { isDestroy = true; }
 }
+#pragma endregion
 
+#pragma region LadderBlock
+void LadderBlock::Initialize()
+{
+	BaseBlock::Initialize();
+	SetUseAxis(Axis::Y, false);
+	//SetTexture("ladderBlock.png");
+}
+#pragma endregion
 
+#pragma region ElseBlock
 StagePlane* StagePlane::GetInstance()
 {
 	static StagePlane instance;
@@ -126,3 +152,4 @@ void BgBlock::Initialize()
 	worldTransform.Update();
 	SetTexture("bgBlock.png");
 }
+#pragma endregion

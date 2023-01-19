@@ -1,9 +1,11 @@
 #include "CollisionManager.h"
 #include <cassert>
 #include <imgui.h>
+#include <algorithm>
 using namespace std;
 
 list<BoxCollider*> CollisionManager::boxColliders;
+list<IncludeCollider*> CollisionManager::includeColliders;
 list<SphereCollider*> CollisionManager::sphereColliders;
 list<PlaneCollider*> CollisionManager::planeColliders;
 list<PolygonCollider*> CollisionManager::polygonColliders;
@@ -25,6 +27,28 @@ bool CollisionManager::CheckCollision2Boxes(BoxCollider* colliderA, BoxCollider*
 	vecAB = vecAB.abs();
 
 	return vecAB <= radAB;
+}
+
+bool CollisionManager::CheckCollision2IncludeObjects(IncludeCollider* colliderA, IncludeCollider* colliderB)
+{
+	if (!CheckCollisionFiltering(colliderA, colliderB)) { return false; }
+
+	Vector3 vecAB = colliderA->GetWorldPosition() - colliderB->GetWorldPosition();
+	// 使用フラグの取得
+	array<bool, 3> isUse{};
+	if (count(colliderA->GetUseAxis().begin(), colliderA->GetUseAxis().end(), true) >
+		count(colliderB->GetUseAxis().begin(), colliderB->GetUseAxis().end(), true))
+	{
+		isUse = colliderB->GetUseAxis();
+	}
+	else{ isUse = colliderA->GetUseAxis(); }
+
+	// 計算に使わない値を0にする
+	if (!isUse[(size_t)IncludeCollider::Axis::X]) { vecAB.x = 0; }
+	if (!isUse[(size_t)IncludeCollider::Axis::Y]) { vecAB.y = 0; }
+	if (!isUse[(size_t)IncludeCollider::Axis::Z]) { vecAB.z = 0; }
+
+	return vecAB.length() <= IncludeCollider::GetIncludeRadius();
 }
 
 bool CollisionManager::CheckCollision2Spheres(SphereCollider* colliderA, SphereCollider* colliderB)
@@ -115,6 +139,20 @@ void CollisionManager::CheckBoxCollisions()
 	}
 }
 
+void CollisionManager::CheckIncludeCollisions()
+{
+	for (IncludeCollider* includeBoxColliderA : includeColliders) {
+		for (IncludeCollider* includeBoxColliderB : includeColliders)
+		{
+			if (includeBoxColliderA == includeBoxColliderB) { continue; }
+			if (!CheckCollision2IncludeObjects(includeBoxColliderA, includeBoxColliderB)) { continue; }
+
+			includeBoxColliderA->OnCollision(includeBoxColliderB);
+			includeBoxColliderB->OnCollision(includeBoxColliderA);
+		}
+	}
+}
+
 void CollisionManager::CheckSphereCollisions()
 {
 	for (SphereCollider* sphereColliderA : sphereColliders) {
@@ -160,7 +198,9 @@ void CollisionManager::CheckAllCollisions()
 	CheckBoxCollisions();
 	CheckRayPlaneCollisions();
 	CheckRayPolygonCollisions();
+	CheckIncludeCollisions();
 	ImGui::Text("boxColliders.size() = %d", boxColliders.size());
 	ImGui::Text("planeColliders.size() = %d", planeColliders.size());
 	ImGui::Text("polygonColliders.size() = %d", polygonColliders.size());
+	ImGui::Text("includeColliders.size() = %d", includeColliders.size());
 }

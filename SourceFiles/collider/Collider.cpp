@@ -1,6 +1,8 @@
 #include "Collider.h"
 #include "CollisionManager.h"
 
+float IncludeCollider::includeRadius = 0.1f;
+
 BoxCollider::BoxCollider() { CollisionManager::PushCollider(this); }
 BoxCollider::~BoxCollider() { CollisionManager::PopCollider(this); }
 SphereCollider::SphereCollider() { CollisionManager::PushCollider(this); }
@@ -11,6 +13,8 @@ PolygonCollider::PolygonCollider() { CollisionManager::PushCollider(this); }
 PolygonCollider::~PolygonCollider() { CollisionManager::PopCollider(this); }
 PlaneCollider::PlaneCollider() { CollisionManager::PushCollider(this); }
 PlaneCollider::~PlaneCollider() { CollisionManager::PopCollider(this); }
+IncludeCollider::IncludeCollider() { CollisionManager::PushCollider(this); }
+IncludeCollider::~IncludeCollider() { CollisionManager::PopCollider(this); }
 
 void PolygonCollider::SetVertices()
 {

@@ -15,8 +15,9 @@ public:
 	virtual void Update() {};
 	virtual void Draw() = 0;
 	virtual bool IsDestroy() { return false; }
-	void SetTexture(const std::string& fileName);
 	virtual void SetTranslation(Vector3 translation) = 0;
+	virtual std::unique_ptr<BaseBlock> NewBlockCreate() { return nullptr; }
+	void SetTexture(const std::string& fileName);
 };
 
 class BaseBlockCollider : public virtual BaseBlock, public BoxCollider
@@ -59,11 +60,15 @@ public:
 	void OnCollision(RayCollider* Collider);
 };
 
-class CopyBlock : public BaseBlockCollider
+class CopyBlock : public BaseBlockCollider, public PolygonCollider
 {
+private:
+	bool isCopyMode = false;
 public:
+	std::unique_ptr<BaseBlock> NewBlockCreate();
 	void Initialize();
 	void Update();
+	void OnCollision(RayCollider* Collider);
 };
 
 class DestroyBlock : public BaseBlockCollider, public PolygonCollider
@@ -78,6 +83,14 @@ public:
 	void Update();
 	bool IsDestroy() { return isDestroy; }
 	void OnCollision(RayCollider* collider) override;
+};
+
+class LadderBlock : public BaseBlock, public IncludeCollider
+{
+public:
+	virtual void Initialize();
+	virtual void Draw() { model->Draw(worldTransform, *ViewProjection::GetInstance(), textureHandle); }
+	virtual void SetTranslation(Vector3 translation) { worldTransform.translation_ = translation; };
 };
 
 class StagePlane : public PlaneCollider

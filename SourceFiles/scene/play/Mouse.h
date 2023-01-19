@@ -8,12 +8,8 @@
 class Mouse final : public RayCollider
 {
 private:
-	Input* input = Input::GetInstance();
-	Vector2 mousePos{};
-	Matrix4 mat = MathUtility::Matrix4Identity();
-	Matrix4 matViewPort = MathUtility::Matrix4Identity();
-	ViewProjection* viewProjection = ViewProjection::GetInstance();
 	Vector3 posNear{};
+	Matrix4 matViewPort = MathUtility::Matrix4Identity();
 
 	~Mouse() = default;
 public:
@@ -22,8 +18,5 @@ public:
 	void Update();
 	// ビューポート行列の生成
 	void Initialize();
-	Vector2 GetMousePos() { return mousePos; }
-	Matrix4 GetMatrix() { return mat; }
-	Vector3 GetNearPos() { return posNear; }
-	Vector3 GetWorldPosition() { return GetNearPos(); }
+	Vector3 GetWorldPosition() { return posNear; }
 };

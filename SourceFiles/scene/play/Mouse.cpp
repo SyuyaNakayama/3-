@@ -13,17 +13,15 @@ Mouse* Mouse::GetInstance()
 
 void Mouse::Update()
 {
-	mousePos = input->GetMousePosition();
-
-	// スクリーン座標
-	posNear = { mousePos.x,mousePos.y,0 };
-	Vector3 posFar = { mousePos.x,mousePos.y,1 };
+	ViewProjection* viewProjection = ViewProjection::GetInstance();
+	
+	Vector2 mousePos = Input::GetInstance()->GetMousePosition();
 
 	// ビュー、プロジェクション、ビューポート行列の掛け算
-	mat = viewProjection->matView * viewProjection->matProjection * matViewPort;
+	Matrix4 mat = viewProjection->matView * viewProjection->matProjection * matViewPort;
 	// スクリーン座標をワールド座標に変換
-	posNear = Vector3TransformCoord(posNear, Matrix4Inverse(mat));
-	posFar = Vector3TransformCoord(posFar, Matrix4Inverse(mat));
+	posNear = Vector3TransformCoord({ mousePos.x,mousePos.y,0 }, Matrix4Inverse(mat));
+	Vector3 posFar = Vector3TransformCoord({ mousePos.x,mousePos.y,1 }, Matrix4Inverse(mat));
 
 	// マウスレイの方向
 	direction = posFar - posNear;

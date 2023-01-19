@@ -2,7 +2,6 @@
 #include <wrl.h>
 #include <d3d12.h>
 #include <string>
-#include "Vector2.h"
 #include "Vector3.h"
 #include "WinApp.h"
 
