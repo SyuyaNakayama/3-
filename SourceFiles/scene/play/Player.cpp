@@ -19,19 +19,19 @@ void Player::Initialize()
 	//体
 	parentWorldTransform_[PartId::kBody].Initialize();
 	parentWorldTransform_[PartId::kBody].parent_ = &worldTransform;
-	parentWorldTransform_[PartId::kBody].translation_ = { 0.0f,1.0f,0.0f };
+	parentWorldTransform_[PartId::kBody].translation_ = { 0.0f,0.9f,0.0f };
 	//parentWorldTransform_[0].scale_ = {10.0f,10.0f,10.0f};
 	//左足
 	parentWorldTransform_[PartId::kLegL].Initialize();
 	parentWorldTransform_[PartId::kLegL].parent_ = &worldTransform;
-	parentWorldTransform_[PartId::kLegL].translation_ = { 0.0f,5.0f,0.0f };
-	parentWorldTransform_[PartId::kLegL].rotation_.y = 90 * PI / 180;
+	parentWorldTransform_[PartId::kLegL].translation_ = { 0.0f,0.9f,0.0f };
+	//parentWorldTransform_[PartId::kLegL].rotation_.y = 90 * PI / 180;
 	//parentWorldTransform_[1].scale_ = { 10.0f,10.0f,10.0f };
 	//右足
 	parentWorldTransform_[PartId::kLegR].Initialize();
 	parentWorldTransform_[PartId::kLegR].parent_ = &worldTransform;
-	parentWorldTransform_[PartId::kLegR].translation_ = { 0.0f,5.0f,0.0f };
-	parentWorldTransform_[PartId::kLegR].rotation_.y = 90 * PI / 180;
+	parentWorldTransform_[PartId::kLegR].translation_ = { 0.0f,0.9f,0.0f };
+	//parentWorldTransform_[PartId::kLegR].rotation_.y = 90 * PI / 180;
 	//parentWorldTransform_[2].scale_ = { 10.0f,10.0f,10.0f };
 
 	jump.SetGravity(0.08f);
@@ -42,6 +42,35 @@ void Player::Initialize()
 void Player::Move()
 {
 	worldTransform.translation_.x += spdX;
+}
+
+void Player::WalkMotion()
+{
+	float X = 0.5f;		//歩幅
+	float speed = 0.03f;//足の振りの速さ
+
+	if(walkFlag == true)
+	{
+		if(ForB == true)
+		{
+			walkPos += speed;
+			if(walkPos >= X)
+			{
+				ForB = false;
+			}
+		}
+		if(ForB == false)
+		{
+			walkPos -= speed;
+			if (walkPos <= -X)
+			{
+				ForB = true;
+			}
+		}
+		ImGui::Text("X:%f", walkPos);
+		parentWorldTransform_[PartId::kLegL].translation_.z = walkPos;
+		parentWorldTransform_[PartId::kLegR].translation_.z = -walkPos;
+	}
 }
 
 void Player::Update()
@@ -68,7 +97,20 @@ void Player::Update()
 		Move();
 		jump.UpdateJump(worldTransform.translation_.y);
 	}
+	//進んでる方向によってキャラの向きを変える
+	if(direction == 0)
+	{
+		worldTransform.rotation_.y = 90 * PI / 180;
+	}
+	else if(direction == 1)
+	{
+		worldTransform.rotation_.y = 270 * PI / 180;
+	}
+
+	WalkMotion();
+
 	worldTransform.Update();
+
 	parentWorldTransform_[PartId::kBody].Update();
 	parentWorldTransform_[PartId::kLegL].Update();
 	parentWorldTransform_[PartId::kLegR].Update();
@@ -78,7 +120,7 @@ void Player::Update()
 void Player::Draw()
 {
 	//model_->Draw(worldTransform, *ViewProjection::GetInstance());
-	//modelBody_->Draw(parentWorldTransform_[PartId::kBody], *ViewProjection::GetInstance());
+	modelBody_->Draw(parentWorldTransform_[PartId::kBody], *ViewProjection::GetInstance());
 	modelLegL_->Draw(parentWorldTransform_[PartId::kLegL], *ViewProjection::GetInstance());
 	modelLegR_->Draw(parentWorldTransform_[PartId::kLegR], *ViewProjection::GetInstance());
 }
@@ -112,4 +154,7 @@ void Player::OnCollision(BoxCollider* boxCollider)
 
 	// それ以外なら撥ね返る
 	spdX = -spdX;
+
+	if (direction == 0) { direction = 1; }
+	else if (direction == 1) { direction = 0; }
 }

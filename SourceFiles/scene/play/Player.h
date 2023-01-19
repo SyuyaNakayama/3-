@@ -17,7 +17,14 @@ private:
 	bool isFallCheck = false;
 	WorldTransform parentWorldTransform_[3] = {}; //親子関係用のworldTransform
 
+	uint16_t direction = 0;	//キャラの方向(0...左,1...右)
+	float walkTimer = 0;
+	bool walkFlag = true;
+	float walkPos = 0.0f;
+	bool ForB = true; //true...前, false...後
+
 	void Move();
+	void WalkMotion();	//歩くモーション
 public:
 	~Player() { delete model_; }
 	void Initialize();
