@@ -20,20 +20,15 @@ void Player::Initialize()
 	parentWorldTransform_[PartId::kBody].Initialize();
 	parentWorldTransform_[PartId::kBody].parent_ = &worldTransform;
 	parentWorldTransform_[PartId::kBody].translation_ = { 0.0f,0.9f,0.0f };
-	//parentWorldTransform_[0].scale_ = {10.0f,10.0f,10.0f};
 	//左足
 	parentWorldTransform_[PartId::kLegL].Initialize();
 	parentWorldTransform_[PartId::kLegL].parent_ = &worldTransform;
 	parentWorldTransform_[PartId::kLegL].translation_ = { 0.0f,0.9f,0.0f };
-	//parentWorldTransform_[PartId::kLegL].rotation_.y = 90 * PI / 180;
-	//parentWorldTransform_[1].scale_ = { 10.0f,10.0f,10.0f };
 	//右足
 	parentWorldTransform_[PartId::kLegR].Initialize();
 	parentWorldTransform_[PartId::kLegR].parent_ = &worldTransform;
 	parentWorldTransform_[PartId::kLegR].translation_ = { 0.0f,0.9f,0.0f };
-	//parentWorldTransform_[PartId::kLegR].rotation_.y = 90 * PI / 180;
-	//parentWorldTransform_[2].scale_ = { 10.0f,10.0f,10.0f };
-
+	
 	jump.SetGravity(0.08f);
 	SetCollisionAttribute(CollisionAttribute::Player);
 	SetCollisionMask(CollisionMask::Player);
@@ -98,13 +93,17 @@ void Player::Update()
 		jump.UpdateJump(worldTransform.translation_.y);
 	}
 	//進んでる方向によってキャラの向きを変える
-	if(direction == 0)
+	switch (direction)
 	{
+	case 0://左
 		worldTransform.rotation_.y = 90 * PI / 180;
-	}
-	else if(direction == 1)
-	{
+		break;
+	case 1://右
 		worldTransform.rotation_.y = 270 * PI / 180;
+		break;
+	case 2://奥
+		worldTransform.rotation_.y = 180 * PI / 180;
+		break;
 	}
 
 	WalkMotion();
