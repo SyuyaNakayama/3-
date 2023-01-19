@@ -5,7 +5,12 @@
 
 void Player::Initialize()
 {
+	//ÉÇÉfÉãì«Ç›çûÇ›
 	model_ = Model::Create();
+	modelBody_ = Model::CreateFromOBJ("player_body");
+	modelLegL_ = Model::CreateFromOBJ("player_legL");
+	modelLegR_ = Model::CreateFromOBJ("player_legR");
+
 	worldTransform.Initialize();
 	worldTransform.scale_.x = 0.9999f;
 	worldTransform.translation_ = { 76.0f ,-76.0f + epsilon,0 };
