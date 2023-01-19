@@ -15,6 +15,7 @@ private:
 	float epsilon = 1.0e-5f; // 当たり判定のときの微調整として使う
 	Jump jump;
 	bool isFallCheck = false;
+	WorldTransform parentWorldTransform_[3] = {}; //親子関係用のworldTransform
 
 	void Move();
 public:
@@ -24,4 +25,10 @@ public:
 	void Draw();
 
 	void OnCollision(BoxCollider* boxCollider);
+
+	enum PartId {
+		kBody,	//体
+		kLegL,	//左足
+		kLegR	//右足
+	};
 };

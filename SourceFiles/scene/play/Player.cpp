@@ -14,6 +14,26 @@ void Player::Initialize()
 	worldTransform.Initialize();
 	worldTransform.scale_.x = 0.9999f;
 	worldTransform.translation_ = { 76.0f ,-76.0f + epsilon,0 };
+
+	//eŽqŠÖŒW
+	//‘Ì
+	parentWorldTransform_[PartId::kBody].Initialize();
+	parentWorldTransform_[PartId::kBody].parent_ = &worldTransform;
+	parentWorldTransform_[PartId::kBody].translation_ = { 0.0f,1.0f,0.0f };
+	//parentWorldTransform_[0].scale_ = {10.0f,10.0f,10.0f};
+	//¶‘«
+	parentWorldTransform_[PartId::kLegL].Initialize();
+	parentWorldTransform_[PartId::kLegL].parent_ = &worldTransform;
+	parentWorldTransform_[PartId::kLegL].translation_ = { 0.0f,5.0f,0.0f };
+	parentWorldTransform_[PartId::kLegL].rotation_.y = 90 * PI / 180;
+	//parentWorldTransform_[1].scale_ = { 10.0f,10.0f,10.0f };
+	//‰E‘«
+	parentWorldTransform_[PartId::kLegR].Initialize();
+	parentWorldTransform_[PartId::kLegR].parent_ = &worldTransform;
+	parentWorldTransform_[PartId::kLegR].translation_ = { 0.0f,5.0f,0.0f };
+	parentWorldTransform_[PartId::kLegR].rotation_.y = 90 * PI / 180;
+	//parentWorldTransform_[2].scale_ = { 10.0f,10.0f,10.0f };
+
 	jump.SetGravity(0.08f);
 	SetCollisionAttribute(CollisionAttribute::Player);
 	SetCollisionMask(CollisionMask::Player);
@@ -49,11 +69,18 @@ void Player::Update()
 		jump.UpdateJump(worldTransform.translation_.y);
 	}
 	worldTransform.Update();
+	parentWorldTransform_[PartId::kBody].Update();
+	parentWorldTransform_[PartId::kLegL].Update();
+	parentWorldTransform_[PartId::kLegR].Update();
+
 }
 
 void Player::Draw()
 {
-	model_->Draw(worldTransform, *ViewProjection::GetInstance());
+	//model_->Draw(worldTransform, *ViewProjection::GetInstance());
+	//modelBody_->Draw(parentWorldTransform_[PartId::kBody], *ViewProjection::GetInstance());
+	modelLegL_->Draw(parentWorldTransform_[PartId::kLegL], *ViewProjection::GetInstance());
+	modelLegR_->Draw(parentWorldTransform_[PartId::kLegR], *ViewProjection::GetInstance());
 }
 
 void Player::OnCollision(BoxCollider* boxCollider)
