@@ -18,7 +18,7 @@ void PolygonCollider::SetVertices()
 	Vector3 objRad = worldTransform.scale_;
 	vertices.clear();
 	vertices.push_back(objPos + Vector3(-objRad.x, objRad.y, -objRad.z));
-	vertices.push_back(objPos + objRad);
+	vertices.push_back(objPos + Vector3(objRad.x, objRad.y, -objRad.z));
 	vertices.push_back(objPos + Vector3(objRad.x, -objRad.y, -objRad.z));
 	vertices.push_back(objPos - objRad);
 }

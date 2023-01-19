@@ -26,6 +26,7 @@ void NonCollisionNormalBlock::Initialize()
 	worldTransform.Initialize();
 	worldTransform.Update();
 	SetTexture("normalBlock.png");
+	//SetTexture("cube.jpg");
 }
 
 void NormalBlock::Initialize()
@@ -49,6 +50,7 @@ void MoveBlock::DragBox()
 void MoveBlock::Initialize()
 {
 	BaseBlockCollider::Initialize();
+	SetVertices();
 	SetTexture("moveBlock.png");
 	normal = { 0,0,-1 };
 }
@@ -82,6 +84,8 @@ void DestroyBlock::Initialize()
 {
 	BaseBlockCollider::Initialize();
 	SetTexture("destroyBlock.png");
+	SetVertices();
+	normal = { 0,0,-1 };
 }
 
 void DestroyBlock::Update()
@@ -92,9 +96,10 @@ void DestroyBlock::Update()
 
 void DestroyBlock::OnCollision(RayCollider* collider)
 {
-	ImGui::Text("clickNum = %d", clickNum);
 	clickNum += input->IsTriggerMouse(0);
-	if (clickNum >= DESTROY_NUM) { isDestroy = true; }
+	if (clickNum >= DESTROY_NUM) {
+		isDestroy = true;
+	}
 }
 
 
@@ -110,4 +115,14 @@ void StagePlane::Initialize()
 	normal = { 0,0,-1 };
 	SetCollisionAttribute(CollisionAttribute::StagePlane);
 	SetCollisionMask(CollisionMask::StagePlane);
+}
+
+void BgBlock::Initialize()
+{
+	BaseBlock::Initialize();
+	worldTransform.Initialize();
+	worldTransform.scale_ *= 39.0f;
+	worldTransform.translation_ = { 40,-40,40 };
+	worldTransform.Update();
+	SetTexture("bgBlock.png");
 }

@@ -30,7 +30,11 @@ void GamePlayScene::Update()
 	CollisionManager::CheckAllCollisions();
 
 	debugCamera_->Update();
-	//*viewProjection = debugCamera_->GetViewProjection();
+	
+#ifdef DEBUG
+	*viewProjection = debugCamera_->GetViewProjection(); 
+#endif // DEBUG
+
 	if (input->TriggerKey(DIK_SPACE))
 	{
 		gameScene->SetNextScene(Scene::Title);

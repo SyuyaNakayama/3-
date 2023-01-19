@@ -10,7 +10,7 @@ protected:
 	uint32_t textureHandle = 0;
 
 public:
-	~BaseBlock() { delete model; }
+	virtual ~BaseBlock() { delete model; }
 	virtual void Initialize() = 0;
 	virtual void Update() {};
 	virtual void Draw() = 0;
@@ -38,7 +38,8 @@ private:
 
 public:
 	void Initialize();
-	virtual void SetTranslation(Vector3 translation) { worldTransform.translation_ = translation; }
+	void SetTranslation(Vector3 translation) { worldTransform.translation_ = translation; }
+	void Draw() { model->Draw(worldTransform, *ViewProjection::GetInstance(), textureHandle); }
 };
 
 class NormalBlock : public BaseBlockCollider
@@ -69,7 +70,7 @@ class DestroyBlock : public BaseBlockCollider, public PolygonCollider
 {
 private:
 	uint32_t clickNum = 0;
-	static const uint32_t DESTROY_NUM = 3;
+	static const uint32_t DESTROY_NUM = 2;
 	bool isDestroy = false;
 
 public:
@@ -85,4 +86,15 @@ class StagePlane : public PlaneCollider
 public:
 	static StagePlane* GetInstance();
 	void Initialize();
+};
+
+class BgBlock : public BaseBlock
+{
+private:
+	WorldTransform worldTransform;
+
+public:
+	void Initialize();
+	void SetTranslation(Vector3 translation) { worldTransform.translation_ = translation; }
+	void Draw() { model->Draw(worldTransform, *ViewProjection::GetInstance(), textureHandle); }
 };

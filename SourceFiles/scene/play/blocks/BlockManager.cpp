@@ -10,19 +10,31 @@ BlockManager* BlockManager::GetInstance()
 	return &instance;
 }
 
-BlockManager::BlockType BlockManager::IntToBlockType(int num)
+void BlockManager::Initialize(UINT16 stage)
 {
-	switch (num)
+	switch (stage)
 	{
-	case 0: return BlockType::None;
-	case 1: return BlockType::Normal;
-	case 2: return BlockType::Move;
-	case 3: return BlockType::Copy;
-	case 4: return BlockType::Destroy;
-	case 5: return BlockType::Ladder;
-	case 6: return BlockType::Goal;
-	default: return BlockType::None;
+	case 0: LoadMap("stage1.txt"); break;
+	case 1: LoadMap("stage2.txt"); break;
+	case 2: LoadMap("stage3.txt"); break;
+	case 3: LoadMap("stage4.txt"); break;
 	}
+	StagePlane::GetInstance()->Initialize();
+	unique_ptr<BaseBlock> bgBlock = make_unique<BgBlock>();
+	bgBlock->SetTranslation({ 40,-40,40 });
+	bgBlock->Initialize();
+	blocks.push_back(move(bgBlock));
+}
+
+void BlockManager::Update()
+{
+	blocks.remove_if([](const unique_ptr<BaseBlock>& block) { return block->IsDestroy(); });
+	for (const unique_ptr<BaseBlock>& block : blocks) { block->Update(); }
+}
+
+void BlockManager::Draw()
+{
+	for (const unique_ptr<BaseBlock>& block : blocks) { block->Draw(); }
 }
 
 void BlockManager::LoadMap(const std::string& fileName)
@@ -52,37 +64,20 @@ void BlockManager::LoadMap(const std::string& fileName)
 	CreateBlocks();
 }
 
-void BlockManager::CreateBlock(Vector3 pos, BlockType type)
+BlockManager::BlockType BlockManager::IntToBlockType(int num)
 {
-	BaseBlock* block = nullptr;
-
-	switch (type)
+	switch (num)
 	{
-	case BlockManager::BlockType::None:
-		return;
-	case BlockManager::BlockType::Normal:
-		block = new NormalBlock;
-		break;
-	case BlockManager::BlockType::Move:
-		block = new MoveBlock;
-		break;
-	case BlockManager::BlockType::Copy:
-		block = new CopyBlock;
-		break;
-	case BlockManager::BlockType::Destroy:
-		block = new DestroyBlock;
-		break;
-	case BlockManager::BlockType::Ladder:
-		block = new MoveBlock;
-		break;
-	case BlockManager::BlockType::Goal:
-		block = new MoveBlock;
-		break;
+	case 0: return BlockType::None;
+	case 1: return BlockType::Normal;
+	case 2: return BlockType::Move;
+	case 3: return BlockType::Copy;
+	case 4: return BlockType::Destroy;
+	case 5: return BlockType::Ladder;
+	case 6: return BlockType::Goal;
+	case 7: return BlockType::NonCollisionNormal;
+	default: return BlockType::None;
 	}
-	assert(block);
-	block->SetTranslation(pos);
-	block->Initialize();
-	blocks.push_back(block);
 }
 
 void BlockManager::CreateBlocks()
@@ -95,31 +90,22 @@ void BlockManager::CreateBlocks()
 	}
 }
 
-void BlockManager::Initialize(UINT16 stage)
+void BlockManager::CreateBlock(Vector3 pos, BlockType type)
 {
-	switch (stage)
+	unique_ptr<BaseBlock> block;
+	switch (type)
 	{
-	case 0:
-		LoadMap("stage1.txt");
-		break;
-	case 1:
-		break;
-	case 2:
-		break;
-	case 3:
-		break;
+	case BlockType::None: return;
+	case BlockType::Normal:				block = make_unique<NormalBlock>();				break;
+	case BlockType::Move:				block = make_unique<MoveBlock>();				break;
+	case BlockType::Copy:				block = make_unique<CopyBlock>();				break;
+	case BlockType::Destroy:			block = make_unique<DestroyBlock>();			break;
+	case BlockType::Ladder:				block = make_unique<MoveBlock>();				break;
+	case BlockType::Goal:				block = make_unique<MoveBlock>();				break;
+	case BlockType::NonCollisionNormal:	block = make_unique<NonCollisionNormalBlock>();	break;
 	}
-	StagePlane::GetInstance()->Initialize();
-}
-
-void BlockManager::Update()
-{
-	//blocks.remove_if([](BaseBlock* block) { return block->IsDestroy(); });
-	auto block = blocks.begin();
-	for (BaseBlock* block : blocks) { block->Update(); }
-}
-
-void BlockManager::Draw()
-{
-	for (BaseBlock* block : blocks) { block->Draw(); }
+	assert(block);
+	block->SetTranslation(pos);
+	block->Initialize();
+	blocks.push_back(move(block));
 }
