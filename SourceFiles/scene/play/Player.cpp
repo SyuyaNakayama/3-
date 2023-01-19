@@ -6,10 +6,10 @@
 void Player::Initialize()
 {
 	//ƒ‚ƒfƒ‹“Ç‚İ‚İ
-	model_ = Model::Create();
-	modelBody_ = Model::CreateFromOBJ("player_body");
-	modelLegL_ = Model::CreateFromOBJ("player_legL");
-	modelLegR_ = Model::CreateFromOBJ("player_legR");
+	model_ = Model::Create();							// ‘åŒ³
+	modelBody_ = Model::CreateFromOBJ("player_body");	// ‘Ì
+	modelLegL_ = Model::CreateFromOBJ("player_legL");	// ¶‘«
+	modelLegR_ = Model::CreateFromOBJ("player_legR");	// ‰E‘«
 
 	worldTransform.Initialize();
 	worldTransform.scale_.x = 0.9999f;
