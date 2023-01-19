@@ -4,7 +4,7 @@
 #include "input.h"
 #include "Jump.h"
 
-class Player : public BoxCollider
+class Player : public BoxCollider, public IncludeCollider
 {
 private:
 	Model* model_ = nullptr;
@@ -12,6 +12,7 @@ private:
 	float epsilon = 1.0e-5f; // “–‚½‚è”»’è‚Ì‚Æ‚«‚Ì”÷’²®‚Æ‚µ‚Äg‚¤
 	Jump jump;
 	bool isFallCheck = false;
+	bool isClimb = false;
 
 	void Move();
 public:
@@ -21,4 +22,5 @@ public:
 	void Draw();
 
 	void OnCollision(BoxCollider* boxCollider);
+	void OnCollision(IncludeCollider* includeCollider);
 };

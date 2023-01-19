@@ -63,7 +63,7 @@ public:
 	virtual Vector3 GetRadius() { return worldTransform.scale_; }
 };
 
-class IncludeCollider : public BaseCollider
+class IncludeCollider : public virtual BaseCollider
 {
 public:
 	enum class Axis { X, Y, Z };
@@ -71,7 +71,7 @@ public:
 private:
 	static float includeRadius;
 	// “–‚½‚è”»’è‚ğæ‚éƒyƒA‚Ìtrue‚ª­‚È‚¢‚Ù‚¤‚ªŒvZ‚É”½‰f‚³‚ê‚é
-	std::array<bool, 3> isUseAxis;
+	std::array<bool, 3> isUseAxis = { true,true,true };
 
 public:
 	IncludeCollider();

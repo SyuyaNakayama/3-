@@ -231,6 +231,9 @@
     <ClCompile Include="SourceFiles\scene\SceneFactory.cpp" />
     <ClCompile Include="SourceFiles\scene\TitleScene.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="Resources\stages\stage1.txt" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

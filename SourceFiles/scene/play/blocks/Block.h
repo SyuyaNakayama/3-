@@ -6,7 +6,7 @@
 class BaseBlock
 {
 protected:
-	Model* model;
+	Model* model = nullptr;
 	uint32_t textureHandle = 0;
 
 public:
@@ -89,7 +89,7 @@ class LadderBlock : public BaseBlock, public IncludeCollider
 {
 public:
 	virtual void Initialize();
-	virtual void Draw() { model->Draw(worldTransform, *ViewProjection::GetInstance(), textureHandle); }
+	virtual void Draw() { model->Draw(worldTransform, *ViewProjection::GetInstance()); }
 	virtual void SetTranslation(Vector3 translation) { worldTransform.translation_ = translation; };
 };
 

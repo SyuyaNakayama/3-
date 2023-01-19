@@ -122,9 +122,10 @@ void DestroyBlock::OnCollision(RayCollider* collider)
 #pragma region LadderBlock
 void LadderBlock::Initialize()
 {
-	BaseBlock::Initialize();
+	model = Model::CreateFromOBJ("ladder");
 	SetUseAxis(Axis::Y, false);
-	//SetTexture("ladderBlock.png");
+	worldTransform.Initialize();
+	worldTransform.Update();
 }
 #pragma endregion
 

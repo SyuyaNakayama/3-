@@ -36,12 +36,11 @@ bool CollisionManager::CheckCollision2IncludeObjects(IncludeCollider* colliderA,
 	Vector3 vecAB = colliderA->GetWorldPosition() - colliderB->GetWorldPosition();
 	// 使用フラグの取得
 	array<bool, 3> isUse{};
-	if (count(colliderA->GetUseAxis().begin(), colliderA->GetUseAxis().end(), true) >
-		count(colliderB->GetUseAxis().begin(), colliderB->GetUseAxis().end(), true))
+	
+	for (size_t i = 0; i < isUse.size(); i++)
 	{
-		isUse = colliderB->GetUseAxis();
+		isUse[i] = colliderA->GetUseAxis()[i] && colliderB->GetUseAxis()[i];
 	}
-	else{ isUse = colliderA->GetUseAxis(); }
 
 	// 計算に使わない値を0にする
 	if (!isUse[(size_t)IncludeCollider::Axis::X]) { vecAB.x = 0; }

@@ -19,29 +19,33 @@ void Player::Move() { worldTransform.translation_.x += spdX; }
 void Player::Update()
 {
 	// 落下チェック(ジャンプ中でないとき)
-	if (!jump.IsJump())
+	if(!isClimb)
 	{
-		worldTransform.translation_.y -= epsilon;
-		worldTransform.Update();
-		isFallCheck = true;
-		CollisionManager::CheckBoxCollisions();
-		worldTransform.translation_.y += epsilon;
-
-		// 下に地面がなかったら落下
-		if (isFallCheck)
+		if (!jump.IsJump())
 		{
-			jump.StartFall();
-			isFallCheck = false;
-			jump.UpdateFall(worldTransform.translation_.y);
+			worldTransform.translation_.y -= epsilon;
+			worldTransform.Update();
+			isFallCheck = true;
+			CollisionManager::CheckBoxCollisions();
+			worldTransform.translation_.y += epsilon;
+
+			// 下に地面がなかったら落下
+			if (isFallCheck)
+			{
+				jump.StartFall();
+				isFallCheck = false;
+				jump.UpdateFall(worldTransform.translation_.y);
+			}
 		}
-	}
-	if (!jump.IsFall())
-	{
-		Move();
-		jump.UpdateJump(worldTransform.translation_.y);
+		if (!jump.IsFall())
+		{
+			Move();
+			jump.UpdateJump(worldTransform.translation_.y);
+		}
 	}
 
 	worldTransform.Update();
+	isClimb = false;
 }
 
 void Player::Draw() { model_->Draw(worldTransform, *ViewProjection::GetInstance()); }
@@ -64,7 +68,7 @@ void Player::OnCollision(BoxCollider* boxCollider)
 		return;
 	}
 
-	float playerTopPosition = GetWorldPosition().y + GetRadius().y;
+	float playerTopPosition = BoxCollider::GetWorldPosition().y + GetRadius().y;
 
 	if (blockTopPosition - playerTopPosition <= epsilon)
 	{
@@ -75,4 +79,10 @@ void Player::OnCollision(BoxCollider* boxCollider)
 
 	// それ以外なら撥ね返る
 	spdX = -spdX;
+}
+
+void Player::OnCollision(IncludeCollider* includeCollider)
+{
+	isClimb = true;
+	worldTransform.translation_.y += 0.05f;
 }

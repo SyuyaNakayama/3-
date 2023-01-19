@@ -85,7 +85,7 @@ void BlockManager::CreateBlock(Vector3 pos, BlockType type)
 	case BlockType::Move:				block = make_unique<MoveBlock>();				break;
 	case BlockType::Copy:				block = make_unique<CopyBlock>();				break;
 	case BlockType::Destroy:			block = make_unique<DestroyBlock>();			break;
-	case BlockType::Ladder:				block = make_unique<MoveBlock>();				break;
+	case BlockType::Ladder:				block = make_unique<LadderBlock>();				break;
 	case BlockType::Goal:				block = make_unique<MoveBlock>();				break;
 	case BlockType::NonCollisionNormal:	block = make_unique<NonCollisionNormalBlock>();	break;
 	}
