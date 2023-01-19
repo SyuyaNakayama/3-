@@ -18,9 +18,11 @@ void Player::Move() { worldTransform.translation_.x += spdX; }
 
 void Player::Update()
 {
-	// 落下チェック(ジャンプ中でないとき)
-	if(!isClimb)
+	UINT16 flagSum = isClimb + isLadderHit;
+	switch (flagSum)
 	{
+	case 0:
+		// 落下チェック(ジャンプ中でないとき)
 		if (!jump.IsJump())
 		{
 			worldTransform.translation_.y -= epsilon;
@@ -42,10 +44,12 @@ void Player::Update()
 			Move();
 			jump.UpdateJump(worldTransform.translation_.y);
 		}
+		break;
+	case 1:	Move();	break;
 	}
 
 	worldTransform.Update();
-	isClimb = false;
+	isClimb = isLadderHit = false;
 }
 
 void Player::Draw() { model_->Draw(worldTransform, *ViewProjection::GetInstance()); }
@@ -56,6 +60,12 @@ void Player::OnCollision(BoxCollider* boxCollider)
 	{
 		// 落下チェックのときは終了
 		isFallCheck = false;
+		return;
+	}
+
+	if (boxCollider->GetCollisionAttribute() == CollisionAttribute::LadderBlock)
+	{
+		isLadderHit = true;
 		return;
 	}
 
@@ -84,5 +94,5 @@ void Player::OnCollision(BoxCollider* boxCollider)
 void Player::OnCollision(IncludeCollider* includeCollider)
 {
 	isClimb = true;
-	worldTransform.translation_.y += 0.05f;
+	if (isLadderHit) { worldTransform.translation_.y += 0.01f; }
 }

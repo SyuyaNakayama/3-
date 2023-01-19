@@ -85,7 +85,7 @@ public:
 	void OnCollision(RayCollider* collider) override;
 };
 
-class LadderBlock : public BaseBlock, public IncludeCollider
+class LadderBlock : public BaseBlockCollider, public IncludeCollider
 {
 public:
 	virtual void Initialize();

@@ -13,6 +13,7 @@ private:
 	Jump jump;
 	bool isFallCheck = false;
 	bool isClimb = false;
+	bool isLadderHit = false;
 
 	void Move();
 public:

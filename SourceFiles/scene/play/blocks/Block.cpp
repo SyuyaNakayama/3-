@@ -126,6 +126,8 @@ void LadderBlock::Initialize()
 	SetUseAxis(Axis::Y, false);
 	worldTransform.Initialize();
 	worldTransform.Update();
+	SetCollisionAttribute(CollisionAttribute::LadderBlock);
+	SetCollisionMask(CollisionMask::Block);
 }
 #pragma endregion
 
