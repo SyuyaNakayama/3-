@@ -109,9 +109,16 @@ void Player::Update()
 		break;
 	}
 
-	WalkMotion();
+	//プレイヤーが向いている方向を求める
+	if (oldPos > worldTransform.translation_.x) { direction = 0; }
+	else if (oldPos < worldTransform.translation_.x) { direction = 1; }
 
+	WalkMotion();
 	worldTransform.Update();
+
+	//現在の座標を保存する
+	oldPos = worldTransform.translation_.x;
+
 	isClimb = isLadderHit = false;
 
 	parentWorldTransform_[PartId::kBody].Update();
@@ -163,13 +170,13 @@ void Player::OnCollision(BoxCollider* boxCollider)
 
 	// それ以外なら撥ね返る
 	spdX = -spdX;
-
-	if (direction == 0) { direction = 1; }
-	else if (direction == 1) { direction = 0; }
 }
 
 void Player::OnCollision(IncludeCollider* includeCollider)
 {
 	isClimb = true;
-	if (isLadderHit) { worldTransform.translation_.y += 0.01f; }
+	if (isLadderHit) {
+		worldTransform.translation_.y += 0.01f;
+		direction = 2;
+	}
 }
