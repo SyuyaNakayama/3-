@@ -39,12 +39,8 @@ void Player::Update()
 				jump.UpdateFall(worldTransform.translation_.y);
 			}
 		}
-		if (!jump.IsFall())
-		{
-			Move();
-			jump.UpdateJump(worldTransform.translation_.y);
-		}
-		break;
+		if (jump.IsFall()) { break; }
+		jump.UpdateJump(worldTransform.translation_.y);
 	case 1:	Move();	break;
 	}
 
