@@ -17,18 +17,13 @@ void Player::Initialize()
 
 	//eŽqŠÖŒW
 	//‘Ì
-	parentWorldTransform_[PartId::kBody].Initialize();
-	parentWorldTransform_[PartId::kBody].parent_ = &worldTransform;
-	parentWorldTransform_[PartId::kBody].translation_ = { 0.0f,0.9f,0.0f };
-	//¶‘«
-	parentWorldTransform_[PartId::kLegL].Initialize();
-	parentWorldTransform_[PartId::kLegL].parent_ = &worldTransform;
-	parentWorldTransform_[PartId::kLegL].translation_ = { 0.0f,0.9f,0.0f };
-	//‰E‘«
-	parentWorldTransform_[PartId::kLegR].Initialize();
-	parentWorldTransform_[PartId::kLegR].parent_ = &worldTransform;
-	parentWorldTransform_[PartId::kLegR].translation_ = { 0.0f,0.9f,0.0f };
-	
+	for (WorldTransform& w : parentWorldTransform_)
+	{
+		w.Initialize();
+		w.parent_ = &worldTransform;
+		w.translation_ = { 0.0f,0.9f,0.0f };
+	}
+
 	jump.SetGravity(0.08f);
 	SetCollisionAttribute(CollisionAttribute::Player);
 	SetCollisionMask(CollisionMask::Player);
@@ -41,31 +36,30 @@ void Player::Move()
 
 void Player::WalkMotion()
 {
-	float X = 0.5f;		//•à•
-	float speed = 0.03f;//‘«‚ÌU‚è‚Ì‘¬‚³
+	const float X = 0.5f; //•à•
 
-	if(walkFlag == true)
+	if (!walkFlag == true) { return; }
+	if (fabsf(walkPos) >= X) { speed = -speed; }
+	walkPos += speed;
+	/*if (ForB == true)
 	{
-		if(ForB == true)
+		walkPos += speed;
+		if (walkPos >= X)
 		{
-			walkPos += speed;
-			if(walkPos >= X)
-			{
-				ForB = false;
-			}
+			ForB = false;
 		}
-		if(ForB == false)
-		{
-			walkPos -= speed;
-			if (walkPos <= -X)
-			{
-				ForB = true;
-			}
-		}
-		ImGui::Text("X:%f", walkPos);
-		parentWorldTransform_[PartId::kLegL].translation_.z = walkPos;
-		parentWorldTransform_[PartId::kLegR].translation_.z = -walkPos;
 	}
+	if (ForB == false)
+	{
+		walkPos -= speed;
+		if (walkPos <= -X)
+		{
+			ForB = true;
+		}
+	}*/
+	ImGui::Text("X:%f", walkPos);
+	parentWorldTransform_[PartId::kLegL].translation_.z = walkPos;
+	parentWorldTransform_[PartId::kLegR].translation_.z = -walkPos;
 }
 
 void Player::Update()
@@ -114,10 +108,7 @@ void Player::Update()
 	worldTransform.Update();
 	isClimb = isLadderHit = false;
 
-	parentWorldTransform_[PartId::kBody].Update();
-	parentWorldTransform_[PartId::kLegL].Update();
-	parentWorldTransform_[PartId::kLegR].Update();
-
+	for (WorldTransform& w : parentWorldTransform_) { w.Update(); }
 }
 
 void Player::Draw()

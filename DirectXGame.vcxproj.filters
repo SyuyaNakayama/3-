@@ -264,6 +264,9 @@
     <ClInclude Include="SourceFiles\functions\Timer.h">
       <Filter>ヘッダー ファイル\functions</Filter>
     </ClInclude>
+    <ClInclude Include="SourceFiles\math\Quaternion.h">
+      <Filter>ヘッダー ファイル\math</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SourceFiles\base\TextureManager.cpp">
@@ -337,6 +340,9 @@
     </ClCompile>
     <ClCompile Include="SourceFiles\functions\Timer.cpp">
       <Filter>ソース ファイル\functions</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceFiles\math\Quaternion.cpp">
+      <Filter>ソース ファイル\math</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

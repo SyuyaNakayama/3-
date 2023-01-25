@@ -23,7 +23,7 @@ private:
 	float walkTimer = 0;
 	bool walkFlag = true;
 	float walkPos = 0.0f;
-	bool ForB = true; //true...‘O, false...Œã
+	float speed = 0.03f; //‘«‚ÌU‚è‚Ì‘¬‚³
 
 	Input* input = nullptr;
 
