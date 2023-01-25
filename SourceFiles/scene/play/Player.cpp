@@ -41,22 +41,7 @@ void Player::WalkMotion()
 	if (!walkFlag == true) { return; }
 	if (fabsf(walkPos) >= X) { speed = -speed; }
 	walkPos += speed;
-	/*if (ForB == true)
-	{
-		walkPos += speed;
-		if (walkPos >= X)
-		{
-			ForB = false;
-		}
-	}
-	if (ForB == false)
-	{
-		walkPos -= speed;
-		if (walkPos <= -X)
-		{
-			ForB = true;
-		}
-	}*/
+
 	ImGui::Text("X:%f", walkPos);
 	parentWorldTransform_[PartId::kLegL].translation_.z = walkPos;
 	parentWorldTransform_[PartId::kLegR].translation_.z = -walkPos;
