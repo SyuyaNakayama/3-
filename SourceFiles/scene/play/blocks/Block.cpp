@@ -25,7 +25,6 @@ void NonCollisionNormalBlock::Initialize()
 	worldTransform.Initialize();
 	worldTransform.Update();
 	SetTexture("normalBlock.png");
-	//SetTexture("cube.jpg");
 }
 
 void NormalBlock::Initialize()
@@ -125,6 +124,7 @@ void LadderBlock::Initialize()
 	model = Model::CreateFromOBJ("ladder");
 	SetUseAxis(Axis::Y, false);
 	worldTransform.Initialize();
+	worldTransform.translation_.z = -1.0f;
 	worldTransform.Update();
 	SetCollisionAttribute(CollisionAttribute::LadderBlock);
 	SetCollisionMask(CollisionMask::Block);

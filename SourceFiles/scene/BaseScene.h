@@ -4,6 +4,7 @@
 #include "ViewProjection.h"
 #include "DirectXCommon.h"
 #include "ImGuiManager.h"
+#include "BlockManager.h"
 
 class GameScene;
 
@@ -16,6 +17,8 @@ protected:
 	ViewProjection* viewProjection = ViewProjection::GetInstance();
 	ID3D12GraphicsCommandList* cmdList = DirectXCommon::GetInstance()->GetCommandList();
 	ImGuiManager* imguiManager = ImGuiManager::GetInstance();
+	BlockManager* blockManager = BlockManager::GetInstance();
+	UINT16 stage = 2;
 
 public:
 	virtual ~BaseScene() = default;

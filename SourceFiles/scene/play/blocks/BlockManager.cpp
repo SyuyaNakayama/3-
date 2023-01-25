@@ -14,10 +14,12 @@ void BlockManager::Initialize(UINT16 stage)
 {
 	switch (stage)
 	{
-	case 0: LoadMap("stage1.txt"); break;
-	case 1: LoadMap("stage2.txt"); break;
-	case 2: LoadMap("stage3.txt"); break;
-	case 3: LoadMap("stage4.txt"); break;
+	case 0: LoadMap("title.txt", 0); break;
+	case 1: LoadMap("tutorial.txt", 1); break;
+	case 2: LoadMap("stage1.txt", 2); break;
+	case 3: LoadMap("stage2.txt", 3); break;
+	case 4: LoadMap("stage3.txt", 4); break;
+	case 5: LoadMap("clear.txt", 5); break;
 	}
 	StagePlane::GetInstance()->Initialize();
 	unique_ptr<BaseBlock> bgBlock = make_unique<BgBlock>();
@@ -35,10 +37,10 @@ void BlockManager::Update()
 	unique_ptr<BaseBlock> newBlock;
 	for (const unique_ptr<BaseBlock>& block : blocks)
 	{
-		if (newBlock = block->NewBlockCreate()) 
+		if (newBlock = block->NewBlockCreate())
 		{
 			blocks.push_back(move(newBlock));
-			break; 
+			break;
 		}
 	}
 
@@ -50,7 +52,7 @@ void BlockManager::Draw()
 	for (const unique_ptr<BaseBlock>& block : blocks) { block->Draw(); }
 }
 
-void BlockManager::LoadMap(const std::string& fileName)
+void BlockManager::LoadMap(const std::string& fileName, UINT16 faceNum)
 {
 	fstream file;
 	file.open("Resources/stages/" + fileName);
@@ -67,7 +69,8 @@ void BlockManager::LoadMap(const std::string& fileName)
 		{
 			int temp;
 			lineStream >> temp;
-			CreateBlock({ 2.0f * x, -2.0f * y, 0 }, (BlockType)temp);
+			if (faceNum == 0) { CreateBlock({ 2.0f * x, 0, 2.0f * y }, (BlockType)temp); }
+			if (faceNum == 2) { CreateBlock({ 2.0f * x, -2.0f * y, 0 }, (BlockType)temp); }
 			getline(lineStream, key, ',');
 		}
 		y++;

@@ -33,6 +33,7 @@ void GameScene::Initialize()
 	SetNextScene(Scene::Play, false);
 	imguiManager->Initialize();
 	fadeManager_.Initialize();
+	BlockManager::GetInstance()->Initialize(0);
 }
 
 void GameScene::Update()

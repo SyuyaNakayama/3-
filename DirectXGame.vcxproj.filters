@@ -345,7 +345,4 @@
       <Filter>ソース ファイル\math</Filter>
     </ClCompile>
   </ItemGroup>
-  <ItemGroup>
-    <Text Include="Resources\stages\stage1.txt" />
-  </ItemGroup>
 </Project>

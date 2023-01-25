@@ -2,30 +2,27 @@
 #include "TextureManager.h"
 #include "GamePlayScene.h"
 #include "GameScene.h"
+#include "Quaternion.h"
 
 void TitleScene::Initialize()
 {
 	gameScene = GameScene::GetInstance();
-}
-
-void TitleScene::Finalize()
-{
-	delete sprite;
+	viewProjection->target = { 40,0,40 };
+	viewProjection->eye = { 0,1200,0 };
+	viewProjection->up = upVector;
 }
 
 void TitleScene::Update()
 {
-	if (input->TriggerKey(DIK_SPACE))
-	{
-		gameScene->SetNextScene(Scene::Play);
-	}
+	Quaternion rotaQ = { std::cos(cameraUpAngle / 2.0f) ,Vector3(0,1,0) * std::sin(cameraUpAngle / 2.0f) };
+	viewProjection->up = Quaternion::RotateVector(Vector3(70, -40.0f, -1200), rotaQ);
+	cameraUpAngle += 0.005f;
+	if (input->TriggerKey(DIK_SPACE)) { gameScene->SetNextScene(Scene::Play); }
 }
 
 void TitleScene::Draw()
 {
-	Sprite::PreDraw(cmdList);
-	//sprite->Draw();
-	Sprite::PostDraw();
-
-	DirectXCommon::GetInstance()->ClearDepthBuffer();
+	Model::PreDraw(cmdList);
+	blockManager->Draw();
+	Model::PostDraw();
 }

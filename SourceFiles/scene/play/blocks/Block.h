@@ -91,6 +91,7 @@ public:
 	virtual void Initialize();
 	virtual void Draw() { model->Draw(worldTransform, *ViewProjection::GetInstance()); }
 	virtual void SetTranslation(Vector3 translation) { worldTransform.translation_ = translation; };
+	Vector3 GetWorldPosition() { return worldTransform.GetWorldPosition() + Vector3(0, 0, 1); }
 };
 
 class StagePlane : public PlaneCollider

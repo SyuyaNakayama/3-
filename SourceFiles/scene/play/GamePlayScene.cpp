@@ -11,14 +11,14 @@ void GamePlayScene::Initialize()
 
 	viewProjection->eye = { 70,-40.0f,-1200 };
 	viewProjection->target = { 70,-40.0f,0 };
-	viewProjection->farZ = 15000.0f;
-
-	blockManager->Initialize(stage);
+	viewProjection->up = { 0,1,0 };
+	viewProjection->farZ = 1500.0f;
 
 	debugCamera_ = new DebugCamera(WinApp::kWindowWidth, WinApp::kWindowHeight);
 	player_.Initialize();
-
+	
 	mouse->Initialize();
+	blockManager->Initialize(2);
 }
 
 void GamePlayScene::Update()
@@ -27,11 +27,6 @@ void GamePlayScene::Update()
 	blockManager->Update();
 	player_.Update();
 
-	static float angle = 0;
-	Quaternion rotaQ = { std::cos(angle / 2.0f) ,Vector3(0,1,0) * std::sin(angle / 2.0f) };
-	viewProjection->eye = Quaternion::RotateVector(Vector3(70, -40.0f, -1200), rotaQ);
-	angle += 0.05f;
-	imguiManager->PrintVector("viewProjection->eye", viewProjection->eye);
 	// “–‚½‚è”»’è
 	CollisionManager::CheckAllCollisions();
 
