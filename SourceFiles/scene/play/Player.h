@@ -7,7 +7,6 @@
 class Player : public BoxCollider, public IncludeCollider
 {
 private:
-	Model* model_ = nullptr;
 	Model* modelBody_ = nullptr;	//体のモデル
 	Model* modelLegL_ = nullptr;	//左足のモデル
 	Model* modelLegR_ = nullptr;	//右足のモデル
@@ -30,7 +29,7 @@ private:
 	void Move();
 	void WalkMotion();	//歩くモーション
 public:
-	~Player() { delete model_; }
+	~Player() { delete modelBody_, delete modelLegL_, delete modelLegR_; }
 	void Initialize();
 	void Update();
 	void Draw();

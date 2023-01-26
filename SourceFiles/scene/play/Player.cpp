@@ -6,7 +6,6 @@
 void Player::Initialize()
 {
 	//モデル読み込み
-	model_ = Model::Create();							// 大元
 	modelBody_ = Model::CreateFromOBJ("player_body");	// 体
 	modelLegL_ = Model::CreateFromOBJ("player_legL");	// 左足
 	modelLegR_ = Model::CreateFromOBJ("player_legR");	// 右足
@@ -98,7 +97,6 @@ void Player::Update()
 
 void Player::Draw()
 {
-	//model_->Draw(worldTransform, *ViewProjection::GetInstance());
 	modelBody_->Draw(parentWorldTransform_[PartId::kBody], *ViewProjection::GetInstance());
 	modelLegL_->Draw(parentWorldTransform_[PartId::kLegL], *ViewProjection::GetInstance());
 	modelLegR_->Draw(parentWorldTransform_[PartId::kLegR], *ViewProjection::GetInstance());
@@ -115,7 +113,14 @@ void Player::OnCollision(BoxCollider* boxCollider)
 
 	if (boxCollider->GetCollisionAttribute() == CollisionAttribute::LadderBlock)
 	{
+		// 梯子ブロックの場合
 		isLadderHit = true;
+		return;
+	}
+
+	if (boxCollider->GetCollisionAttribute() == CollisionAttribute::Button)
+	{
+		// ボタンの場合
 		return;
 	}
 

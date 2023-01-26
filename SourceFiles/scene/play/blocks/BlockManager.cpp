@@ -69,7 +69,7 @@ void BlockManager::LoadMap(const std::string& fileName, UINT16 faceNum)
 		{
 			int temp;
 			lineStream >> temp;
-			if (faceNum == 0) { CreateBlock({ 2.0f * x, 0, 2.0f * y }, (BlockType)temp); }
+			if (faceNum == 0) { CreateBlock({ 2.0f * y, 0, 2.0f * x }, (BlockType)temp); }
 			if (faceNum == 2) { CreateBlock({ 2.0f * x, -2.0f * y, 0 }, (BlockType)temp); }
 			getline(lineStream, key, ',');
 		}
@@ -89,7 +89,7 @@ void BlockManager::CreateBlock(Vector3 pos, BlockType type)
 	case BlockType::Copy:				block = make_unique<CopyBlock>();				break;
 	case BlockType::Destroy:			block = make_unique<DestroyBlock>();			break;
 	case BlockType::Ladder:				block = make_unique<LadderBlock>();				break;
-	case BlockType::Goal:				block = make_unique<MoveBlock>();				break;
+	case BlockType::Button:				block = make_unique<Button>();					break;
 	case BlockType::NonCollisionNormal:	block = make_unique<NonCollisionNormalBlock>();	break;
 	}
 	assert(block);

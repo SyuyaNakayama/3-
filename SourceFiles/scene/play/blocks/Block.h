@@ -88,10 +88,18 @@ public:
 class LadderBlock : public BaseBlockCollider, public IncludeCollider
 {
 public:
-	virtual void Initialize();
-	virtual void Draw() { model->Draw(worldTransform, *ViewProjection::GetInstance()); }
-	virtual void SetTranslation(Vector3 translation) { worldTransform.translation_ = translation; };
+	void Initialize();
+	void Draw() { model->Draw(worldTransform, *ViewProjection::GetInstance()); }
 	Vector3 GetWorldPosition() { return worldTransform.GetWorldPosition() + Vector3(0, 0, 1); }
+};
+
+class Button : public BaseBlockCollider
+{
+	bool isDraw = true;
+public:
+	void Initialize();
+	void Draw() { if (isDraw) { model->Draw(worldTransform, *ViewProjection::GetInstance()); } }
+	void OnCollision(BoxCollider* collider);
 };
 
 class StagePlane : public PlaneCollider

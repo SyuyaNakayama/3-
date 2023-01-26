@@ -12,7 +12,6 @@ void GamePlayScene::Initialize()
 	viewProjection->eye = { 70,-40.0f,-1200 };
 	viewProjection->target = { 70,-40.0f,0 };
 	viewProjection->up = { 0,1,0 };
-	viewProjection->farZ = 1500.0f;
 
 	debugCamera_ = new DebugCamera(WinApp::kWindowWidth, WinApp::kWindowHeight);
 	player_.Initialize();

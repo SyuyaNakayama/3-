@@ -8,8 +8,9 @@ enum class CollisionAttribute
 	Player = 0b1,
 	Block = 0b1 << 1,
 	LadderBlock = 0b1 << 2,
-	MouseRay = 0b1 << 3,
-	StagePlane = 0b1 << 4,
+	Button = 0b1 << 3,
+	MouseRay = 0b1 << 4,
+	StagePlane = 0b1 << 5,
 	All = -1
 };
 

@@ -7,7 +7,7 @@
 class BlockManager
 {
 private:
-	enum class BlockType { None, Normal, Move, Copy, Destroy, Ladder, Goal, NonCollisionNormal };
+	enum class BlockType { None, Normal, Move, Copy, Destroy, Ladder, Button, NonCollisionNormal };
 	static const UINT16 STAGE_SIZE = 40;
 
 	std::list<std::unique_ptr<BaseBlock>> blocks;

@@ -26,8 +26,8 @@ void GameScene::Initialize()
 	primitiveDrawer->Initialize();
 
 	viewProjection->Initialize();
-	viewProjection->eye = { 0,0,-500 };
 	viewProjection->fovAngleY = 4.0f * MathUtility::PI / 180.0f;
+	viewProjection->farZ = 1500.0f;
 
 	// シーンの生成
 	SetNextScene(Scene::Play, false);

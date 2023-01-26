@@ -156,3 +156,19 @@ void BgBlock::Initialize()
 	SetTexture("bgBlock.png");
 }
 #pragma endregion
+
+void Button::Initialize()
+{
+	model = Model::CreateFromOBJ("botton");
+	worldTransform.Initialize();
+	worldTransform.rotation_.x = -PI / 2.0f;
+	worldTransform.translation_.z = -1.0f;
+	worldTransform.Update();
+	SetCollisionAttribute(CollisionAttribute::Button);
+	SetCollisionMask(CollisionMask::Block);
+}
+
+void Button::OnCollision(BoxCollider* collider)
+{
+	isDraw = false;
+}
