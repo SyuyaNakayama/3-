@@ -78,24 +78,39 @@ void CopyBlock::Initialize()
 
 std::unique_ptr<BaseBlock> CopyBlock::NewBlockCreate()
 {
+	if(isCopy == false){return nullptr;}
 	if (!isCopyMode) { return nullptr; }
 	if (!input->IsTriggerMouse(0)) { return nullptr; }
 	isCopyMode = false;
-
-	std::unique_ptr<BaseBlock> newBlock = std::make_unique<CopyBlock>();
+	std::unique_ptr<BaseBlock> newBlock = std::make_unique<CopyedBlock>();
 
 	newBlock->SetTranslation(*StagePlane::GetInstance()->GetInter());
 	newBlock->Initialize();
 
+	isCopy = false;
 	return newBlock;
 }
 
 void CopyBlock::Update()
 {
+	if (isCopy == false) { SetTexture("copyBlock_2.png"); }
 	worldTransform.Update();
 }
 
-void CopyBlock::OnCollision(RayCollider* Collider) { if (input->IsTriggerMouse(0)) { isCopyMode = true; } }
+void CopyBlock::OnCollision(RayCollider* Collider) { if (input->IsTriggerMouse(0)) { isCopyMode = true; }}
+#pragma endregion
+
+#pragma region CopyedBlock
+void CopyedBlock::Initialize()
+{
+	BaseBlockCollider::Initialize();
+	SetTexture("copyedBlock.png");
+}
+
+void CopyedBlock::Update()
+{
+	worldTransform.Update();
+}
 #pragma endregion
 
 #pragma region DestroyBlock

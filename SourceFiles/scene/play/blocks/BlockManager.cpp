@@ -26,22 +26,6 @@ void BlockManager::Initialize(UINT16 stage)
 	bgBlock->SetTranslation({ 40,-40,40 });
 	bgBlock->Initialize();
 	blocks.push_back(move(bgBlock));
-
-	/*unique_ptr<BaseBlock> stopBlock = make_unique<NormalBlock>();
-	stopBlock->SetTranslation({ 20,-19,0 });
-	stopBlock->SetScale({ 20.0f,20.0f,1.0f });
-	stopBlock->Initialize();
-	blocks.push_back(move(stopBlock));
-	stopBlock = make_unique<NormalBlock>();
-	stopBlock->SetTranslation({ 20,-59,0 });
-	stopBlock->SetScale({ 20.0f,20.0f,1.0f });
-	stopBlock->Initialize();
-	blocks.push_back(move(stopBlock));
-	stopBlock = make_unique<NormalBlock>();
-	stopBlock->SetTranslation({ 59,-19,0 });
-	stopBlock->SetScale({ 20.0f,20.0f,1.0f });
-	stopBlock->Initialize();
-	blocks.push_back(move(stopBlock));*/
 }
 
 void BlockManager::Update()

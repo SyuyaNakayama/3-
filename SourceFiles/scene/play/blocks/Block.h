@@ -67,13 +67,19 @@ class CopyBlock : public BaseBlockCollider, public PolygonCollider
 {
 private:
 	bool isCopyMode = false;
-	bool isCopyed = false;
+	bool isCopy = true;
 public:
 	std::unique_ptr<BaseBlock> NewBlockCreate();
 	void Initialize();
 	void Update();
 	void OnCollision(RayCollider* Collider);
-	void SetIsCopyed(bool isCopyed) { this->isCopyed = isCopyed; }
+};
+
+class CopyedBlock : public BaseBlockCollider
+{
+public:
+	void Initialize();
+	void Update();
 };
 
 class DestroyBlock : public BaseBlockCollider, public PolygonCollider
