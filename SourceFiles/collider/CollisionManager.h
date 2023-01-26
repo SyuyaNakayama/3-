@@ -16,11 +16,8 @@ private:
 	static bool CheckCollision2Boxes(BoxCollider* colliderA, BoxCollider* colliderB);
 	static bool CheckCollision2IncludeObjects(IncludeCollider* colliderA, IncludeCollider* colliderB);
 	static bool CheckCollision2Spheres(SphereCollider* colliderA, SphereCollider* colliderB);
-	//static bool CheckCollisionSpherePlane(const Sphere& sphere, const Plane& plane, Vector3* inter = nullptr);
-	//static bool CheckCollisionSphereTriangle(const Sphere& sphere, const Triangle& triangle, Vector3* inter = nullptr);
 	static bool CheckCollisionRayPlane(RayCollider* colliderA, PlaneCollider* colliderB, float* distance = nullptr);
 	static bool CheckCollisionRayPolygon(RayCollider* colliderA, PolygonCollider* colliderB, float* distance = nullptr);
-	//static bool CheckCollisionRaySphere(const Ray& ray, const Sphere& sphere, float* distance = nullptr, Vector3* inter = nullptr);
 
 public:
 	CollisionManager() = delete;

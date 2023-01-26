@@ -1,5 +1,5 @@
 ﻿#include "GameScene.h"
-#include <cassert>
+#include "Quaternion.h"
 
 void GameScene::Initialize()
 {
@@ -28,6 +28,8 @@ void GameScene::Initialize()
 	viewProjection->Initialize();
 	viewProjection->fovAngleY = 4.0f * MathUtility::PI / 180.0f;
 	viewProjection->farZ = 1500.0f;
+
+	CubeQuaternion::Create();
 
 	// シーンの生成
 	SetNextScene(Scene::Play, false);

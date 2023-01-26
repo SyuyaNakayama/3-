@@ -16,7 +16,7 @@ public:
 	virtual void Draw() = 0;
 	virtual bool IsDestroy() { return false; }
 	virtual void SetTranslation(Vector3 translation) = 0;
-virtual void SetRotation(Vector3 rotation){}
+	virtual void SetRotation(Vector3 rotation) {}
 	virtual std::unique_ptr<BaseBlock> NewBlockCreate() { return nullptr; }
 	void SetTexture(const std::string& fileName);
 };
@@ -30,8 +30,7 @@ public:
 	virtual void Initialize();
 	~BaseBlockCollider() = default;
 	void SetTranslation(Vector3 translation) { worldTransform.translation_ = translation; }
-	void SetRotation(Vector3 rotation){worldTransform.rotation_ = rotation_;}
-void Draw();
+	void Draw();
 };
 
 class NonCollisionNormalBlock : public BaseBlock
@@ -92,7 +91,8 @@ class LadderBlock : public BaseBlockCollider, public IncludeCollider
 public:
 	void Initialize();
 	void Draw() { model->Draw(worldTransform, *ViewProjection::GetInstance()); }
-	Vector3 GetWorldPosition() { return worldTransform.GetWorldPosition() + Vector3(0, 0, 1); }
+	//Vector3 GetWorldPosition() { return worldTransform.GetWorldPosition() + Vector3(0, 0, 1); }
+	void SetRotation(Vector3 rotation) { worldTransform.rotation_ = rotation; }
 };
 
 class Button : public BaseBlockCollider
@@ -102,6 +102,7 @@ public:
 	void Initialize();
 	void Draw() { if (isDraw) { model->Draw(worldTransform, *ViewProjection::GetInstance()); } }
 	void OnCollision(BoxCollider* collider);
+	void SetRotation(Vector3 rotation) { worldTransform.rotation_ = rotation; }
 };
 
 class StagePlane : public PlaneCollider

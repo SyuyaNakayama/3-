@@ -13,7 +13,7 @@ private:
 	std::list<std::unique_ptr<BaseBlock>> blocks;
 
 	void LoadMap(const std::string& fileName, UINT16 faceNum);
-	void CreateBlock(Vector3 pos, BlockType type);
+	void CreateBlock(Vector3 pos, Vector3 rot, BlockType type);
 	BlockManager() = default;
 public:
 	BlockManager(const BlockManager& obj) = delete;

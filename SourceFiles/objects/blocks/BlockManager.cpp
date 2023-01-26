@@ -59,6 +59,7 @@ void BlockManager::LoadMap(const std::string& fileName, UINT16 faceNum)
 	assert(file.is_open());
 
 	string line, key;
+	Quaternion rotQ = CubeQuaternion::Get(faceNum);
 	for (UINT16 y = 0; y < STAGE_SIZE;)
 	{
 		getline(file, line);
@@ -70,16 +71,10 @@ void BlockManager::LoadMap(const std::string& fileName, UINT16 faceNum)
 			int temp;
 			lineStream >> temp;
 			Vector3 pos = { 2.0f * x - 39.0f,-2.0f * y + 39.0f,-39.0f };
-			Quaternion rotQ = { cos(PI / 4.0f),sin(PI / 4.0f) * Vector3(1,0,0) };
-			Quaternion rotQ2 = { cos(0.0f),sin(0.0f) * Vector3(0,1,0) };
-			switch (faceNum)
-			{
-			case 0:	rotQ = { cos(PI / 4.0f),sin(PI / 4.0f) * Vector3(1,0,0) }; break;
-			case 5:	rotQ = { cos(PI / 4.0f),sin(PI / 4.0f) * Vector3(-1,0,0) };	break;
-			default:
-				rotQ = { cos(PI / 4.0f * (float)(faceNum - 1)),sin(PI / 4.0f * (float)(faceNum - 1)) * Vector3(0,-1,0) };
-			}
-			CreateBlock(Quaternion::RotateVector(pos, rotQ), (BlockType)temp);
+			Vector3 rotVec{};
+			if (temp == (int)BlockType::Button) { rotVec = Quaternion::RotateVector(Vector3(-PI / 2.0f, 0, 0), rotQ); }
+			if (temp == (int)BlockType::Ladder) { rotVec.y = PI - PI / 2.0f * (float)(faceNum - 1); }
+			CreateBlock(Quaternion::RotateVector(pos, rotQ), rotVec, (BlockType)temp);
 			getline(lineStream, key, ',');
 		}
 		y++;
@@ -87,7 +82,7 @@ void BlockManager::LoadMap(const std::string& fileName, UINT16 faceNum)
 	file.close();
 }
 
-void BlockManager::CreateBlock(Vector3 pos, BlockType type)
+void BlockManager::CreateBlock(Vector3 pos, Vector3 rot, BlockType type)
 {
 	unique_ptr<BaseBlock> block;
 	switch (type)
@@ -103,6 +98,7 @@ void BlockManager::CreateBlock(Vector3 pos, BlockType type)
 	}
 	assert(block);
 	block->SetTranslation(pos);
+	block->SetRotation(rot);
 	block->Initialize();
 	blocks.push_back(move(block));
 }

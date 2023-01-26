@@ -55,3 +55,13 @@ Quaternion Slerp(const Quaternion& q0, const Quaternion& q1, float t);
 
 // u‚©‚çv‚Ö‚Ì‰ñ“]‚ğ¶¬(u,v‚Í³‹K‰»‚³‚ê‚Ä‚¢‚é‘O’ñ)
 Quaternion DirectionToDirection(const Vector3& u, const Vector3& v);
+
+// —§•û‘Ì‚ÌŠe–Ê‚É‘Î‰‚µ‚½Quaternion‚ğŠi”[‚·‚éÃ“IƒNƒ‰ƒX
+class CubeQuaternion
+{
+	static Quaternion quaternions[6];
+public:
+	CubeQuaternion() = delete;
+	static void Create();
+	static Quaternion Get(unsigned short faceNum) { return quaternions[faceNum]; }
+};

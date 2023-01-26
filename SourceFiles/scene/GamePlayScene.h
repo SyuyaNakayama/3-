@@ -8,13 +8,12 @@ class GamePlayScene : public BaseScene
 {
 private:
 	Player player_;
-	DebugCamera* debugCamera_ = nullptr;
+	std::unique_ptr<DebugCamera> debugCamera_;
 	Mouse* mouse = Mouse::GetInstance();
-	float angle = 0;
 
 public:
 	void Initialize() override;
-	void Finalize() override;
+	void Finalize() {};
 	void Update() override;
 	void Draw() override;
 };

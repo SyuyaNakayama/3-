@@ -1,12 +1,16 @@
 #pragma once
 #include "Sprite.h"
 #include "BaseScene.h"
+#include "Timer.h"
 
 class TitleScene : public BaseScene
 {
 private:
 	float cameraUpAngle = 0;
 	Vector3 upVector = { 0,0,1 };
+	float upRotSpd = 0.005f;
+	bool isNextScene = false;
+	Timer timer = 60;
 
 public:
 	void Initialize() override;

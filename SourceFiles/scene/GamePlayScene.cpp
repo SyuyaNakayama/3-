@@ -9,11 +9,11 @@ void GamePlayScene::Initialize()
 {
 	gameScene = GameScene::GetInstance();
 
-	viewProjection->eye = { 70,-40.0f,-1200 };
-	viewProjection->target = { 70,-40.0f,0 };
+	viewProjection->eye = { 0,0,-1200 };
+	viewProjection->eye = { 1200,0,0 };
 	viewProjection->up = { 0,1,0 };
 
-	debugCamera_ = new DebugCamera(WinApp::kWindowWidth, WinApp::kWindowHeight);
+	debugCamera_ = std::make_unique<DebugCamera>(WinApp::kWindowWidth, WinApp::kWindowHeight);
 	player_.Initialize();
 	
 	mouse->Initialize();
@@ -36,11 +36,6 @@ void GamePlayScene::Update()
 	debugCamera_->Update();
 
 	*viewProjection = debugCamera_->GetViewProjection(); 
-
-	if (input->TriggerKey(DIK_SPACE))
-	{
-		gameScene->SetNextScene(Scene::Title);
-	}
 }
 
 void GamePlayScene::Draw()
@@ -53,9 +48,4 @@ void GamePlayScene::Draw()
 
 	// 3Dオブジェクト描画後処理
 	Model::PostDraw();
-}
-
-void GamePlayScene::Finalize()
-{
-	delete debugCamera_;
 }

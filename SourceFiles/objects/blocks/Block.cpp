@@ -124,7 +124,6 @@ void LadderBlock::Initialize()
 	model = Model::CreateFromOBJ("ladder");
 	SetUseAxis(Axis::Y, false);
 	worldTransform.Initialize();
-	//worldTransform.translation_.z = -1.0f;
 	worldTransform.Update();
 	SetCollisionAttribute(CollisionAttribute::LadderBlock);
 	SetCollisionMask(CollisionMask::Block);
@@ -160,8 +159,6 @@ void Button::Initialize()
 {
 	model = Model::CreateFromOBJ("botton");
 	worldTransform.Initialize();
-	worldTransform.rotation_.x = -PI / 2.0f;
-	//worldTransform.translation_.z = -1.0f;
 	worldTransform.Update();
 	SetCollisionAttribute(CollisionAttribute::Button);
 	SetCollisionMask(CollisionMask::Block);
