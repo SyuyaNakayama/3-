@@ -31,7 +31,7 @@ void GamePlayScene::Update()
 	player_.Update();
 
 	// “–‚½‚è”»’è
-	//CollisionManager::CheckAllCollisions();
+	CollisionManager::CheckAllCollisions();
 
 	debugCamera_->Update();
 

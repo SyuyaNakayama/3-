@@ -77,7 +77,7 @@ void BlockManager::LoadMap(const std::string& fileName, UINT16 faceNum)
 			case 0:	rotQ = { cos(PI / 4.0f),sin(PI / 4.0f) * Vector3(1,0,0) }; break;
 			case 5:	rotQ = { cos(PI / 4.0f),sin(PI / 4.0f) * Vector3(-1,0,0) };	break;
 			default:
-				rotQ = { cos(PI / 4.0f * (float)(faceNum - 1)),sin(PI / 4.0f * (float)(faceNum-1)) * Vector3(0,-1,0) };
+				rotQ = { cos(PI / 4.0f * (float)(faceNum - 1)),sin(PI / 4.0f * (float)(faceNum - 1)) * Vector3(0,-1,0) };
 			}
 			CreateBlock(Quaternion::RotateVector(pos, rotQ), (BlockType)temp);
 			getline(lineStream, key, ',');
