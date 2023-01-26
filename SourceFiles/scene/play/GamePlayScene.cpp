@@ -17,7 +17,11 @@ void GamePlayScene::Initialize()
 	player_.Initialize();
 	
 	mouse->Initialize();
+	blockManager->Initialize(1);
 	blockManager->Initialize(2);
+	blockManager->Initialize(3);
+	blockManager->Initialize(4);
+	blockManager->Initialize(5);
 }
 
 void GamePlayScene::Update()
@@ -27,11 +31,11 @@ void GamePlayScene::Update()
 	player_.Update();
 
 	// “–‚½‚è”»’è
-	CollisionManager::CheckAllCollisions();
+	//CollisionManager::CheckAllCollisions();
 
 	debugCamera_->Update();
 
-	//*viewProjection = debugCamera_->GetViewProjection(); 
+	*viewProjection = debugCamera_->GetViewProjection(); 
 
 	if (input->TriggerKey(DIK_SPACE))
 	{
