@@ -16,7 +16,7 @@ public:
 	virtual void Draw() = 0;
 	virtual bool IsDestroy() { return false; }
 	virtual void SetTranslation(Vector3 translation) = 0;
-virtual void SetRotation(Vector3 rotation) = 0;
+virtual void SetRotation(Vector3 rotation){}
 	virtual std::unique_ptr<BaseBlock> NewBlockCreate() { return nullptr; }
 	void SetTexture(const std::string& fileName);
 };
@@ -30,7 +30,8 @@ public:
 	virtual void Initialize();
 	~BaseBlockCollider() = default;
 	void SetTranslation(Vector3 translation) { worldTransform.translation_ = translation; }
-	void Draw();
+	void SetRotation(Vector3 rotation){worldTransform.rotation_ = rotation_;}
+void Draw();
 };
 
 class NonCollisionNormalBlock : public BaseBlock
