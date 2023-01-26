@@ -24,8 +24,8 @@ void NonCollisionNormalBlock::Initialize()
 	BaseBlock::Initialize();
 	worldTransform.Initialize();
 	worldTransform.Update();
-	SetTexture("normalBlock.png");
-	//SetTexture("cube.jpg");
+	//SetTexture("normalBlock.png");
+	SetTexture("cube.jpg");
 }
 
 void NormalBlock::Initialize()
