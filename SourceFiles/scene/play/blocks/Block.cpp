@@ -83,8 +83,10 @@ std::unique_ptr<BaseBlock> CopyBlock::NewBlockCreate()
 	isCopyMode = false;
 
 	std::unique_ptr<BaseBlock> newBlock = std::make_unique<CopyBlock>();
+
 	newBlock->SetTranslation(*StagePlane::GetInstance()->GetInter());
 	newBlock->Initialize();
+
 	return newBlock;
 }
 
@@ -114,6 +116,10 @@ void DestroyBlock::Update()
 void DestroyBlock::OnCollision(RayCollider* collider)
 {
 	clickNum += input->IsTriggerMouse(0);
+
+	if (clickNum == 1) { SetTexture("destroyBlock_2.png"); }
+	if (clickNum == 2) { SetTexture("destroyBlock_1.png"); }
+	
 	if (clickNum >= DESTROY_NUM) { isDestroy = true; }
 }
 #pragma endregion

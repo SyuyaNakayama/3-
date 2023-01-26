@@ -16,6 +16,7 @@ public:
 	virtual void Draw() = 0;
 	virtual bool IsDestroy() { return false; }
 	virtual void SetTranslation(Vector3 translation) = 0;
+	virtual void SetScale(Vector3 scale) = 0;
 	virtual std::unique_ptr<BaseBlock> NewBlockCreate() { return nullptr; }
 	void SetTexture(const std::string& fileName);
 };
@@ -29,6 +30,7 @@ public:
 	virtual void Initialize();
 	~BaseBlockCollider() = default;
 	void SetTranslation(Vector3 translation) { worldTransform.translation_ = translation; }
+	void SetScale(Vector3 scale) { worldTransform.scale_ = scale; }
 	void Draw();
 };
 
@@ -40,6 +42,7 @@ private:
 public:
 	void Initialize();
 	void SetTranslation(Vector3 translation) { worldTransform.translation_ = translation; }
+	void SetScale(Vector3 scale) { worldTransform.scale_ = scale; }
 	void Draw() { model->Draw(worldTransform, *ViewProjection::GetInstance(), textureHandle); }
 };
 
@@ -64,18 +67,20 @@ class CopyBlock : public BaseBlockCollider, public PolygonCollider
 {
 private:
 	bool isCopyMode = false;
+	bool isCopyed = false;
 public:
 	std::unique_ptr<BaseBlock> NewBlockCreate();
 	void Initialize();
 	void Update();
 	void OnCollision(RayCollider* Collider);
+	void SetIsCopyed(bool isCopyed) { this->isCopyed = isCopyed; }
 };
 
 class DestroyBlock : public BaseBlockCollider, public PolygonCollider
 {
 private:
 	uint32_t clickNum = 0;
-	static const uint32_t DESTROY_NUM = 2;
+	static const uint32_t DESTROY_NUM = 3;
 	bool isDestroy = false;
 
 public:
@@ -118,5 +123,6 @@ private:
 public:
 	void Initialize();
 	void SetTranslation(Vector3 translation) { worldTransform.translation_ = translation; }
+	void SetScale(Vector3 scale) { worldTransform.scale_ = scale; }
 	void Draw() { model->Draw(worldTransform, *ViewProjection::GetInstance(), textureHandle); }
 };

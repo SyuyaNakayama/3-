@@ -7,6 +7,7 @@ void Player::Initialize()
 {
 	//ƒ‚ƒfƒ‹“Ç‚İ‚İ
 	modelBody_ = Model::CreateFromOBJ("player_body");	// ‘Ì
+	//modelBody_ = Model::CreateFromOBJ("lever");	// ‘Ì
 	modelLegL_ = Model::CreateFromOBJ("player_legL");	// ¶‘«
 	modelLegR_ = Model::CreateFromOBJ("player_legR");	// ‰E‘«
 
