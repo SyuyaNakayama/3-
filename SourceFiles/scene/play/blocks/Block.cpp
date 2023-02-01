@@ -189,7 +189,31 @@ void Button::Initialize()
 	SetCollisionMask(CollisionMask::Block);
 }
 
+uint16_t Button::useCount;
 void Button::OnCollision(BoxCollider* collider)
 {
 	isDraw = false;
+	isDestroy = true;
+	useCount++;
 }
+
+
+
+#pragma region CopyedBlock
+void StopBlock::Initialize()
+{
+	BaseBlockCollider::Initialize();
+	SetTexture("copyedBlock.png");
+}
+
+void StopBlock::Update()
+{
+	NumDestroy();
+	worldTransform.Update();
+}
+
+void StopBlock::NumDestroy()
+{
+	if (num_ == Button::useCount) { isDestroy = true; }
+}
+#pragma endregion

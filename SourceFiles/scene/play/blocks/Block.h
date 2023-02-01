@@ -8,7 +8,7 @@ class BaseBlock
 protected:
 	Model* model = nullptr;
 	uint32_t textureHandle = 0;
-
+	int num_;
 public:
 	virtual ~BaseBlock() { delete model; }
 	virtual void Initialize() = 0;
@@ -19,6 +19,8 @@ public:
 	virtual void SetScale(Vector3 scale) = 0;
 	virtual std::unique_ptr<BaseBlock> NewBlockCreate() { return nullptr; }
 	void SetTexture(const std::string& fileName);
+
+	void SetNum(int num) { num_ = num; }
 };
 
 class BaseBlockCollider : public virtual BaseBlock, public BoxCollider
@@ -107,7 +109,13 @@ public:
 class Button : public BaseBlockCollider
 {
 	bool isDraw = true;
+
+private:
+	bool isDestroy = false;
 public:
+	static uint16_t useCount;
+public:
+	bool IsDestroy() { return isDestroy; }
 	void Initialize();
 	void Draw() { if (isDraw) { model->Draw(worldTransform, *ViewProjection::GetInstance()); } }
 	void OnCollision(BoxCollider* collider);
@@ -131,4 +139,15 @@ public:
 	void SetTranslation(Vector3 translation) { worldTransform.translation_ = translation; }
 	void SetScale(Vector3 scale) { worldTransform.scale_ = scale; }
 	void Draw() { model->Draw(worldTransform, *ViewProjection::GetInstance(), textureHandle); }
+};
+
+class StopBlock : public BaseBlockCollider
+{
+private:
+	bool isDestroy = false;
+public:
+	bool IsDestroy() { return isDestroy; }
+	void NumDestroy();
+	void Initialize();
+	void Update();
 };
