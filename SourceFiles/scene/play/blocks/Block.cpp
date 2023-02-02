@@ -199,7 +199,7 @@ void Button::OnCollision(BoxCollider* collider)
 
 
 
-#pragma region CopyedBlock
+#pragma region StopBlock
 void StopBlock::Initialize()
 {
 	BaseBlockCollider::Initialize();
