@@ -8,7 +8,7 @@ class BaseBlock
 protected:
 	Model* model = nullptr;
 	uint32_t textureHandle = 0;
-
+	int num_;
 public:
 	virtual ~BaseBlock() { delete model; }
 	virtual void Initialize() = 0;
@@ -17,8 +17,11 @@ public:
 	virtual bool IsDestroy() { return false; }
 	virtual void SetTranslation(Vector3 translation) = 0;
 	virtual void SetRotation(Vector3 rotation) {}
+	virtual void SetScale(Vector3 scale) = 0;
 	virtual std::unique_ptr<BaseBlock> NewBlockCreate() { return nullptr; }
 	void SetTexture(const std::string& fileName);
+
+	void SetNum(int num) { num_ = num; }
 };
 
 class BaseBlockCollider : public virtual BaseBlock, public BoxCollider
@@ -30,6 +33,7 @@ public:
 	virtual void Initialize();
 	~BaseBlockCollider() = default;
 	void SetTranslation(Vector3 translation) { worldTransform.translation_ = translation; }
+	void SetScale(Vector3 scale) { worldTransform.scale_ = scale; }
 	void Draw();
 };
 
@@ -41,6 +45,7 @@ private:
 public:
 	void Initialize();
 	void SetTranslation(Vector3 translation) { worldTransform.translation_ = translation; }
+	void SetScale(Vector3 scale) { worldTransform.scale_ = scale; }
 	void Draw() { model->Draw(worldTransform, *ViewProjection::GetInstance(), textureHandle); }
 };
 
@@ -65,6 +70,7 @@ class CopyBlock : public BaseBlockCollider, public PolygonCollider
 {
 private:
 	bool isCopyMode = false;
+	bool isCopy = true;
 public:
 	std::unique_ptr<BaseBlock> NewBlockCreate();
 	void Initialize();
@@ -72,11 +78,18 @@ public:
 	void OnCollision(RayCollider* Collider);
 };
 
+class CopyedBlock : public BaseBlockCollider
+{
+public:
+	void Initialize();
+	void Update();
+};
+
 class DestroyBlock : public BaseBlockCollider, public PolygonCollider
 {
 private:
 	uint32_t clickNum = 0;
-	static const uint32_t DESTROY_NUM = 2;
+	static const uint32_t DESTROY_NUM = 3;
 	bool isDestroy = false;
 
 public:
@@ -98,7 +111,13 @@ public:
 class Button : public BaseBlockCollider
 {
 	bool isDraw = true;
+
+private:
+	bool isDestroy = false;
 public:
+	static uint16_t useCount;
+public:
+	bool IsDestroy() { return isDestroy; }
 	void Initialize();
 	void Draw() { if (isDraw) { model->Draw(worldTransform, *ViewProjection::GetInstance()); } }
 	void OnCollision(BoxCollider* collider);
@@ -121,5 +140,17 @@ private:
 public:
 	void Initialize();
 	void SetTranslation(Vector3 translation) { worldTransform.translation_ = translation; }
+	void SetScale(Vector3 scale) { worldTransform.scale_ = scale; }
 	void Draw() { model->Draw(worldTransform, *ViewProjection::GetInstance(), textureHandle); }
+};
+
+class StopBlock : public BaseBlockCollider
+{
+private:
+	bool isDestroy = false;
+public:
+	bool IsDestroy() { return isDestroy; }
+	void NumDestroy();
+	void Initialize();
+	void Update();
 };

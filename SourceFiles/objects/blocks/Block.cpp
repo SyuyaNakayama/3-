@@ -78,22 +78,39 @@ void CopyBlock::Initialize()
 
 std::unique_ptr<BaseBlock> CopyBlock::NewBlockCreate()
 {
+	if(isCopy == false){return nullptr;}
 	if (!isCopyMode) { return nullptr; }
 	if (!input->IsTriggerMouse(0)) { return nullptr; }
 	isCopyMode = false;
+	std::unique_ptr<BaseBlock> newBlock = std::make_unique<CopyedBlock>();
 
-	std::unique_ptr<BaseBlock> newBlock = std::make_unique<CopyBlock>();
 	newBlock->SetTranslation(*StagePlane::GetInstance()->GetInter());
 	newBlock->Initialize();
+
+	isCopy = false;
 	return newBlock;
 }
 
 void CopyBlock::Update()
 {
+	if (isCopy == false) { SetTexture("copyBlock_2.png"); }
 	worldTransform.Update();
 }
 
-void CopyBlock::OnCollision(RayCollider* Collider) { if (input->IsTriggerMouse(0)) { isCopyMode = true; } }
+void CopyBlock::OnCollision(RayCollider* Collider) { if (input->IsTriggerMouse(0)) { isCopyMode = true; }}
+#pragma endregion
+
+#pragma region CopyedBlock
+void CopyedBlock::Initialize()
+{
+	BaseBlockCollider::Initialize();
+	SetTexture("copyedBlock.png");
+}
+
+void CopyedBlock::Update()
+{
+	worldTransform.Update();
+}
 #pragma endregion
 
 #pragma region DestroyBlock
@@ -114,6 +131,10 @@ void DestroyBlock::Update()
 void DestroyBlock::OnCollision(RayCollider* collider)
 {
 	clickNum += input->IsTriggerMouse(0);
+
+	if (clickNum == 1) { SetTexture("destroyBlock_2.png"); }
+	if (clickNum == 2) { SetTexture("destroyBlock_1.png"); }
+	
 	if (clickNum >= DESTROY_NUM) { isDestroy = true; }
 }
 #pragma endregion
@@ -164,7 +185,31 @@ void Button::Initialize()
 	SetCollisionMask(CollisionMask::Block);
 }
 
+uint16_t Button::useCount;
 void Button::OnCollision(BoxCollider* collider)
 {
 	isDraw = false;
+	isDestroy = true;
+	useCount++;
 }
+
+
+
+#pragma region CopyedBlock
+void StopBlock::Initialize()
+{
+	BaseBlockCollider::Initialize();
+	SetTexture("copyedBlock.png");
+}
+
+void StopBlock::Update()
+{
+	NumDestroy();
+	worldTransform.Update();
+}
+
+void StopBlock::NumDestroy()
+{
+	if (num_ == Button::useCount) { isDestroy = true; }
+}
+#pragma endregion
