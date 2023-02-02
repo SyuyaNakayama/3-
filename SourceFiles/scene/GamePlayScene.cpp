@@ -36,7 +36,7 @@ void GamePlayScene::Update()
 	debugCamera_->Update();
 
 #ifdef _DEBUG
-	//*viewProjection = debugCamera_->GetViewProjection(); 
+	*viewProjection = debugCamera_->GetViewProjection(); 
 #endif // _DEBUG
 }
 
