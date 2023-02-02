@@ -18,13 +18,13 @@ private:
 
 	enum class Direction
 	{
-		Left,Right,
+		Left, Right,
 		Back // 奥
 	};
 
 	std::array <std::unique_ptr<Model>, 3> models;
 	WorldTransform parentWorldTransform_[3]{}; //親子関係用のworldTransform
-	float spdX = -0.1f;
+	Vector3 moveSpd = { -0.1f,0,0 };
 	float epsilon = 1.0e-5f; // 当たり判定のときの微調整として使う
 	Jump jump;
 	bool isFallCheck = false;

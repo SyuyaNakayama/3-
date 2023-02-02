@@ -14,8 +14,9 @@ void Player::Initialize()
 	worldTransform.Initialize();
 	worldTransform.scale_.x = 0.9999f;
 	worldTransform.translation_ = { 36.0f ,-35.0f + epsilon,-39.0f };
-	Quaternion rotQ = { cos(PI / 4.0f),sin(PI / 4.0f) * Vector3(0,-1,0) };
+	Quaternion rotQ = CubeQuaternion::Get(1);
 	worldTransform.translation_ = Quaternion::RotateVector(worldTransform.translation_, rotQ);
+	moveSpd= Quaternion::RotateVector(worldTransform.translation_, rotQ);
 
 	//êeéqä÷åW
 	for (WorldTransform& w : parentWorldTransform_)
@@ -32,7 +33,7 @@ void Player::Initialize()
 
 void Player::Move()
 {
-	worldTransform.translation_.x += spdX;
+	worldTransform.translation_ += moveSpd;
 }
 
 void Player::WalkMotion()
@@ -150,7 +151,7 @@ void Player::OnCollision(BoxCollider* boxCollider)
 	}
 
 	// ÇªÇÍà»äOÇ»ÇÁùõÇÀï‘ÇÈ
-	spdX = -spdX;
+	moveSpd = -moveSpd;
 }
 
 void Player::OnCollision(IncludeCollider* includeCollider)
