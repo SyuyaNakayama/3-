@@ -3,6 +3,8 @@
 #include "Player.h"
 #include "DebugCamera.h"
 #include "Mouse.h"
+#include "Model.h"
+
 
 class GamePlayScene : public BaseScene
 {
@@ -11,6 +13,10 @@ private:
 	DebugCamera* debugCamera_ = nullptr;
 	Mouse* mouse = Mouse::GetInstance();
 	float angle = 0;
+
+	Model* hideBlock = nullptr;
+
+	WorldTransform worldTransform_;
 
 public:
 	void Initialize() override;

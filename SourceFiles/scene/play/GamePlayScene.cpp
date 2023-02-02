@@ -4,6 +4,7 @@
 #include "TitleScene.h"
 #include "CollisionManager.h"
 #include "Quaternion.h"
+#include <DirectXMath.h>
 
 void GamePlayScene::Initialize()
 {
@@ -18,6 +19,16 @@ void GamePlayScene::Initialize()
 	
 	mouse->Initialize();
 	blockManager->Initialize(2);
+
+	hideBlock = Model::CreateFromOBJ("hideblock");
+
+	worldTransform_.Initialize();
+
+	worldTransform_.scale_ = { 0.5f,0.511f,0.511f };
+	worldTransform_.rotation_ = { 0,1.555f,0 };
+	worldTransform_.translation_ = { 19.0f,-19.0f,-1.0f };
+
+	worldTransform_.Update();
 }
 
 void GamePlayScene::Update()
@@ -37,6 +48,16 @@ void GamePlayScene::Update()
 	{
 		gameScene->SetNextScene(Scene::Title);
 	}
+
+	if (input->PushKey(DIK_1))
+	{
+		worldTransform_.rotation_.x += 0.2f;
+		worldTransform_.scale_.x -= 0.01f;
+		worldTransform_.scale_.y -= 0.01f;
+		worldTransform_.scale_.z -= 0.01f;
+		worldTransform_.Update();
+		
+	}
 }
 
 void GamePlayScene::Draw()
@@ -46,6 +67,8 @@ void GamePlayScene::Draw()
 
 	blockManager->Draw();
 	player_.Draw();
+	hideBlock->Draw(worldTransform_, *ViewProjection::GetInstance());
+	
 
 	// 3Dオブジェクト描画後処理
 	Model::PostDraw();
