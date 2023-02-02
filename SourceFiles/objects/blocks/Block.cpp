@@ -145,7 +145,6 @@ void LadderBlock::Initialize()
 	model = Model::CreateFromOBJ("ladder");
 	SetUseAxis(Axis::Y, false);
 	worldTransform.Initialize();
-	worldTransform.translation_.z = -1.0f;
 	worldTransform.Update();
 	SetCollisionAttribute(CollisionAttribute::LadderBlock);
 	SetCollisionMask(CollisionMask::Block);
@@ -161,7 +160,7 @@ StagePlane* StagePlane::GetInstance()
 
 void StagePlane::Initialize()
 {
-	distance = 0;
+	distance = 39.0f;
 	normal = { 0,0,-1 };
 	SetCollisionAttribute(CollisionAttribute::StagePlane);
 	SetCollisionMask(CollisionMask::StagePlane);
@@ -171,8 +170,7 @@ void BgBlock::Initialize()
 {
 	BaseBlock::Initialize();
 	worldTransform.Initialize();
-	worldTransform.scale_ *= 39.0f;
-	worldTransform.translation_ = { 40,-40,40 };
+	worldTransform.scale_ *= 38.0f;
 	worldTransform.Update();
 	SetTexture("bgBlock.png");
 }
@@ -182,8 +180,6 @@ void Button::Initialize()
 {
 	model = Model::CreateFromOBJ("botton");
 	worldTransform.Initialize();
-	worldTransform.rotation_.x = -PI / 2.0f;
-	worldTransform.translation_.z = -1.0f;
 	worldTransform.Update();
 	SetCollisionAttribute(CollisionAttribute::Button);
 	SetCollisionMask(CollisionMask::Block);
@@ -197,7 +193,16 @@ void Button::OnCollision(BoxCollider* collider)
 	useCount++;
 }
 
+void GoalBlock::Initialize()
+{
+	worldTransform.Initialize();
+	worldTransform.Update();
+	model=Model::CreateFromOBJ("gate");
+	SetCollisionAttribute(CollisionAttribute::GoalBlock);
+	SetCollisionMask(CollisionMask::Block);
+}
 
+void GoalBlock::Draw() { model->Draw(worldTransform, *ViewProjection::GetInstance()); }
 
 #pragma region StopBlock
 void StopBlock::Initialize()

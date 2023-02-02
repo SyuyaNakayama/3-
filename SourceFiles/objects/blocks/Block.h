@@ -2,6 +2,7 @@
 #include "Model.h"
 #include "Collider.h"
 #include "Input.h"
+#include "Quaternion.h"
 
 class BaseBlock
 {
@@ -16,6 +17,7 @@ public:
 	virtual void Draw() = 0;
 	virtual bool IsDestroy() { return false; }
 	virtual void SetTranslation(Vector3 translation) = 0;
+	virtual void SetRotation(Vector3 rotation) {}
 	virtual void SetScale(Vector3 scale) = 0;
 	virtual std::unique_ptr<BaseBlock> NewBlockCreate() { return nullptr; }
 	void SetTexture(const std::string& fileName);
@@ -103,7 +105,7 @@ class LadderBlock : public BaseBlockCollider, public IncludeCollider
 public:
 	void Initialize();
 	void Draw() { model->Draw(worldTransform, *ViewProjection::GetInstance()); }
-	Vector3 GetWorldPosition() { return worldTransform.GetWorldPosition() + Vector3(0, 0, 1); }
+	void SetRotation(Vector3 rotation) { worldTransform.rotation_ = rotation; }
 };
 
 class Button : public BaseBlockCollider
@@ -119,6 +121,14 @@ public:
 	void Initialize();
 	void Draw() { if (isDraw) { model->Draw(worldTransform, *ViewProjection::GetInstance()); } }
 	void OnCollision(BoxCollider* collider);
+	void SetRotation(Vector3 rotation) { worldTransform.rotation_ = rotation; }
+};
+
+class GoalBlock : public BaseBlockCollider
+{
+public:
+	void Initialize();
+	void Draw();
 };
 
 class StagePlane : public PlaneCollider
@@ -127,6 +137,7 @@ class StagePlane : public PlaneCollider
 public:
 	static StagePlane* GetInstance();
 	void Initialize();
+	void Rotation(Quaternion rotQ) { normal = Quaternion::RotateVector(normal, rotQ); }
 };
 
 class BgBlock : public BaseBlock

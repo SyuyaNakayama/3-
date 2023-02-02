@@ -2,21 +2,23 @@
 #include "ImGuiManager.h"
 #include "CollisionManager.h"
 #include <imgui.h>
+#include "Quaternion.h"
 
 void Player::Initialize()
 {
 	//モデル読み込み
-	modelBody_ = Model::CreateFromOBJ("player_body");	// 体
-	//modelBody_ = Model::CreateFromOBJ("lever");	// 体
-	modelLegL_ = Model::CreateFromOBJ("player_legL");	// 左足
-	modelLegR_ = Model::CreateFromOBJ("player_legR");	// 右足
+	models[(int)PartId::Body].reset(Model::CreateFromOBJ("player_body"));	// 体
+	models[(int)PartId::LegL].reset(Model::CreateFromOBJ("player_legL"));	// 左足
+	models[(int)PartId::LegR].reset(Model::CreateFromOBJ("player_legR"));	// 右足
 
 	worldTransform.Initialize();
 	worldTransform.scale_.x = 0.9999f;
-	worldTransform.translation_ = { 76.0f ,-76.0f + epsilon,0 };
+	worldTransform.translation_ = { 36.0f ,-30.0f + epsilon,-39.0f };
+	Quaternion rotQ = CubeQuaternion::Get(1);
+	worldTransform.translation_ = Quaternion::RotateVector(worldTransform.translation_, rotQ);
+	moveSpd= Quaternion::RotateVector(moveSpd, rotQ);
 
 	//親子関係
-	//体
 	for (WorldTransform& w : parentWorldTransform_)
 	{
 		w.Initialize();
@@ -31,7 +33,7 @@ void Player::Initialize()
 
 void Player::Move()
 {
-	worldTransform.translation_.x += spdX;
+	worldTransform.translation_ += moveSpd;
 }
 
 void Player::WalkMotion()
@@ -42,9 +44,8 @@ void Player::WalkMotion()
 	if (fabsf(walkPos) >= X) { speed = -speed; }
 	walkPos += speed;
 
-	ImGui::Text("X:%f", walkPos);
-	parentWorldTransform_[PartId::kLegL].translation_.z = walkPos;
-	parentWorldTransform_[PartId::kLegR].translation_.z = -walkPos;
+	parentWorldTransform_[(int)PartId::LegL].translation_.z = walkPos;
+	parentWorldTransform_[(int)PartId::LegR].translation_.z = -walkPos;
 }
 
 void Player::Update()
@@ -74,40 +75,43 @@ void Player::Update()
 		jump.UpdateJump(worldTransform.translation_.y);
 	case 1:	Move();	break;
 	}
+
 	//進んでる方向によってキャラの向きを変える
 	switch (direction)
 	{
-	case 0://左
-		worldTransform.rotation_.y = 90 * PI / 180;
+	case Player::Direction::Left:
+		worldTransform.rotation_.y = PI / 2.0f;
 		break;
-	case 1://右
-		worldTransform.rotation_.y = 270 * PI / 180;
+	case Player::Direction::Right:
+		worldTransform.rotation_.y = 1.5f * PI;
 		break;
-	case 2://奥
-		worldTransform.rotation_.y = 180 * PI / 180;
+	case Player::Direction::Back:
+		worldTransform.rotation_.y = PI;
 		break;
 	}
 
 	//プレイヤーが向いている方向を求める
-	if (oldPos > worldTransform.translation_.x) { direction = 0; }
-	else if (oldPos < worldTransform.translation_.x) { direction = 1; }
+	if (oldPosX > worldTransform.translation_.x) { direction = Direction::Left; }
+	else if (oldPosX < worldTransform.translation_.x) { direction = Direction::Right; }
 
 	WalkMotion();
 	worldTransform.Update();
 
 	//現在の座標を保存する
-	oldPos = worldTransform.translation_.x;
+	oldPosX = worldTransform.translation_.x;
 
 	isClimb = isLadderHit = false;
 
 	for (WorldTransform& w : parentWorldTransform_) { w.Update(); }
+	ImGuiManager::GetInstance()->PrintVector("playerPos", worldTransform.GetWorldPosition());
 }
 
 void Player::Draw()
 {
-	modelBody_->Draw(parentWorldTransform_[PartId::kBody], *ViewProjection::GetInstance());
-	modelLegL_->Draw(parentWorldTransform_[PartId::kLegL], *ViewProjection::GetInstance());
-	modelLegR_->Draw(parentWorldTransform_[PartId::kLegR], *ViewProjection::GetInstance());
+	for (size_t i = 0; i < models.size(); i++)
+	{
+		models[i]->Draw(parentWorldTransform_[i], *ViewProjection::GetInstance());
+	}
 }
 
 void Player::OnCollision(BoxCollider* boxCollider)
@@ -126,11 +130,8 @@ void Player::OnCollision(BoxCollider* boxCollider)
 		return;
 	}
 
-	if (boxCollider->GetCollisionAttribute() == CollisionAttribute::Button)
-	{
-		// ボタンの場合
-		return;
-	}
+	// ボタンの場合
+	if (boxCollider->GetCollisionAttribute() == CollisionAttribute::Button) { return; }
 
 	float blockTopPosition = boxCollider->GetWorldPosition().y + boxCollider->GetRadius().y;
 	if (jump.IsFall())
@@ -151,14 +152,15 @@ void Player::OnCollision(BoxCollider* boxCollider)
 	}
 
 	// それ以外なら撥ね返る
-	spdX = -spdX;
+	moveSpd = -moveSpd;
 }
 
 void Player::OnCollision(IncludeCollider* includeCollider)
 {
 	isClimb = true;
-	if (isLadderHit) {
+	if (isLadderHit)
+	{
 		worldTransform.translation_.y += 0.01f;
-		direction = 2;
+		direction = Direction::Back;
 	}
 }

@@ -127,3 +127,21 @@ Quaternion DirectionToDirection(const Vector3& u, const Vector3& v)
 	float theta = std::acos(dot);
 	return Quaternion::MakeAxisAngle(axis, theta);
 }
+
+Quaternion CubeQuaternion::quaternions[6];
+
+void CubeQuaternion::Create()
+{
+	for (size_t i = 0; i < 6; i++)
+	{
+		Quaternion rotQ;
+		switch (i)
+		{
+		case 0:	rotQ = { cos(PI / 4.0f),sin(PI / 4.0f) * Vector3(1,0,0) }; break;
+		case 5:	rotQ = { cos(PI / 4.0f),sin(PI / 4.0f) * Vector3(-1,0,0) };	break;
+		default:
+			rotQ = { cos(PI / 4.0f * (float)(i - 1)),sin(PI / 4.0f * (float)(i - 1)) * Vector3(0,-1,0) };
+		}
+		quaternions[i] = rotQ;
+	}
+}

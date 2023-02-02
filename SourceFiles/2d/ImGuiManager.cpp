@@ -4,7 +4,6 @@
 #include "WinApp.h"
 #include "DirectXCommon.h"
 #include <cassert>
-#define TO_STRING(VariableName) # VariableName
 
 using namespace ImGui;
 

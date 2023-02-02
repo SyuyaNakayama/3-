@@ -59,7 +59,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)SourceFiles\2d;$(ProjectDir)SourceFiles\3d;$(ProjectDir)SourceFiles\audio;$(ProjectDir)SourceFiles\base;$(ProjectDir)SourceFiles\input;$(ProjectDir)SourceFiles\scene;$(ProjectDir)SourceFiles\math;$(ProjectDir)SourceFiles\collider;$(ProjectDir)SourceFiles\player;$(ProjectDir)SourceFiles\functions;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)SourceFiles\2d;$(ProjectDir)SourceFiles\3d;$(ProjectDir)SourceFiles\audio;$(ProjectDir)SourceFiles\base;$(ProjectDir)SourceFiles\collider;$(ProjectDir)SourceFiles\functions;$(ProjectDir)SourceFiles\input;$(ProjectDir)SourceFiles\math;$(ProjectDir)SourceFiles\objects;$(ProjectDir)SourceFiles\objects\blocks;$(ProjectDir)SourceFiles\scene</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
@@ -79,7 +79,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)SourceFiles\2d;$(ProjectDir)SourceFiles\3d;$(ProjectDir)SourceFiles\audio;$(ProjectDir)SourceFiles\base;$(ProjectDir)SourceFiles\math;$(ProjectDir)SourceFiles;$(ProjectDir)SourceFiles\functions;$(ProjectDir)SourceFiles\scene;$(ProjectDir)SourceFiles\collider;$(ProjectDir)SourceFiles\scene\blocks;$(ProjectDir)SourceFiles\scene\play;$(ProjectDir)SourceFiles\input;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)SourceFiles\2d;$(ProjectDir)SourceFiles\3d;$(ProjectDir)SourceFiles\audio;$(ProjectDir)SourceFiles\base;$(ProjectDir)SourceFiles\collider;$(ProjectDir)SourceFiles\functions;$(ProjectDir)SourceFiles\input;$(ProjectDir)SourceFiles\math;$(ProjectDir)SourceFiles\objects;$(ProjectDir)SourceFiles\objects\blocks;$(ProjectDir)SourceFiles\scene</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <Optimization>MinSpace</Optimization>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
@@ -181,9 +181,7 @@
     <ClInclude Include="SourceFiles\base\TextureManager.h" />
     <ClInclude Include="SourceFiles\base\WinApp.h" />
     <ClInclude Include="SourceFiles\collider\Collider.h" />
-    <ClInclude Include="SourceFiles\collider\Collision.h" />
     <ClInclude Include="SourceFiles\collider\CollisionManager.h" />
-    <ClInclude Include="SourceFiles\collider\CollisionPrimitive.h" />
     <ClInclude Include="SourceFiles\functions\FadeManager.h" />
     <ClInclude Include="SourceFiles\functions\SharePtr.h" />
     <ClInclude Include="SourceFiles\functions\Timer.h" />
@@ -197,12 +195,12 @@
     <ClInclude Include="SourceFiles\scene\BaseScene.h" />
     <ClInclude Include="SourceFiles\scene\FadeManager.h" />
     <ClInclude Include="SourceFiles\scene\GameScene.h" />
-    <ClInclude Include="SourceFiles\scene\play\blocks\Block.h" />
-    <ClInclude Include="SourceFiles\scene\play\blocks\BlockManager.h" />
-    <ClInclude Include="SourceFiles\scene\play\GamePlayScene.h" />
-    <ClInclude Include="SourceFiles\scene\play\Jump.h" />
-    <ClInclude Include="SourceFiles\scene\play\Mouse.h" />
-    <ClInclude Include="SourceFiles\scene\play\Player.h" />
+    <ClInclude Include="SourceFiles\objects\blocks\Block.h" />
+    <ClInclude Include="SourceFiles\objects\blocks\BlockManager.h" />
+    <ClInclude Include="SourceFiles\scene\GamePlayScene.h" />
+    <ClInclude Include="SourceFiles\functions\Jump.h" />
+    <ClInclude Include="SourceFiles\objects\Mouse.h" />
+    <ClInclude Include="SourceFiles\objects\Player.h" />
     <ClInclude Include="SourceFiles\scene\SceneFactory.h" />
     <ClInclude Include="SourceFiles\scene\TitleScene.h" />
   </ItemGroup>
@@ -214,22 +212,20 @@
     <ClCompile Include="SourceFiles\base\TextureManager.cpp" />
     <ClCompile Include="SourceFiles\base\WinApp.cpp" />
     <ClCompile Include="SourceFiles\collider\Collider.cpp" />
-    <ClCompile Include="SourceFiles\collider\Collision.cpp" />
     <ClCompile Include="SourceFiles\collider\CollisionManager.cpp" />
-    <ClCompile Include="SourceFiles\collider\CollisionPrimitive.cpp" />
     <ClCompile Include="SourceFiles\functions\FadeManager.cpp" />
     <ClCompile Include="SourceFiles\functions\SharePtr.cpp" />
     <ClCompile Include="SourceFiles\functions\Timer.cpp" />
-    <ClCompile Include="SourceFiles\main.cpp" />
+    <ClCompile Include="SourceFiles\base\main.cpp" />
     <ClCompile Include="SourceFiles\math\Quaternion.cpp" />
     <ClCompile Include="SourceFiles\math\Vector3.cpp" />
     <ClCompile Include="SourceFiles\scene\GameScene.cpp" />
-    <ClCompile Include="SourceFiles\scene\play\blocks\Block.cpp" />
-    <ClCompile Include="SourceFiles\scene\play\blocks\BlockManager.cpp" />
-    <ClCompile Include="SourceFiles\scene\play\GamePlayScene.cpp" />
-    <ClCompile Include="SourceFiles\scene\play\Jump.cpp" />
-    <ClCompile Include="SourceFiles\scene\play\Mouse.cpp" />
-    <ClCompile Include="SourceFiles\scene\play\Player.cpp" />
+    <ClCompile Include="SourceFiles\objects\blocks\Block.cpp" />
+    <ClCompile Include="SourceFiles\objects\blocks\BlockManager.cpp" />
+    <ClCompile Include="SourceFiles\scene\GamePlayScene.cpp" />
+    <ClCompile Include="SourceFiles\functions\Jump.cpp" />
+    <ClCompile Include="SourceFiles\objects\Mouse.cpp" />
+    <ClCompile Include="SourceFiles\objects\Player.cpp" />
     <ClCompile Include="SourceFiles\scene\SceneFactory.cpp" />
     <ClCompile Include="SourceFiles\scene\TitleScene.cpp" />
   </ItemGroup>

@@ -5,8 +5,6 @@
 #include "DirectXCommon.h"
 #include "TextureManager.h"
 #include "WinApp.h"
-#include "AxisIndicator.h"
-#include "PrimitiveDrawer.h"
 #include "FadeManager.h"
 #include "SceneFactory.h"
 
@@ -47,7 +45,5 @@ private: // メンバ変数
 	Input* input = Input::GetInstance();
 	Audio* audio = Audio::GetInstance();
 	DirectXCommon* dxCommon = DirectXCommon::GetInstance();
-	AxisIndicator* axisIndicator = AxisIndicator::GetInstance();
-	PrimitiveDrawer* primitiveDrawer = PrimitiveDrawer::GetInstance();
 	ViewProjection* viewProjection = ViewProjection::GetInstance();
 };
