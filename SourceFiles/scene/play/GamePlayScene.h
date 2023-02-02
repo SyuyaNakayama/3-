@@ -18,7 +18,11 @@ private:
 
 	WorldTransform worldTransform_;
 
+	bool isDraw = true;
+
 public:
+	void SetB(Vector3 vec3);
+
 	void Initialize() override;
 	void Finalize() override;
 	void Update() override;

@@ -26,13 +26,14 @@ void GamePlayScene::Initialize()
 
 	worldTransform_.scale_ = { 0.5f,0.511f,0.511f };
 	worldTransform_.rotation_ = { 0,1.555f,0 };
-	worldTransform_.translation_ = { 19.0f,-19.0f,-1.0f };
+	//worldTransform_.translation_ = { 19.0f,-19.0f,-1.0f };
 
 	worldTransform_.Update();
 }
 
 void GamePlayScene::Update()
 {
+	SetB(Vector3{19,-19,-1});
 	mouse->Update();
 	blockManager->Update();
 	player_.Update();
@@ -52,10 +53,14 @@ void GamePlayScene::Update()
 	if (input->PushKey(DIK_1))
 	{
 		worldTransform_.rotation_.x += 0.2f;
-		worldTransform_.scale_.x -= 0.01f;
 		worldTransform_.scale_.y -= 0.01f;
 		worldTransform_.scale_.z -= 0.01f;
 		worldTransform_.Update();
+
+		if (worldTransform_.scale_.y <= 0.01f)
+		{
+			isDraw = false;
+		}
 		
 	}
 }
@@ -67,8 +72,10 @@ void GamePlayScene::Draw()
 
 	blockManager->Draw();
 	player_.Draw();
-	hideBlock->Draw(worldTransform_, *ViewProjection::GetInstance());
-	
+	if (isDraw == true)
+	{
+		hideBlock->Draw(worldTransform_, *ViewProjection::GetInstance());
+	}
 
 	// 3Dオブジェクト描画後処理
 	Model::PostDraw();
@@ -77,4 +84,10 @@ void GamePlayScene::Draw()
 void GamePlayScene::Finalize()
 {
 	delete debugCamera_;
+}
+
+void GamePlayScene::SetB(Vector3 vec3)
+{
+	worldTransform_.translation_ = vec3;
+	worldTransform_.Update();
 }
