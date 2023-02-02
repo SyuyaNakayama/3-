@@ -10,7 +10,7 @@ void GamePlayScene::Initialize()
 	gameScene = GameScene::GetInstance();
 
 	viewProjection->eye = { 0,0,-1200 };
-	viewProjection->eye = { 1200,0,0 };
+	//viewProjection->eye = { 1200,0,0 };
 	viewProjection->up = { 0,1,0 };
 
 	debugCamera_ = std::make_unique<DebugCamera>(WinApp::kWindowWidth, WinApp::kWindowHeight);
@@ -18,10 +18,10 @@ void GamePlayScene::Initialize()
 	
 	mouse->Initialize();
 	blockManager->Initialize(1);
-	blockManager->Initialize(2);
-	blockManager->Initialize(3);
-	blockManager->Initialize(4);
-	blockManager->Initialize(5);
+	//blockManager->Initialize(2);
+	//blockManager->Initialize(3);
+	//blockManager->Initialize(4);
+	//blockManager->Initialize(5);
 }
 
 void GamePlayScene::Update()
@@ -35,7 +35,9 @@ void GamePlayScene::Update()
 
 	debugCamera_->Update();
 
+#ifdef _DEBUG
 	*viewProjection = debugCamera_->GetViewProjection(); 
+#endif // _DEBUG
 }
 
 void GamePlayScene::Draw()

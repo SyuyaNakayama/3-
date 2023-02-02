@@ -6,11 +6,12 @@
 enum class CollisionAttribute
 {
 	Player = 0b1,
-	Block = 0b1 << 1,
-	LadderBlock = 0b1 << 2,
-	Button = 0b1 << 3,
-	MouseRay = 0b1 << 4,
-	StagePlane = 0b1 << 5,
+	Block = Player << 1,
+	LadderBlock = Block << 1,
+	Button = LadderBlock << 1,
+	GoalBlock = Button <<1,
+	MouseRay = GoalBlock << 1,
+	StagePlane = MouseRay << 1,
 	All = -1
 };
 

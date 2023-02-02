@@ -20,11 +20,6 @@ void GameScene::Initialize()
 	// 3Dモデル静的初期化
 	Model::StaticInitialize();
 
-	// 軸方向表示初期化
-	axisIndicator->Initialize();
-
-	primitiveDrawer->Initialize();
-
 	viewProjection->Initialize();
 	viewProjection->fovAngleY = 4.0f * MathUtility::PI / 180.0f;
 	viewProjection->farZ = 1500.0f;
@@ -35,7 +30,6 @@ void GameScene::Initialize()
 	SetNextScene(Scene::Play, false);
 	imguiManager->Initialize();
 	fadeManager_.Initialize();
-	BlockManager::GetInstance()->Initialize(0);
 }
 
 void GameScene::Update()
@@ -69,8 +63,6 @@ void GameScene::Update()
 	imguiManager->End();
 
 	viewProjection->UpdateMatrix();
-	// 軸表示の更新
-	axisIndicator->Update();
 }
 
 void GameScene::Draw()
@@ -79,10 +71,6 @@ void GameScene::Draw()
 	dxCommon->PreDraw();
 	// ゲームシーンの描画
 	scene_->Draw();
-	// 軸表示の描画
-	axisIndicator->Draw();
-	// プリミティブ描画のリセット
-	primitiveDrawer->Reset();
 	fadeManager_.Draw();
 	// デバッグの描画(ImGui)
 	imguiManager->Draw();

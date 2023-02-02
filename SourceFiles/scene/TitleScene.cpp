@@ -10,6 +10,7 @@ void TitleScene::Initialize()
 	viewProjection->target = {};
 	viewProjection->eye = { 0,1200,0 };
 	viewProjection->up = upVector;
+	BlockManager::GetInstance()->Initialize(0);
 }
 
 void TitleScene::Update()
@@ -19,11 +20,11 @@ void TitleScene::Update()
 	cameraUpAngle += upRotSpd;
 	if (input->TriggerKey(DIK_SPACE))
 	{
-		isNextScene = true; 
+		isNextScene = true;
 		upRotSpd = 0.075f;
 	}
 	if (!isNextScene) { return; }
-	if(timer.CountDown()){ gameScene->SetNextScene(Scene::Play); }
+	if (timer.CountDown()) { gameScene->SetNextScene(Scene::Play); }
 }
 
 void TitleScene::Draw()

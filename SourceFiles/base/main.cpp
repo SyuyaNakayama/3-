@@ -5,7 +5,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 {	
 	// ゲームウィンドウの作成
 	WinApp* win = WinApp::GetInstance();
-	win->CreateGameWindow("2347_箱庭奇譚");
+	win->CreateGameWindow("2347_シカク");
 
 	// ゲームシーンの初期化
 	GameScene* gameScene = GameScene::GetInstance();

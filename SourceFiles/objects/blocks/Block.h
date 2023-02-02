@@ -2,6 +2,7 @@
 #include "Model.h"
 #include "Collider.h"
 #include "Input.h"
+#include "Quaternion.h"
 
 class BaseBlock
 {
@@ -104,7 +105,6 @@ class LadderBlock : public BaseBlockCollider, public IncludeCollider
 public:
 	void Initialize();
 	void Draw() { model->Draw(worldTransform, *ViewProjection::GetInstance()); }
-	//Vector3 GetWorldPosition() { return worldTransform.GetWorldPosition() + Vector3(0, 0, 1); }
 	void SetRotation(Vector3 rotation) { worldTransform.rotation_ = rotation; }
 };
 
@@ -124,12 +124,20 @@ public:
 	void SetRotation(Vector3 rotation) { worldTransform.rotation_ = rotation; }
 };
 
+class GoalBlock : public BaseBlockCollider
+{
+public:
+	void Initialize();
+	void Draw();
+};
+
 class StagePlane : public PlaneCollider
 {
 	StagePlane() = default;
 public:
 	static StagePlane* GetInstance();
 	void Initialize();
+	void Rotation(Quaternion rotQ) { normal = Quaternion::RotateVector(normal, rotQ); }
 };
 
 class BgBlock : public BaseBlock

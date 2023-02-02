@@ -13,10 +13,10 @@ void Player::Initialize()
 
 	worldTransform.Initialize();
 	worldTransform.scale_.x = 0.9999f;
-	worldTransform.translation_ = { 36.0f ,-35.0f + epsilon,-39.0f };
+	worldTransform.translation_ = { 36.0f ,-30.0f + epsilon,-39.0f };
 	Quaternion rotQ = CubeQuaternion::Get(1);
 	worldTransform.translation_ = Quaternion::RotateVector(worldTransform.translation_, rotQ);
-	moveSpd= Quaternion::RotateVector(worldTransform.translation_, rotQ);
+	moveSpd= Quaternion::RotateVector(moveSpd, rotQ);
 
 	//eŽqŠÖŒW
 	for (WorldTransform& w : parentWorldTransform_)
@@ -103,6 +103,7 @@ void Player::Update()
 	isClimb = isLadderHit = false;
 
 	for (WorldTransform& w : parentWorldTransform_) { w.Update(); }
+	ImGuiManager::GetInstance()->PrintVector("playerPos", worldTransform.GetWorldPosition());
 }
 
 void Player::Draw()

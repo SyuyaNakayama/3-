@@ -18,7 +18,7 @@ void BlockManager::Initialize(UINT16 stage)
 	case 0: LoadMap("title.txt", 0); break;
 	case 1: LoadMap("tutorial.txt", 1); break;
 	case 2: LoadMap("stageDeb.txt", 2); break;
-	//case 2: LoadMap("stage1.txt", 2); break;
+		//case 2: LoadMap("stage1.txt", 2); break;
 	case 3: LoadMap("stage2.txt", 3); break;
 	case 4: LoadMap("stage3.txt", 4); break;
 	case 5: LoadMap("clear.txt", 5); break;
@@ -30,7 +30,7 @@ void BlockManager::Initialize(UINT16 stage)
 
 	//左下
 	unique_ptr<BaseBlock> StopBlock_ = make_unique<StopBlock>();
-	
+
 	StopBlock_->SetTranslation({ 19,-59,-1 });
 	StopBlock_->SetScale({ 20,20,1 });
 	StopBlock_->SetNum(1);
@@ -56,10 +56,9 @@ void BlockManager::Initialize(UINT16 stage)
 
 void BlockManager::Update()
 {
-
 	// 破壊されたブロックの排除
 	blocks.remove_if([](const unique_ptr<BaseBlock>& block) { return block->IsDestroy(); });
-	
+
 	// コピーされたブロックの追加
 	unique_ptr<BaseBlock> newBlock;
 	for (const unique_ptr<BaseBlock>& block : blocks)
@@ -116,7 +115,7 @@ void BlockManager::CreateBlock(Vector3 pos, Vector3 rot, BlockType type)
 	unique_ptr<BaseBlock> block;
 	switch (type)
 	{
-	case BlockType::None: return;
+	case BlockType::None:																return;
 	case BlockType::Normal:				block = make_unique<NormalBlock>();				break;
 	case BlockType::Move:				block = make_unique<MoveBlock>();				break;
 	case BlockType::Copy:				block = make_unique<CopyBlock>();				break;
@@ -124,6 +123,7 @@ void BlockManager::CreateBlock(Vector3 pos, Vector3 rot, BlockType type)
 	case BlockType::Ladder:				block = make_unique<LadderBlock>();				break;
 	case BlockType::Button:				block = make_unique<Button>();					break;
 	case BlockType::NonCollisionNormal:	block = make_unique<NonCollisionNormalBlock>();	break;
+	case BlockType::Goal:				block = make_unique<GoalBlock>();				break;
 	}
 	assert(block);
 	block->SetTranslation(pos);

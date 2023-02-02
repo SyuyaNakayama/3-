@@ -160,7 +160,7 @@ StagePlane* StagePlane::GetInstance()
 
 void StagePlane::Initialize()
 {
-	distance = 0;
+	distance = 39.0f;
 	normal = { 0,0,-1 };
 	SetCollisionAttribute(CollisionAttribute::StagePlane);
 	SetCollisionMask(CollisionMask::StagePlane);
@@ -193,9 +193,18 @@ void Button::OnCollision(BoxCollider* collider)
 	useCount++;
 }
 
+void GoalBlock::Initialize()
+{
+	worldTransform.Initialize();
+	worldTransform.Update();
+	model=Model::CreateFromOBJ("gate");
+	SetCollisionAttribute(CollisionAttribute::GoalBlock);
+	SetCollisionMask(CollisionMask::Block);
+}
 
+void GoalBlock::Draw() { model->Draw(worldTransform, *ViewProjection::GetInstance()); }
 
-#pragma region CopyedBlock
+#pragma region StopBlock
 void StopBlock::Initialize()
 {
 	BaseBlockCollider::Initialize();
