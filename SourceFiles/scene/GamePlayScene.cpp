@@ -24,7 +24,7 @@ void GamePlayScene::Initialize()
 	//blockManager->Initialize(4);
 	//blockManager->Initialize(5);
 
-	hideBlock_.Initialize({ 19.0f,-19.0f,-41.0f }, { 0,90*PI/180,0 });
+	hideBlock_.Initialize({ -20,-20,-40.5 }, { 0,0,0 });
 }
 
 void GamePlayScene::Update()
