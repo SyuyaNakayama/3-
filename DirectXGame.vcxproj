@@ -156,7 +156,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="HideBlock.h" />
+    <ClInclude Include="SourceFiles\objects\blocks\HideBlock.h" />
     <ClInclude Include="SourceFiles\2d\ImGuiManager.h" />
     <ClInclude Include="SourceFiles\2d\Sprite.h" />
     <ClInclude Include="SourceFiles\3d\AxisIndicator.h" />
@@ -206,7 +206,7 @@
     <ClInclude Include="SourceFiles\scene\TitleScene.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="HideBlock.cpp" />
+    <ClCompile Include="SourceFiles\objects\blocks\HideBlock.cpp" />
     <ClCompile Include="SourceFiles\2d\ImGuiManager.cpp" />
     <ClCompile Include="SourceFiles\3d\ParticleManager.cpp" />
     <ClCompile Include="SourceFiles\audio\SoundManager.cpp" />

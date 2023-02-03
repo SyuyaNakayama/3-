@@ -5,6 +5,7 @@
 #include "CollisionManager.h"
 #include "Quaternion.h"
 
+
 void GamePlayScene::Initialize()
 {
 	gameScene = GameScene::GetInstance();
@@ -22,10 +23,13 @@ void GamePlayScene::Initialize()
 	//blockManager->Initialize(3);
 	//blockManager->Initialize(4);
 	//blockManager->Initialize(5);
+
+	hideBlock_.Initialize({ 19.0f,-19.0f,-41.0f }, { 0,90*PI/180,0 });
 }
 
 void GamePlayScene::Update()
 {
+	hideBlock_.Update();
 	mouse->Update();
 	blockManager->Update();
 	player_.Update();
@@ -47,7 +51,7 @@ void GamePlayScene::Draw()
 
 	blockManager->Draw();
 	player_.Draw();
-
+	hideBlock_.Draw();
 	// 3Dオブジェクト描画後処理
 	Model::PostDraw();
 }

@@ -1,16 +1,15 @@
 #include "HideBlock.h"
 #include <Input.h>
 
-void HideBlock::Initialize()
+void HideBlock::Initialize(Vector3 pos, Vector3 rot)
 {
 	hideBlock = Model::CreateFromOBJ("hideblock");
 
 	worldTransform_.Initialize();
-	
-
 	worldTransform_.scale_ = { 0.5f,0.511f,0.511f };
-	worldTransform_.rotation_ = { 0,1.555f,0 };
-	worldTransform_.translation_ = { 19.0f,-19.0f,-1.0f };
+	worldTransform_.translation_ = { pos.x,pos.y,pos.z };
+	worldTransform_.rotation_ = { rot.x,rot.y,rot.z };
+	
 }
 
 void HideBlock::Update()
@@ -24,6 +23,7 @@ void HideBlock::Update()
 		worldTransform_.scale_.z -= 0.01f;
 		worldTransform_.Update();
 	}
+	worldTransform_.Update();
 }
 
 void HideBlock::Draw()

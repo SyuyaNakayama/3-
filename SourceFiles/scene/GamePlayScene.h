@@ -3,7 +3,7 @@
 #include "Player.h"
 #include "DebugCamera.h"
 #include "Mouse.h"
- 
+#include "HideBlock.h"
 
 class GamePlayScene : public BaseScene
 {
@@ -11,6 +11,8 @@ private:
 	Player player_;
 	std::unique_ptr<DebugCamera> debugCamera_;
 	Mouse* mouse = Mouse::GetInstance();
+	HideBlock hideBlock_;
+
 
 public:
 	void Initialize() override;
