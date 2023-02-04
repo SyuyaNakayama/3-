@@ -55,18 +55,18 @@ Quaternion Quaternion::Inverse(const Quaternion& q)
 	return ans;
 }
 
-Quaternion Quaternion::MakeAxisAngle(const Vector3& axis, float angle)
+Quaternion MakeAxisAngle(const Vector3& axis, float angle)
 {
 	return Quaternion(cosf(angle / 2.0f), axis * sinf(angle / 2.0f));
 }
 
-Vector3 Quaternion::RotateVector(const Vector3& v, const Quaternion& q)
+Vector3 RotateVector(const Vector3& v, const Quaternion& q)
 {
 	Quaternion r = { 0,v };
-	return Quaternion(q * r * Conjugate(q)).GetImaginary();
+	return Quaternion(q * r * Quaternion::Conjugate(q)).GetImaginary();
 }
 
-Matrix4 Quaternion::MakeRotateMatrix(const Quaternion& q)
+Matrix4 MakeRotateMatrix(const Quaternion& q)
 {
 	return q.MakeRotateMatrix();
 }
@@ -125,10 +125,10 @@ Quaternion DirectionToDirection(const Vector3& u, const Vector3& v)
 	Vector3 cross = Vector3Cross(u, v);
 	Vector3 axis = Vector3Normalize(cross);
 	float theta = std::acos(dot);
-	return Quaternion::MakeAxisAngle(axis, theta);
+	return MakeAxisAngle(axis, theta);
 }
 
-Quaternion CubeQuaternion::quaternions[6];
+std::array<Quaternion, 6> CubeQuaternion::quaternions;
 
 void CubeQuaternion::Create()
 {

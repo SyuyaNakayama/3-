@@ -4,8 +4,14 @@
 #include <imgui.h>
 #include "Quaternion.h"
 
-void Player::Initialize()
+void Player::Initialize(UINT stage)
 {
+	worldTransform.translation_ = { 36.0f ,30.0f + epsilon,-39.0f };
+	Quaternion rotQ = CubeQuaternion::Get(stage);
+	worldTransform.translation_ = RotateVector(worldTransform.translation_, rotQ);
+	moveSpd = RotateVector(moveSpd, rotQ);
+
+	if (isInitialize) { return; }
 	//ƒ‚ƒfƒ‹“Ç‚Ýž‚Ý
 	models[(int)PartId::Body].reset(Model::CreateFromOBJ("player_body"));	// ‘Ì
 	models[(int)PartId::LegL].reset(Model::CreateFromOBJ("player_legL"));	// ¶‘«
@@ -13,10 +19,6 @@ void Player::Initialize()
 
 	worldTransform.Initialize();
 	worldTransform.scale_.x = 0.9999f;
-	worldTransform.translation_ = { 36.0f ,-30.0f + epsilon,-39.0f };
-	Quaternion rotQ = CubeQuaternion::Get(1);
-	worldTransform.translation_ = Quaternion::RotateVector(worldTransform.translation_, rotQ);
-	moveSpd= Quaternion::RotateVector(moveSpd, rotQ);
 
 	//eŽqŠÖŒW
 	for (WorldTransform& w : parentWorldTransform_)
@@ -29,6 +31,8 @@ void Player::Initialize()
 	jump.SetGravity(0.08f);
 	SetCollisionAttribute(CollisionAttribute::Player);
 	SetCollisionMask(CollisionMask::Player);
+
+	isInitialize = true;
 }
 
 void Player::Move()
@@ -103,7 +107,6 @@ void Player::Update()
 	isClimb = isLadderHit = false;
 
 	for (WorldTransform& w : parentWorldTransform_) { w.Update(); }
-	ImGuiManager::GetInstance()->PrintVector("playerPos", worldTransform.GetWorldPosition());
 }
 
 void Player::Draw()

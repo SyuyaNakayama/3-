@@ -71,8 +71,6 @@ void BlockManager::Update()
 	}
 
 	for (const unique_ptr<BaseBlock>& block : blocks) { block->Update(); }
-
-	ImGui::Text("count:%d", Button::useCount);
 }
 
 void BlockManager::Draw()
@@ -100,9 +98,9 @@ void BlockManager::LoadMap(const std::string& fileName, UINT16 faceNum)
 			lineStream >> temp;
 			Vector3 pos = { 2.0f * x - 39.0f,-2.0f * y + 39.0f,-39.0f };
 			Vector3 rotVec{};
-			if (temp == (int)BlockType::Button) { rotVec = Quaternion::RotateVector(Vector3(-PI / 2.0f, 0, 0), rotQ); }
+			if (temp == (int)BlockType::Button) { rotVec = RotateVector(Vector3(-PI / 2.0f, 0, 0), rotQ); }
 			if (temp == (int)BlockType::Ladder) { rotVec.y = PI - PI / 2.0f * (float)(faceNum - 1); }
-			CreateBlock(Quaternion::RotateVector(pos, rotQ), rotVec, (BlockType)temp);
+			CreateBlock(RotateVector(pos, rotQ), rotVec, (BlockType)temp);
 			getline(lineStream, key, ',');
 		}
 		y++;

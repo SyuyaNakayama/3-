@@ -37,12 +37,14 @@ private:
 	float speed = 0.03f; //‘«‚ÌU‚è‚Ì‘¬‚³
 	float oldPosX = 0.0f;
 
+	bool isInitialize = false;
+
 	Input* input = nullptr;
 
 	void Move();
 	void WalkMotion();	//•à‚­ƒ‚[ƒVƒ‡ƒ“
 public:
-	void Initialize();
+	void Initialize(UINT stage);
 	void Update();
 	void Draw();
 

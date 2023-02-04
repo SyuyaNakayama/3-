@@ -1,6 +1,7 @@
 #pragma once
 #include "Matrix4.h"
 #include "Vector3.h"
+#include <array>
 
 class Quaternion
 {
@@ -34,13 +35,6 @@ public:
 	static float Norm(const Quaternion& q) { return q.Norm(); }
 	static Quaternion Normalize(const Quaternion& q);
 	static Quaternion Inverse(const Quaternion& q);
-
-	// ”CˆÓ²‰ñ“]‚ÌQuaternion¶¬(axis‚Í³‹K‰»‚³‚ê‚Ä‚¢‚é•K—v‚ª‚ ‚é)
-	static Quaternion MakeAxisAngle(const Vector3& axis, float angle);
-	// ƒxƒNƒgƒ‹‚ğQuaternion‚Å‰ñ“]‚³‚¹‚é
-	static Vector3 RotateVector(const Vector3& v, const Quaternion& q);
-	// Quaternion‚©‚ç‰ñ“]s—ñ‚ğ‹‚ß‚é
-	static Matrix4 MakeRotateMatrix(const Quaternion& q);
 };
 
 float Dot(const Quaternion& q1, const Quaternion& q2);
@@ -50,6 +44,12 @@ Quaternion operator-(const Quaternion& q1, const Quaternion& q2);
 Quaternion operator*(const Quaternion& q1, const Quaternion& q2);
 Quaternion operator/(const Quaternion& q, float norm);
 
+// ”CˆÓ²‰ñ“]‚ÌQuaternion¶¬(axis‚Í³‹K‰»‚³‚ê‚Ä‚¢‚é•K—v‚ª‚ ‚é)
+Quaternion MakeAxisAngle(const Vector3& axis, float angle);
+// ƒxƒNƒgƒ‹‚ğQuaternion‚Å‰ñ“]‚³‚¹‚é
+Vector3 RotateVector(const Vector3& v, const Quaternion& q);
+// Quaternion‚©‚ç‰ñ“]s—ñ‚ğ‹‚ß‚é
+Matrix4 MakeRotateMatrix(const Quaternion& q);
 // ‹…–ÊüŒ`•âŠÔ
 Quaternion Slerp(const Quaternion& q0, const Quaternion& q1, float t);
 
@@ -59,7 +59,7 @@ Quaternion DirectionToDirection(const Vector3& u, const Vector3& v);
 // —§•û‘Ì‚ÌŠe–Ê‚É‘Î‰‚µ‚½Quaternion‚ğŠi”[‚·‚éÃ“IƒNƒ‰ƒX
 class CubeQuaternion
 {
-	static Quaternion quaternions[6];
+	static std::array<Quaternion, 6> quaternions;
 public:
 	CubeQuaternion() = delete;
 	static void Create();

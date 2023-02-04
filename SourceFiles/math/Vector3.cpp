@@ -1,5 +1,7 @@
 #include "Vector3.h"
-#include <math.h>
+#include <MathUtility.h>
+#include <cmath>
+using namespace MathUtility;
 
 Vector3::Vector3()
 {
@@ -129,3 +131,5 @@ bool Vector3::operator==(Vector3 vec)
 	if (x == vec.x && y == vec.y && z == vec.z) { return true; }
 	return false;
 }
+
+const Vector3 lerp(const Vector3& start, const Vector3& end, const float t) { return start * (1.0f - t) + end * t; }

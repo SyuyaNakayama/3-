@@ -1,12 +1,8 @@
 #include "Block.h"
-#include "ViewProjection.h"
 #include "ImGuiManager.h"
 #include <imgui.h>
 
 #pragma region BaseBlock
-void BaseBlock::Initialize() { model = Model::Create(); }
-void BaseBlock::SetTexture(const std::string& fileName) { textureHandle = TextureManager::Load("blockTextures/" + fileName); }
-
 void BaseBlockCollider::Initialize()
 {
 	BaseBlock::Initialize();
@@ -14,8 +10,6 @@ void BaseBlockCollider::Initialize()
 	SetCollisionMask(CollisionMask::Block);
 	worldTransform.Initialize();
 }
-
-void BaseBlockCollider::Draw() { model->Draw(worldTransform, *ViewProjection::GetInstance(), textureHandle); }
 #pragma endregion
 
 #pragma region NormalBlock
@@ -60,11 +54,6 @@ void MoveBlock::Update()
 	worldTransform.Update();
 	SetVertices();
 }
-
-void MoveBlock::OnCollision(RayCollider* Collider)
-{
-	if (Input::GetInstance()->IsTriggerMouse(0)) { isDrag = true; }
-}
 #pragma endregion
 
 #pragma region CopyBlock
@@ -78,7 +67,7 @@ void CopyBlock::Initialize()
 
 std::unique_ptr<BaseBlock> CopyBlock::NewBlockCreate()
 {
-	if(isCopy == false){return nullptr;}
+	if (isCopy == false) { return nullptr; }
 	if (!isCopyMode) { return nullptr; }
 	if (!input->IsTriggerMouse(0)) { return nullptr; }
 	isCopyMode = false;
@@ -97,19 +86,10 @@ void CopyBlock::Update()
 	worldTransform.Update();
 }
 
-void CopyBlock::OnCollision(RayCollider* Collider) { if (input->IsTriggerMouse(0)) { isCopyMode = true; }}
-#pragma endregion
-
-#pragma region CopyedBlock
 void CopyedBlock::Initialize()
 {
 	BaseBlockCollider::Initialize();
 	SetTexture("copyedBlock.png");
-}
-
-void CopyedBlock::Update()
-{
-	worldTransform.Update();
 }
 #pragma endregion
 
@@ -134,7 +114,6 @@ void DestroyBlock::OnCollision(RayCollider* collider)
 
 	if (clickNum == 1) { SetTexture("destroyBlock_2.png"); }
 	if (clickNum == 2) { SetTexture("destroyBlock_1.png"); }
-	
 	if (clickNum >= DESTROY_NUM) { isDestroy = true; }
 }
 #pragma endregion
@@ -188,21 +167,19 @@ void Button::Initialize()
 uint16_t Button::useCount;
 void Button::OnCollision(BoxCollider* collider)
 {
-	isDraw = false;
 	isDestroy = true;
 	useCount++;
 }
 
+bool GoalBlock::isGoal = false;
 void GoalBlock::Initialize()
 {
 	worldTransform.Initialize();
 	worldTransform.Update();
-	model=Model::CreateFromOBJ("gate");
+	model = Model::CreateFromOBJ("gate");
 	SetCollisionAttribute(CollisionAttribute::GoalBlock);
 	SetCollisionMask(CollisionMask::Block);
 }
-
-void GoalBlock::Draw() { model->Draw(worldTransform, *ViewProjection::GetInstance()); }
 
 #pragma region StopBlock
 void StopBlock::Initialize()
@@ -213,12 +190,7 @@ void StopBlock::Initialize()
 
 void StopBlock::Update()
 {
-	NumDestroy();
+	if (num_ == Button::GetUseCount()) { isDestroy = true; }
 	worldTransform.Update();
-}
-
-void StopBlock::NumDestroy()
-{
-	if (num_ == Button::useCount) { isDestroy = true; }
 }
 #pragma endregion

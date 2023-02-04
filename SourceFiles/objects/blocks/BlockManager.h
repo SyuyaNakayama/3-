@@ -21,4 +21,5 @@ public:
 	void Initialize(UINT16 stage);
 	void Update();
 	void Draw();
+	void Clear() { blocks.clear(); }
 };

@@ -31,3 +31,5 @@ public:
 	bool operator>(Vector3);
 	bool operator==(Vector3);
 };
+
+const Vector3 lerp(const Vector3& start, const Vector3& end, const float t);

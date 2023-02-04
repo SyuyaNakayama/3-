@@ -16,7 +16,7 @@ void TitleScene::Initialize()
 void TitleScene::Update()
 {
 	Quaternion rotaQ = { std::cos(cameraUpAngle / 2.0f) ,Vector3(0,1,0) * std::sin(cameraUpAngle / 2.0f) };
-	viewProjection->up = Quaternion::RotateVector(Vector3(-1, 0, 0), rotaQ);
+	viewProjection->up = RotateVector(Vector3(-1, 0, 0), rotaQ);
 	cameraUpAngle += upRotSpd;
 	if (input->TriggerKey(DIK_SPACE))
 	{
