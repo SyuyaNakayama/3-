@@ -7,7 +7,7 @@
 void Player::Initialize()
 {
 	Quaternion rotQ = CubeQuaternion::Get(*nowStage);
-	worldTransform.translation_ = RotateVector({ 36.0f ,35.0f + epsilon,-39.0f }, rotQ);
+	worldTransform.translation_ = RotateVector({ 36.0f ,-35.0f + epsilon,-39.0f }, rotQ);
 	moveSpd = RotateVector(moveSpd, rotQ);
 	direction = Direction::Left;
 
@@ -75,6 +75,18 @@ void Player::Update()
 	case 1:	worldTransform.translation_ += moveSpd;	break;
 	}
 
+	if (!isClimb)
+	{
+		// プレイヤーが向いている方向を求める
+		Vector3 dVec = { -1,0,0 }; // 向き判別に使うベクトル
+		dVec = RotateVector(dVec, CubeQuaternion::Get(*nowStage));
+		float dot = Vector3Dot(dVec, moveSpd); // 向き判別ベクトルとプレイヤー移動速度ベクトルの内積を取る
+		if (dot < 0.0f) { direction = Direction::Right; }
+		if (dot > 0.0f) { direction = Direction::Left; }
+		//if (direction == Direction::Left) { direction = Direction::Right; }
+		//else if (direction == Direction::Right) { direction = Direction::Left; }
+	}
+
 	// 進んでる方向によってキャラの向きを変える
 	std::array<float, 3> r = { PI / 2.0f,1.5f * PI,PI };
 	worldTransform.rotation_.y = r[(size_t)direction] - PI / 2.0f * (*nowStage - 1);
@@ -137,9 +149,6 @@ void Player::OnCollision(BoxCollider* boxCollider)
 
 	// それ以外なら撥ね返る
 	moveSpd = -moveSpd;
-	//プレイヤーが向いている方向を求める
-	if (direction == Direction::Left) { direction = Direction::Right; }
-	else if (direction == Direction::Right) { direction = Direction::Left; }
 }
 
 void Player::OnCollision(IncludeCollider* includeCollider)

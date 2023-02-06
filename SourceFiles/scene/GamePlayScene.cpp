@@ -17,7 +17,7 @@ void GamePlayScene::Initialize()
 	gameScene = GameScene::GetInstance();
 	mouse->Initialize();
 	blockManager->Initialize(1);
-	Button::SetUseCount(1);
+	//Button::SetUseCount(1);
 }
 
 void GamePlayScene::Update()
@@ -34,11 +34,13 @@ void GamePlayScene::Update()
 		// カメラズームイン
 		if (!isCameraLerp)
 		{
-			//if (CameraLerp(true)) { return; }
+			if (CameraLerp(true)) { return; }
 			player_.Initialize();
 			GoalBlock::SetIsGoal(false); // カメラ補間終了
 			isCameraLerp = false;
 			Button::SetUseCount(0);
+			StagePlane* p = StagePlane::GetInstance();
+			p->SetNormal(RotateVector(p->GetNormal(), CubeQuaternion::Get(stage)));
 		}
 	}
 	// カメラズームアウト
