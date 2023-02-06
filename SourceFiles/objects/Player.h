@@ -30,24 +30,21 @@ private:
 	bool isFallCheck = false;
 	bool isClimb = false;
 	bool isLadderHit = false;
-
 	Direction direction = Direction::Left;
 	bool walkFlag = true;
 	float walkPos = 0.0f;
-	float speed = 0.03f; //足の振りの速さ
+	float speed = 0.03f; // 足の振りの速さ
 	float oldPosX = 0.0f;
-
 	bool isInitialize = false;
-
 	Input* input = nullptr;
+	UINT16* nowStage = nullptr;
 
-	void Move();
-	void WalkMotion();	//歩くモーション
+	void WalkMotion();	// 歩くモーション
 public:
-	void Initialize(UINT stage);
+	void Initialize();
 	void Update();
 	void Draw();
-
+	void SetStage(UINT16* stage) { nowStage = stage; }
 	void OnCollision(BoxCollider* boxCollider);
 	void OnCollision(IncludeCollider* includeCollider);
 };

@@ -4,12 +4,12 @@
 #include <imgui.h>
 #include "Quaternion.h"
 
-void Player::Initialize(UINT stage)
+void Player::Initialize()
 {
-	worldTransform.translation_ = { 36.0f ,30.0f + epsilon,-39.0f };
-	Quaternion rotQ = CubeQuaternion::Get(stage);
-	worldTransform.translation_ = RotateVector(worldTransform.translation_, rotQ);
+	Quaternion rotQ = CubeQuaternion::Get(*nowStage);
+	worldTransform.translation_ = RotateVector({ 36.0f ,35.0f + epsilon,-39.0f }, rotQ);
 	moveSpd = RotateVector(moveSpd, rotQ);
+	direction = Direction::Left;
 
 	if (isInitialize) { return; }
 	//モデル読み込み
@@ -33,11 +33,6 @@ void Player::Initialize(UINT stage)
 	SetCollisionMask(CollisionMask::Player);
 
 	isInitialize = true;
-}
-
-void Player::Move()
-{
-	worldTransform.translation_ += moveSpd;
 }
 
 void Player::WalkMotion()
@@ -77,35 +72,21 @@ void Player::Update()
 		}
 		if (jump.IsFall()) { break; }
 		jump.UpdateJump(worldTransform.translation_.y);
-	case 1:	Move();	break;
+	case 1:	worldTransform.translation_ += moveSpd;	break;
 	}
 
-	//進んでる方向によってキャラの向きを変える
-	switch (direction)
-	{
-	case Player::Direction::Left:
-		worldTransform.rotation_.y = PI / 2.0f;
-		break;
-	case Player::Direction::Right:
-		worldTransform.rotation_.y = 1.5f * PI;
-		break;
-	case Player::Direction::Back:
-		worldTransform.rotation_.y = PI;
-		break;
-	}
-
-	//プレイヤーが向いている方向を求める
-	if (oldPosX > worldTransform.translation_.x) { direction = Direction::Left; }
-	else if (oldPosX < worldTransform.translation_.x) { direction = Direction::Right; }
+	// 進んでる方向によってキャラの向きを変える
+	std::array<float, 3> r = { PI / 2.0f,1.5f * PI,PI };
+	worldTransform.rotation_.y = r[(size_t)direction] - PI / 2.0f * (*nowStage - 1);
 
 	WalkMotion();
-	worldTransform.Update();
 
-	//現在の座標を保存する
+	// 現在の座標を保存する
 	oldPosX = worldTransform.translation_.x;
 
 	isClimb = isLadderHit = false;
 
+	worldTransform.Update();
 	for (WorldTransform& w : parentWorldTransform_) { w.Update(); }
 }
 
@@ -156,6 +137,9 @@ void Player::OnCollision(BoxCollider* boxCollider)
 
 	// それ以外なら撥ね返る
 	moveSpd = -moveSpd;
+	//プレイヤーが向いている方向を求める
+	if (direction == Direction::Left) { direction = Direction::Right; }
+	else if (direction == Direction::Right) { direction = Direction::Left; }
 }
 
 void Player::OnCollision(IncludeCollider* includeCollider)

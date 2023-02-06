@@ -7,7 +7,8 @@
 
 void GamePlayScene::Initialize()
 {
-	player_.Initialize(1);
+	player_.SetStage(&stage);
+	player_.Initialize();
 	viewProjection->up = { 0,1,0 };
 	viewProjection->eye = eyePos[0];
 	viewProjection->target = targetPos[0];
@@ -21,16 +22,27 @@ void GamePlayScene::Initialize()
 
 void GamePlayScene::Update()
 {
+	imguiManager->PrintVector("eyePos", viewProjection->eye);
 	// ステージクリア時
 	if (GoalBlock::IsGoal())
 	{
-		if (ChangeNextStage()) { return; } // カメラ補間中
-		GoalBlock::SetIsGoal(false); // カメラ補間終了
-		t = 0;
-		player_.Initialize(stage);
+		if (isCameraLerp)
+		{
+			if (ChangeNextStage()) { return; } // カメラ補間中
+			t = 0; isCameraLerp = false;
+		}
+		// カメラズームイン
+		if (!isCameraLerp)
+		{
+			//if (CameraLerp(true)) { return; }
+			player_.Initialize();
+			GoalBlock::SetIsGoal(false); // カメラ補間終了
+			isCameraLerp = false;
+			Button::SetUseCount(0);
+		}
 	}
-	// カメラワーク
-	if (CameraLerp()) { return; }
+	// カメラズームアウト
+	if (Button::GetUseCount() == 1 && !isCameraLerp) { if (CameraLerp()) { return; } }
 
 	mouse->Update();
 	blockManager->Update();
@@ -42,7 +54,7 @@ void GamePlayScene::Update()
 	debugCamera_->Update();
 
 #ifdef _DEBUG
-	* viewProjection = debugCamera_->GetViewProjection();
+	//* viewProjection = debugCamera_->GetViewProjection();
 #endif // _DEBUG
 }
 
@@ -60,7 +72,6 @@ void GamePlayScene::Draw()
 
 bool GamePlayScene::CameraLerp(bool isFlip)
 {
-	if (!(Button::GetUseCount() == 1 && !isCameraLerp)) { return false; }
 	t += dt;
 	if (t > 1.0f) { t = 1.0f; }
 	Quaternion rotQ = CubeQuaternion::Get(stage);
@@ -73,8 +84,8 @@ bool GamePlayScene::CameraLerp(bool isFlip)
 
 	auto lerpFunc = [&](size_t startIndex, size_t endIndex)
 	{
-		viewProjection->eye = lerp(RotateVector(eye_lerp[startIndex], rotQ), RotateVector(eye_lerp[endIndex], rotQ), t);
-		viewProjection->target = lerp(RotateVector(target_lerp[startIndex], rotQ), RotateVector(target_lerp[endIndex], rotQ), t);
+		viewProjection->eye = lerp(eye_lerp[startIndex], eye_lerp[endIndex], t);
+		viewProjection->target = lerp(target_lerp[startIndex], target_lerp[endIndex], t);
 	};
 	if (!isFlip) { lerpFunc(0, 1); }
 	else { lerpFunc(1, 0); }

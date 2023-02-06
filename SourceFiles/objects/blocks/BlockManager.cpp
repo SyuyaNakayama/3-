@@ -17,8 +17,8 @@ void BlockManager::Initialize(UINT16 stage)
 	{
 	case 0: LoadMap("title.txt", 0); break;
 	case 1: LoadMap("tutorial.txt", 1); break;
-	//case 2: LoadMap("stageDeb.txt", 2); break;
-	case 2: LoadMap("tutorial.txt", 2); break;
+	case 2: LoadMap("stageDeb.txt", 2); break;
+	//case 2: LoadMap("tutorial.txt", 2); break;
 	case 3: LoadMap("stage2.txt", 3); break;
 	case 4: LoadMap("stage3.txt", 4); break;
 	case 5: LoadMap("clear.txt", 5); break;
