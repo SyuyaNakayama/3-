@@ -19,8 +19,7 @@ void BlockManager::Initialize(UINT16 stage)
 	{
 	case 0: LoadMap("title.txt", 0); break;
 	case 1: LoadMap("tutorial.txt", 1); break;
-	case 2: LoadMap("stageDeb.txt", 2); break;
-		//case 2: LoadMap("tutorial.txt", 2); break;
+	case 2: LoadMap("stage1.txt", 2); break;
 	case 3: LoadMap("stage2.txt", 3); break;
 	case 4: LoadMap("stage3.txt", 4); break;
 	case 5: LoadMap("clear.txt", 5); break;
@@ -30,27 +29,27 @@ void BlockManager::Initialize(UINT16 stage)
 	bgBlock->Initialize();
 	blocks.push_back(move(bgBlock));
 
-	array<Vector3, 3> stopBlock =
-	{ {
-		{ -20,-20,-40 }, //ç∂â∫
-		{ -20, 20,-40 }, //ç∂è„
-		{  20, 20,-40 }  //âEè„
-	} };
+	//array<Vector3, 3> stopBlock =
+	//{ {
+	//	{ -20,-20,-40 }, //ç∂â∫
+	//	{ -20, 20,-40 }, //ç∂è„
+	//	{  20, 20,-40 }  //âEè„
+	//} };
 
-	array<Vector3, 2> stopBlockScale =
-	{ {
-		{20,20,1},{1,20,20}
-	} };
+	//array<Vector3, 2> stopBlockScale =
+	//{ {
+	//	{20,20,1},{1,20,20}
+	//} };
 
-	for (size_t i = 0; i < stopBlock.size(); i++)
-	{
-		unique_ptr<BaseBlock> StopBlock_ = make_unique<StopBlock>();
-		StopBlock_->SetTranslation(RotateVector(stopBlock[i], CubeQuaternion::Get(stage)));
-		StopBlock_->SetScale(stopBlockScale[stage % 2 == 0]);
-		StopBlock_->SetNum(i + 1);
-		StopBlock_->Initialize();
-		blocks.push_back(move(StopBlock_));
-	}
+	//for (size_t i = 0; i < stopBlock.size(); i++)
+	//{
+	//	unique_ptr<BaseBlock> StopBlock_ = make_unique<StopBlock>();
+	//	StopBlock_->SetTranslation(RotateVector(stopBlock[i], CubeQuaternion::Get(stage)));
+	//	StopBlock_->SetScale(stopBlockScale[stage % 2 == 0]);
+	//	StopBlock_->SetNum(i + 1);
+	//	StopBlock_->Initialize();
+	//	blocks.push_back(move(StopBlock_));
+	//}
 }
 
 void BlockManager::Update()

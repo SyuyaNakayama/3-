@@ -188,6 +188,7 @@ void CollisionManager::CheckRayPolygonCollisions()
 
 			rayCollider->OnCollision(triangleCollider);
 			triangleCollider->OnCollision(rayCollider);
+			return;
 		}
 	}
 }

@@ -182,9 +182,10 @@ bool GoalBlock::isGoal = false;
 
 void GoalBlock::Initialize()
 {
+	model = Model::CreateFromOBJ("gate");
+	worldTransform.rotation_.y = PI / 2.0f * (*nowStage - 1);
 	worldTransform.Initialize();
 	worldTransform.Update();
-	model = Model::CreateFromOBJ("gate");
 	SetCollisionAttribute(CollisionAttribute::GoalBlock);
 	SetCollisionMask(CollisionMask::Block);
 }

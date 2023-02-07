@@ -19,7 +19,7 @@ void GamePlayScene::Initialize()
 	BaseBlock::SetStage(&stage);
 	StagePlane::GetInstance()->SetStage(&stage);
 	blockManager->Initialize(1);
-	Button::SetUseCount(3);
+	//Button::SetUseCount(3);
 }
 
 void GamePlayScene::Update()
@@ -58,7 +58,7 @@ void GamePlayScene::Update()
 	debugCamera_->Update();
 
 #ifdef _DEBUG
-	* viewProjection = debugCamera_->GetViewProjection();
+	//*viewProjection = debugCamera_->GetViewProjection();
 #endif // _DEBUG
 }
 
