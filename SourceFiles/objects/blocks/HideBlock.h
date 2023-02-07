@@ -13,6 +13,6 @@ private:
 	Input* input = nullptr;
 public:
 	void Initialize(Vector3 pos,Vector3 rot);
-	void Update();
+	void Update(uint16_t useCount,uint16_t setNum);
 	void Draw();
 };

@@ -40,9 +40,9 @@ void GamePlayScene::Initialize()
 
 void GamePlayScene::Update()
 {
-	hideBlock1_.Update();
-	hideBlock2_.Update();
-	hideBlock3_.Update();
+	hideBlock1_.Update(Button::useCount,1);
+	hideBlock2_.Update(Button::useCount,2);
+	hideBlock3_.Update(Button::useCount,3);
 	mouse->Update();
 	blockManager->Update();
 	player_.Update();

@@ -12,10 +12,19 @@ void HideBlock::Initialize(Vector3 pos, Vector3 rot)
 	
 }
 
-void HideBlock::Update()
+void HideBlock::Update(uint16_t useCount,uint16_t setNum)
 {
     input = Input::GetInstance();
-    if (input->PushKey(DIK_1))
+    //if (input->PushKey(DIK_1))
+    //{
+    //    worldTransform_.rotation_.z += 0.2f;
+    //    worldTransform_.scale_.x -= 0.2f;
+    //    worldTransform_.scale_.y -= 0.2f;
+    //    //worldTransform.scale.z -= 0.01f;
+    //    worldTransform_.Update();
+    //}
+
+    if (setNum == useCount)
     {
         worldTransform_.rotation_.z += 0.2f;
         worldTransform_.scale_.x -= 0.2f;
@@ -23,6 +32,7 @@ void HideBlock::Update()
         //worldTransform.scale.z -= 0.01f;
         worldTransform_.Update();
     }
+
     if (worldTransform_.scale_.x <= 0)
     {
         isHide = false;
