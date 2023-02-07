@@ -18,16 +18,25 @@ void HideBlock::Update()
 	input = Input::GetInstance();
 	if (input->PushKey(DIK_1))
 	{
-		worldTransform_.rotation_.x += 0.2f;
-		worldTransform_.scale_.x -= 0.01f;
-		worldTransform_.scale_.y -= 0.01f;
-		worldTransform_.scale_.z -= 0.01f;
+		worldTransform_.rotation_.z += 0.2f;
+		worldTransform_.scale_.x -= 0.2f;
+		worldTransform_.scale_.y -= 0.2f;
+		//worldTransform_.scale_.z -= 0.01f;
 		worldTransform_.Update();
 	}
+	if (worldTransform_.scale_.x<=0)
+	{
+		hideFlag = false;
+	}
+
 	worldTransform_.Update();
 }
 
 void HideBlock::Draw()
 {
-	hideBlock->Draw(worldTransform_, *ViewProjection::GetInstance());
+	if (hideFlag == true)
+	{
+		hideBlock->Draw(worldTransform_, *ViewProjection::GetInstance());
+	}
+
 }

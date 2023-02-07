@@ -12,7 +12,9 @@ private:
 	std::unique_ptr<DebugCamera> debugCamera_;
 	Mouse* mouse = Mouse::GetInstance();
 	HideBlock hideBlock_;
-
+	HideBlock hideBlock2_;
+	HideBlock hideBlock3_;
+	int num_;
 
 public:
 	void Initialize() override;
