@@ -30,22 +30,27 @@ void BlockManager::Initialize(UINT16 stage)
 	bgBlock->Initialize();
 	blocks.push_back(move(bgBlock));
 
-	//array<Vector3, 3> stopBlock =
-	//{ {
-	//	{ -20,-20,-40 }, //ç∂â∫
-	//	{ -20, 20,-40 }, //ç∂è„
-	//	{  20, 20,-40 }  //âEè„
-	//} };
+	array<Vector3, 3> stopBlock =
+	{ {
+		{ -20,-20,-40 }, //ç∂â∫
+		{ -20, 20,-40 }, //ç∂è„
+		{  20, 20,-40 }  //âEè„
+	} };
 
-	//for (size_t i = 0; i < stopBlock.size(); i++)
-	//{
-	//	unique_ptr<BaseBlock> StopBlock_ = make_unique<StopBlock>();
-	//	StopBlock_->SetTranslation(RotateVector(stopBlock[i], CubeQuaternion::Get(stage)));
-	//	StopBlock_->SetScale({ 20,20,1 });
-	//	StopBlock_->SetNum(i + 1);
-	//	StopBlock_->Initialize();
-	//	blocks.push_back(move(StopBlock_));
-	//}
+	array<Vector3, 2> stopBlockScale =
+	{ {
+		{20,20,1},{1,20,20}
+	} };
+
+	for (size_t i = 0; i < stopBlock.size(); i++)
+	{
+		unique_ptr<BaseBlock> StopBlock_ = make_unique<StopBlock>();
+		StopBlock_->SetTranslation(RotateVector(stopBlock[i], CubeQuaternion::Get(stage)));
+		StopBlock_->SetScale(stopBlockScale[stage % 2 == 0]);
+		StopBlock_->SetNum(i + 1);
+		StopBlock_->Initialize();
+		blocks.push_back(move(StopBlock_));
+	}
 }
 
 void BlockManager::Update()

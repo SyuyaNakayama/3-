@@ -7,7 +7,7 @@
 void Player::Initialize()
 {
 	Quaternion rotQ = CubeQuaternion::Get(*nowStage);
-	worldTransform.translation_ = RotateVector({ 36.0f ,35.0f + epsilon,-39.0f }, rotQ);
+	worldTransform.translation_ = RotateVector({ 36.0f ,-35.0f + epsilon,-39.0f }, rotQ);
 	moveSpd = RotateVector(moveSpd, rotQ);
 	direction = Direction::Left;
 
