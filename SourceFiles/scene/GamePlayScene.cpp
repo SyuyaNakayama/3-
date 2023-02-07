@@ -16,13 +16,16 @@ void GamePlayScene::Initialize()
 	preEyePos = eyePos[1];
 	gameScene = GameScene::GetInstance();
 	mouse->Initialize();
+	BaseBlock::SetStage(&stage);
+	StagePlane::GetInstance()->SetStage(&stage);
 	blockManager->Initialize(1);
-	//Button::SetUseCount(1);
+	Button::SetUseCount(3);
 }
 
 void GamePlayScene::Update()
 {
-	imguiManager->PrintVector("eyePos", viewProjection->eye);
+	imguiManager->PrintVector("stagePlaneInter", *StagePlane::GetInstance()->GetInter());
+	imguiManager->PrintVector("stagePlaneNormal", StagePlane::GetInstance()->GetNormal());
 	// ステージクリア時
 	if (GoalBlock::IsGoal())
 	{
@@ -40,11 +43,10 @@ void GamePlayScene::Update()
 			isCameraLerp = false;
 			Button::SetUseCount(0);
 			StagePlane* p = StagePlane::GetInstance();
-			p->SetNormal(RotateVector(p->GetNormal(), CubeQuaternion::Get(stage)));
 		}
 	}
 	// カメラズームアウト
-	if (Button::GetUseCount() == 1 && !isCameraLerp) { if (CameraLerp()) { return; } }
+	if (Button::GetUseCount() >= 1 && !isCameraLerp) { if (CameraLerp()) { return; } }
 
 	mouse->Update();
 	blockManager->Update();
@@ -56,7 +58,7 @@ void GamePlayScene::Update()
 	debugCamera_->Update();
 
 #ifdef _DEBUG
-	//* viewProjection = debugCamera_->GetViewProjection();
+	* viewProjection = debugCamera_->GetViewProjection();
 #endif // _DEBUG
 }
 

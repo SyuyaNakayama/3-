@@ -1,5 +1,7 @@
 #include "Collider.h"
 #include "CollisionManager.h"
+#include "Quaternion.h"
+#include <array>
 
 float IncludeCollider::includeRadius = 0.1f;
 
@@ -20,11 +22,25 @@ void PolygonCollider::SetVertices()
 {
 	Vector3 objPos = worldTransform.translation_;
 	Vector3 objRad = worldTransform.scale_;
+	Quaternion rotQ = DirectionToDirection({ 0,0,-1 }, normal.normalize());
+	std::array<Vector3, 4> verticesTemp =
+	{ {
+		{-objRad.x, objRad.y, -objRad.z},
+		{objRad.x, objRad.y, -objRad.z},
+		{objRad.x, -objRad.y, -objRad.z},
+		-objRad
+	} };
+
 	vertices.clear();
-	vertices.push_back(objPos + Vector3(-objRad.x, objRad.y, -objRad.z));
-	vertices.push_back(objPos + Vector3(objRad.x, objRad.y, -objRad.z));
-	vertices.push_back(objPos + Vector3(objRad.x, -objRad.y, -objRad.z));
-	vertices.push_back(objPos - objRad);
+	for (auto& vertex : verticesTemp) 
+	{
+		vertices.push_back(objPos+ RotateVector(vertex, rotQ));
+	}
+
+	//vertices.push_back(objPos + Vector3(-objRad.x, objRad.y, -objRad.z));
+	//vertices.push_back(objPos + Vector3(objRad.x, objRad.y, -objRad.z));
+	//vertices.push_back(objPos + Vector3(objRad.x, -objRad.y, -objRad.z));
+	//vertices.push_back(objPos - objRad);
 }
 
 void PolygonCollider::ToPlaneCollider(PlaneCollider* planeCollider)

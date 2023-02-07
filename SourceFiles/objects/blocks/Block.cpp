@@ -1,8 +1,12 @@
+#include <imgui.h>
 #include "Block.h"
 #include "ImGuiManager.h"
-#include <imgui.h>
+#include "CollisionManager.h"
+#include "Mouse.h"
 
 #pragma region BaseBlock
+UINT16* BaseBlock::nowStage = nullptr;
+
 void BaseBlockCollider::Initialize()
 {
 	BaseBlock::Initialize();
@@ -35,7 +39,7 @@ void MoveBlock::Initialize()
 	BaseBlockCollider::Initialize();
 	SetVertices();
 	SetTexture("moveBlock.png");
-	normal = { 0,0,-1 };
+	normal = RotateVector({ 0,0,-1 }, CubeQuaternion::Get(*nowStage));
 }
 
 void MoveBlock::DragBox()
@@ -52,6 +56,7 @@ void MoveBlock::Update()
 {
 	DragBox();
 	worldTransform.Update();
+	normal = RotateVector({ 0,0,-1 }, CubeQuaternion::Get(*nowStage));
 	SetVertices();
 }
 #pragma endregion
@@ -61,8 +66,8 @@ void CopyBlock::Initialize()
 {
 	BaseBlockCollider::Initialize();
 	SetTexture("copyBlock.png");
+	normal = RotateVector({ 0,0,-1 },CubeQuaternion::Get(*nowStage));
 	SetVertices();
-	normal = { 0,0,-1 };
 }
 
 std::unique_ptr<BaseBlock> CopyBlock::NewBlockCreate()
@@ -73,6 +78,7 @@ std::unique_ptr<BaseBlock> CopyBlock::NewBlockCreate()
 	isCopyMode = false;
 	std::unique_ptr<BaseBlock> newBlock = std::make_unique<CopyedBlock>();
 
+	CollisionManager::CheckCollisionRayPlane(Mouse::GetInstance(), StagePlane::GetInstance());
 	newBlock->SetTranslation(*StagePlane::GetInstance()->GetInter());
 	newBlock->Initialize();
 
@@ -82,7 +88,7 @@ std::unique_ptr<BaseBlock> CopyBlock::NewBlockCreate()
 
 void CopyBlock::Update()
 {
-	if (isCopy == false) { SetTexture("copyBlock_2.png"); }
+	if (!isCopy) { SetTexture("copyBlock_2.png"); }
 	worldTransform.Update();
 }
 
@@ -98,8 +104,8 @@ void DestroyBlock::Initialize()
 {
 	BaseBlockCollider::Initialize();
 	SetTexture("destroyBlock.png");
+	normal = RotateVector({ 0,0,-1 }, CubeQuaternion::Get(*nowStage));
 	SetVertices();
-	normal = { 0,0,-1 };
 }
 
 void DestroyBlock::Update()
@@ -140,7 +146,7 @@ StagePlane* StagePlane::GetInstance()
 void StagePlane::Initialize()
 {
 	distance = 39.0f;
-	normal = { 0,0,-1 };
+	normal = RotateVector({ 0,0,-1 }, CubeQuaternion::Get(*nowStage));
 	SetCollisionAttribute(CollisionAttribute::StagePlane);
 	SetCollisionMask(CollisionMask::StagePlane);
 }
@@ -165,6 +171,7 @@ void Button::Initialize()
 }
 
 uint16_t Button::useCount;
+
 void Button::OnCollision(BoxCollider* collider)
 {
 	isDestroy = true;
@@ -172,6 +179,7 @@ void Button::OnCollision(BoxCollider* collider)
 }
 
 bool GoalBlock::isGoal = false;
+
 void GoalBlock::Initialize()
 {
 	worldTransform.Initialize();

@@ -12,6 +12,7 @@ private:
 	static std::list<PolygonCollider*> polygonColliders;
 	static std::list<RayCollider*> rayColliders;
 
+public:
 	static bool CheckCollisionFiltering(BaseCollider* colliderA, BaseCollider* colliderB);
 	static bool CheckCollision2Boxes(BoxCollider* colliderA, BoxCollider* colliderB);
 	static bool CheckCollision2IncludeObjects(IncludeCollider* colliderA, IncludeCollider* colliderB);
@@ -19,7 +20,6 @@ private:
 	static bool CheckCollisionRayPlane(RayCollider* colliderA, PlaneCollider* colliderB, float* distance = nullptr);
 	static bool CheckCollisionRayPolygon(RayCollider* colliderA, PolygonCollider* colliderB, float* distance = nullptr);
 
-public:
 	CollisionManager() = delete;
 	// コライダー登録関数
 	static void PushCollider(BoxCollider* collider) { boxColliders.push_back(collider); }

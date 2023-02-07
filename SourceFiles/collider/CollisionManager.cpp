@@ -198,8 +198,4 @@ void CollisionManager::CheckAllCollisions()
 	CheckRayPlaneCollisions();
 	CheckRayPolygonCollisions();
 	CheckIncludeCollisions();
-	//ImGui::Text("boxColliders.size() = %d", boxColliders.size());
-	//ImGui::Text("planeColliders.size() = %d", planeColliders.size());
-	//ImGui::Text("polygonColliders.size() = %d", polygonColliders.size());
-	//ImGui::Text("includeColliders.size() = %d", includeColliders.size());
 }

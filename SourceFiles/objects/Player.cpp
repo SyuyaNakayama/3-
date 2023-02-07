@@ -7,7 +7,7 @@
 void Player::Initialize()
 {
 	Quaternion rotQ = CubeQuaternion::Get(*nowStage);
-	worldTransform.translation_ = RotateVector({ 36.0f ,-35.0f + epsilon,-39.0f }, rotQ);
+	worldTransform.translation_ = RotateVector({ 36.0f ,35.0f + epsilon,-39.0f }, rotQ);
 	moveSpd = RotateVector(moveSpd, rotQ);
 	direction = Direction::Left;
 
@@ -83,8 +83,6 @@ void Player::Update()
 		float dot = Vector3Dot(dVec, moveSpd); // 向き判別ベクトルとプレイヤー移動速度ベクトルの内積を取る
 		if (dot < 0.0f) { direction = Direction::Right; }
 		if (dot > 0.0f) { direction = Direction::Left; }
-		//if (direction == Direction::Left) { direction = Direction::Right; }
-		//else if (direction == Direction::Right) { direction = Direction::Left; }
 	}
 
 	// 進んでる方向によってキャラの向きを変える

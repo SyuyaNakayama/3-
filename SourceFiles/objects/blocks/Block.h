@@ -9,7 +9,7 @@ class BaseBlock
 protected:
 	Model* model = nullptr;
 	uint32_t textureHandle = 0;
-	int num_;
+	static UINT16* nowStage;
 public:
 	virtual ~BaseBlock() { delete model; }
 	virtual void Initialize() { model = Model::Create(); }
@@ -18,11 +18,11 @@ public:
 	virtual bool IsDestroy() { return false; }
 	virtual void SetTranslation(Vector3 translation) = 0;
 	virtual void SetRotation(Vector3 rotation) {}
-	virtual void SetScale(Vector3 scale) {};
+	virtual void SetScale(Vector3 scale) {}
 	virtual std::unique_ptr<BaseBlock> NewBlockCreate() { return nullptr; }
+	virtual void SetNum(int num) {};
+	static void SetStage(UINT16* stage) { nowStage = stage; }
 	void SetTexture(const std::string& fileName) { textureHandle = TextureManager::Load("blockTextures/" + fileName); }
-
-	void SetNum(int num) { num_ = num; }
 };
 
 class BaseBlockCollider : public virtual BaseBlock, public BoxCollider
@@ -139,9 +139,11 @@ public:
 class StagePlane : public PlaneCollider
 {
 	StagePlane() = default;
+	UINT16* nowStage = nullptr;
 public:
 	static StagePlane* GetInstance();
 	void Initialize();
+	void SetStage(UINT16* stage) { nowStage = stage; }
 	void Rotation(Quaternion rotQ) { normal = RotateVector(normal, rotQ); }
 };
 
@@ -161,8 +163,10 @@ class StopBlock : public BaseBlockCollider
 {
 private:
 	bool isDestroy = false;
+	int num_;
 public:
 	bool IsDestroy() { return isDestroy; }
 	void Initialize();
 	void Update();
+	void SetNum(int num) { num_ = num; }
 };
