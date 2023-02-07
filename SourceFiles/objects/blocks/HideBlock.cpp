@@ -4,7 +4,6 @@
 void HideBlock::Initialize(Vector3 pos, Vector3 rot)
 {
 	hideBlock = Model::CreateFromOBJ("Hblock");
-
 	worldTransform_.Initialize();
 	/*worldTransform_.scale_ = { 0.5f,0.511f,0.511f };*/
 	worldTransform_.scale_ = { 20,20,1 };
