@@ -13,7 +13,9 @@ private:
 	Player player_;
 	std::unique_ptr<DebugCamera> debugCamera_;
 	Mouse* mouse = Mouse::GetInstance();
-	HideBlock hideBlock_;
+	HideBlock hideBlock1_;
+	HideBlock hideBlock2_;
+	HideBlock hideBlock3_;
 
 	uint16_t textureHandle_ = 0;
 	Sprite* UI = nullptr;

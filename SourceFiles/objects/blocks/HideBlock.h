@@ -8,6 +8,8 @@ private:
 	Model* hideBlock = nullptr;
 	WorldTransform worldTransform_;
 
+	bool isHide = true;
+
 	Input* input = nullptr;
 public:
 	void Initialize(Vector3 pos,Vector3 rot);
