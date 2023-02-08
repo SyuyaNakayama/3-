@@ -60,17 +60,7 @@ void GameScene::Update()
 		}
 	}
 
-	if (!fadeManager_.IsFade())
-	{
-		if (input->PushKey(DIK_1)) 
-		{
-			for (size_t i = 0; i < 10; i++)
-			{
-			scene_->Update();
-			}
-		}
-		scene_->Update();
-	}
+	if (!fadeManager_.IsFade()) { scene_->Update(); }
 
 	imguiManager->End();
 

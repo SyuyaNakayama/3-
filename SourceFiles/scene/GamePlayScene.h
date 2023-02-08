@@ -22,10 +22,6 @@ private:
 
 	std::unique_ptr<DebugCamera> debugCamera;
 
-	/*HideBlock hideBlock1_;
-	HideBlock hideBlock2_;
-	HideBlock hideBlock3_;*/
-
 	uint16_t textureHandle_ = 0;
 	uint16_t textureHandleTuto_ = 0;
 	uint16_t textureHandleDdMark_ = 0;

@@ -27,7 +27,6 @@ void GamePlayScene::Initialize()
 	UI->SetPosition({ 995,0 });
 	//ステージ数
 	{
-
 		textureHandleTuto_ = TextureManager::Load("UI/tutorial.png");
 		UITuto = Sprite::Create(textureHandleTuto_, { 0,0 });
 		UITuto->SetSize({ 285,100 });
@@ -181,13 +180,8 @@ void GamePlayScene::Draw()
 
 	// スプライト描画
 	Sprite::PreDraw(cmdList);
-
-	//UI->Draw();
-
 	
 	UITuto->Draw();
-	
-
 	UIDdMark->Draw();
 	UIDdText->Draw();
 
