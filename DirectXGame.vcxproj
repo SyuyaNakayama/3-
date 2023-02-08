@@ -151,8 +151,8 @@
     <None Include="Resources\shaders\Sprite.hlsli" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="SourceFiles\objects\Skydome.h" />
     <ClInclude Include="SourceFiles\objects\blocks\HideBlock.h" />
+    <ClInclude Include="SourceFiles\objects\Skydome.h" />
     <ClInclude Include="SourceFiles\2d\ImGuiManager.h" />
     <ClInclude Include="SourceFiles\2d\Sprite.h" />
     <ClInclude Include="SourceFiles\3d\AxisIndicator.h" />

@@ -264,10 +264,10 @@
     <ClInclude Include="SourceFiles\scene\ClearScene.h">
       <Filter>ヘッダー ファイル\scene</Filter>
     </ClInclude>
-    <ClInclude Include="SourceFiles\objects\blocks\HideBlock.h">
+    <ClInclude Include="SourceFiles\objects\Skydome.h">
       <Filter>ヘッダー ファイル\objects</Filter>
     </ClInclude>
-    <ClInclude Include="SourceFiles\objects\Skydome.h">
+    <ClInclude Include="SourceFiles\objects\blocks\HideBlock.h">
       <Filter>ヘッダー ファイル\objects</Filter>
     </ClInclude>
   </ItemGroup>

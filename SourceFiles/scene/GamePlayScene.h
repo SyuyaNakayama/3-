@@ -27,6 +27,40 @@ private:
 	HideBlock hideBlock3_;*/
 
 	uint16_t textureHandle_ = 0;
+	uint16_t textureHandleTuto_ = 0;
+	uint16_t textureHandleDdMark_ = 0;
+	uint16_t textureHandleDdText_ = 0;
+	uint16_t textureHandleStage1_ = 0;
+	uint16_t textureHandleButtonMark_ = 0;
+	uint16_t textureHandleStage2_ = 0;
+	uint16_t textureHandleStage3_ = 0;
+	uint16_t textureHandleLadderMark_ = 0;
+	uint16_t textureHandleDestroyMark_ = 0;
+	uint16_t textureHandleCopyMark_ = 0;
+	uint16_t textureHandleGoalMark_ = 0;
+	uint16_t textureHandleButtonText_ = 0;
+	uint16_t textureHandleLadderText_ = 0;
+	uint16_t textureHandleDestroyText_ = 0;
+	uint16_t textureHandleCopyText_ = 0;
+	uint16_t textureHandleGoalText_ = 0;
+
+	Sprite* UI = nullptr;
+	Sprite* UITuto = nullptr;
+	Sprite* UIDdMark = nullptr;
+	Sprite* UIDdText = nullptr;
+	Sprite* UIStage1 = nullptr;
+	Sprite* UIButtonMark = nullptr;
+	Sprite* UIStage2 = nullptr;
+	Sprite* UIStage3 = nullptr;
+	Sprite* UILadderMark = nullptr;
+	Sprite* UIDestroyMark = nullptr;
+	Sprite* UICopyMark = nullptr;
+	Sprite* UIGoalMark = nullptr;
+	Sprite* UIButtonText = nullptr;
+	Sprite* UILadderText = nullptr;
+	Sprite* UIDestroyText = nullptr;
+	Sprite* UICopyText = nullptr;
+	Sprite* UIGoalText = nullptr;
 	Sprite* back = nullptr;
 	Skydome* skydome_ = nullptr;
 	

@@ -1,14 +1,10 @@
 #include "HideBlock.h"
-#include <Input.h>
 #include "GameScene.h"
-#include <imgui.h>
-#include "Block.h"
 
 void HideBlock::Initialize()
 {
 	hideBlock = Model::CreateFromOBJ("Hblock");
 	worldTransform_.Initialize();
-	worldTransform_.scale_ = { 20,20,1 };
     isHide = true;
 }
 
@@ -16,13 +12,13 @@ void HideBlock::SetTransfer(Vector3 pos, Vector3 scale)
 {
     worldTransform_.translation_ = pos;
     worldTransform_.scale_ = scale;
+    worldTransform_.rotation_ = {};
     worldTransform_.Update();
 }
 
 void HideBlock::Update(uint16_t useCount,uint16_t setNum)
 {
-    
-    if (*GameScene::GetStage() == 1 || *GameScene::GetStage() == 3)//1‚©‚R
+    if (*GameScene::GetStage() == 1 || *GameScene::GetStage() == 3) //1‚©3
     {
         if (setNum == useCount)
         {
