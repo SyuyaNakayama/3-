@@ -2,6 +2,7 @@
 #include "Block.h"
 #include <list>
 #include <memory>
+#include "HideBlock.h"
 
 class BlockManager
 {
@@ -12,6 +13,11 @@ private:
 	void LoadMap(const std::string& fileName);
 	void CreateBlock(Vector3 pos, Vector3 rot, BlockType type);
 	BlockManager() = default;
+
+	HideBlock hideBlock1_;
+	HideBlock hideBlock2_;
+	HideBlock hideBlock3_;
+
 public:
 	BlockManager(const BlockManager& obj) = delete;
 	static BlockManager* GetInstance();

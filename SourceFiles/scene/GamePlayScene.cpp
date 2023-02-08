@@ -4,6 +4,7 @@
 #include "Quaternion.h"
 #include "WinApp.h"
 #include "ViewProjection.h"
+#include <imgui.h>
 
 void GamePlayScene::Initialize()
 {
@@ -19,9 +20,7 @@ void GamePlayScene::Initialize()
 	Button::SetUseCount(0);
 	debugCamera = std::make_unique<DebugCamera>(1280, 720);
 
-	hideBlock1_.Initialize({ -20,-20,-40.5 }, { 0,0,0 });
-	hideBlock2_.Initialize({ -20,20,-40.5 }, { 0,0,0 });
-	hideBlock3_.Initialize({ 20,20,-40.5 }, { 0,0,0 });
+	
 
 	textureHandle_ = TextureManager::Load("white1x1.png");
 	UI = Sprite::Create(textureHandle_, { 0,0 });
@@ -40,12 +39,14 @@ void GamePlayScene::Update()
 	// ステージクリア時
 	if (GoalBlock::IsGoal())
 	{
+		
 		if (*stage <= 3 || isCameraScroll)
 		{
 			if (isCameraLerp)
 			{
 				isCameraScroll = true;
 				if (ChangeNextStage()) { return; } // カメラ補間中
+
 				t = 0; isCameraLerp = false;
 			}
 			// カメラズームイン
@@ -57,10 +58,8 @@ void GamePlayScene::Update()
 				isCameraLerp = false;
 				Button::SetUseCount(0);
 				isCameraScroll = false;
-				//ステージをクリアしたらflagを戻す
-				hideBlock1_.SetFlag();
-				hideBlock2_.SetFlag();
-				hideBlock3_.SetFlag();
+				
+				
 			}
 		}
 		else { gameScene->SetNextScene(Scene::Clear); }
@@ -68,33 +67,7 @@ void GamePlayScene::Update()
 	// カメラズームアウト
 	if (Button::GetUseCount() >= 1 && !isCameraLerp) { if (CameraLerp()) { return; } }
 
-	switch (*stage)
-	{
-	case 1://チュートリアル　手前
-		hideBlock1_.SetTransfer({-20, -20, -40.5}, { 0,0,0 });
-		hideBlock2_.SetTransfer({ -20,20,-40.5 }, { 0,0,0 });
-		hideBlock3_.SetTransfer({ 20,20,-40.5 }, { 0,0,0 });
-		break;
-	case 2://ステージ1 右
-		hideBlock1_.SetTransfer({ 40.5, -20, -20 }, { 0,90 * PI / 180,0 });
-		hideBlock2_.SetTransfer({ 40.5,20,-20 }, { 0,90 * PI / 180,0 });
-		hideBlock3_.SetTransfer({ 40.5,20,20 }, { 0,90 * PI / 180,0 });
-		break;
-	case 3://ステージ2　奥
-		hideBlock1_.SetTransfer({ 20, -20, 40.5 }, { 0,0,0 });
-		hideBlock2_.SetTransfer({ 20,20,40.5 }, { 0,0,0 });
-		hideBlock3_.SetTransfer({ -20,20,40.5 }, { 0,0,0 });
-		break;
-	case 4://ステージ3　左
-		hideBlock1_.SetTransfer({ -40.5,-20, 20 }, { 0,90 * PI / 180,0 });
-		hideBlock2_.SetTransfer({ -40.5,20,20 }, { 0,90 * PI / 180,0 });
-		hideBlock3_.SetTransfer({ -40.5,20,-20 }, { 0,90 * PI / 180,0 });
-		break;
-	}
 
-	hideBlock1_.Update(Button::GetUseCount(), 1);
-	hideBlock2_.Update(Button::GetUseCount(), 2);
-	hideBlock3_.Update(Button::GetUseCount(), 3);
 	mouse->Update();
 	blockManager->Update();
 	player_.Update();
@@ -114,10 +87,7 @@ void GamePlayScene::Draw()
 	blockManager->Draw();
 	
 	player_.Draw();
-	hideBlock1_.Draw();
-	hideBlock2_.Draw();
-	hideBlock3_.Draw();
-	//skydome_->Draw();
+
 	// 3Dオブジェクト描画後処理
 	Model::PostDraw();
 

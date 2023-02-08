@@ -1,7 +1,7 @@
 ﻿#include "GameScene.h"
 #include "Quaternion.h"
 
-UINT16 GameScene::stage = 4;
+UINT16 GameScene::stage = 0;
 
 void GameScene::Initialize()
 {
@@ -29,7 +29,7 @@ void GameScene::Initialize()
 	CubeQuaternion::Create();
 
 	// シーンの生成
-	SetNextScene(Scene::Play, false);
+	SetNextScene(Scene::Title, false);
 	imguiManager->Initialize();
 	fadeManager_.Initialize();
 }

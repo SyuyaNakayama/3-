@@ -5,6 +5,7 @@
 #include "GameScene.h"
 #include "BlockManager.h"
 #include "Quaternion.h"
+
 using namespace std;
 
 BlockManager* BlockManager::GetInstance()
@@ -52,6 +53,36 @@ void BlockManager::Initialize()
 		StopBlock_->Initialize();
 		blocks.push_back(move(StopBlock_));
 	}
+	hideBlock1_.Initialize({ -20,-20,-40.5 });
+	hideBlock2_.Initialize({ -20,20,-40.5 });
+	hideBlock3_.Initialize({ 20,20,-40.5 });
+	hideBlock1_.SetFlag();
+	hideBlock2_.SetFlag();
+	hideBlock3_.SetFlag();
+	switch (*GameScene::GetStage())
+	{
+	case 1://チュートリアル　手前
+		hideBlock1_.SetTransfer({ -20, -20, -40.5 }, { 20,20,1 });
+		hideBlock2_.SetTransfer({ -20,20,-40.5 }, { 20,20,1 });
+		hideBlock3_.SetTransfer({ 20,20,-40.5 }, { 20,20,1 });
+		break;
+	case 2://ステージ1 右
+		hideBlock1_.SetTransfer({ 40.5, -20, -20 }, { 1,20,20 });
+		hideBlock2_.SetTransfer({ 40.5,20,-20 }, { 1,20,20 });
+		hideBlock3_.SetTransfer({ 40.5,20,20 }, { 1,20,20 });
+		break;
+	case 3://ステージ2　奥
+		hideBlock1_.SetTransfer({ 20, -20, 40.5 }, { 20,20,1 });
+		hideBlock2_.SetTransfer({ 20,20,40.5 }, { 20,20,1 });
+		hideBlock3_.SetTransfer({ -20,20,40.5 }, { 20,20,1 });
+		break;
+	case 4://ステージ3　左
+		hideBlock1_.SetTransfer({ -40.5,-20, 20 }, { 1,20,20 });
+		hideBlock2_.SetTransfer({ -40.5,20,20 }, { 1,20,20 });
+		hideBlock3_.SetTransfer({ -40.5,20,-20 }, { 1,20,20 });
+		break;
+	}
+	
 }
 
 void BlockManager::Update()
@@ -69,11 +100,25 @@ void BlockManager::Update()
 			break;
 		}
 	}
+	hideBlock1_.Update(Button::GetUseCount(), 1);
+	hideBlock2_.Update(Button::GetUseCount(), 2);
+	hideBlock3_.Update(Button::GetUseCount(), 3);
+	
 
 	for (const unique_ptr<BaseBlock>& block : blocks) { block->Update(); }
 }
 
-void BlockManager::Draw() { for (const unique_ptr<BaseBlock>& block : blocks) { block->Draw(); } }
+void BlockManager::Draw() 
+{ 
+	for (const unique_ptr<BaseBlock>& block : blocks) 
+	{ 
+		block->Draw();
+	} 
+	hideBlock1_.Draw();
+	hideBlock2_.Draw();
+	hideBlock3_.Draw();
+	
+}
 
 void BlockManager::LoadMap(const std::string& fileName)
 {
