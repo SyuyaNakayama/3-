@@ -75,7 +75,7 @@ void GamePlayScene::Draw()
 	// スプライト描画
 	Sprite::PreDraw(cmdList);
 
-	UI->Draw();
+	//UI->Draw();
 
 	Sprite::PostDraw();
 }
