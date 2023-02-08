@@ -9,8 +9,6 @@ private:
 	WorldTransform worldTransform_;
 
 	Input* input = nullptr;
-
-	bool hideFlag = true;
 public:
 	void Initialize(Vector3 pos,Vector3 rot);
 	void Update();
