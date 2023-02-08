@@ -19,6 +19,7 @@ public:
 	virtual void SetTranslation(Vector3 translation) = 0;
 	virtual void SetScale(Vector3 scale) = 0;
 	virtual std::unique_ptr<BaseBlock> NewBlockCreate() { return nullptr; }
+	virtual void SpriteDraw() {};
 	void SetTexture(const std::string& fileName);
 
 	void SetNum(int num) { num_ = num; }
@@ -71,12 +72,13 @@ class CopyBlock : public BaseBlockCollider, public PolygonCollider
 private:
 	bool isCopyMode = false;
 	bool isCopy = true;
-	Sprite * CopyblockShadow=nullptr;
+	Sprite* copyBlockShadow = nullptr;
 public:
 	std::unique_ptr<BaseBlock> NewBlockCreate();
 	void Initialize();
 	void Update();
 	void Draw();
+	void SpriteDraw() { if (isCopyMode) { copyBlockShadow->Draw(); } }
 	void OnCollision(RayCollider* Collider);
 };
 

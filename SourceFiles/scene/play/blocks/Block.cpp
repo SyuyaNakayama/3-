@@ -76,12 +76,14 @@ void CopyBlock::Initialize()
 	SetTexture("copyBlock.png");
 	SetVertices();
 	normal = { 0,0,-1 };
-	CopyblockShadow = Sprite::Create(TextureManager::Load("BlockTextures/copy2.png"),{0,0});
+	copyBlockShadow = Sprite::Create(TextureManager::Load("BlockTextures/copy2.png"), { 0,0 });
+	copyBlockShadow->SetAnchorPoint({ 0.5f,0.5f });
+	copyBlockShadow->SetSize({ 20,20 });
 }
 
 std::unique_ptr<BaseBlock> CopyBlock::NewBlockCreate()
 {
-	if(isCopy == false){return nullptr;}
+	if (isCopy == false) { return nullptr; }
 	if (!isCopyMode) { return nullptr; }
 	if (!input->IsTriggerMouse(0)) { return nullptr; }
 	isCopyMode = false;
@@ -98,21 +100,15 @@ void CopyBlock::Update()
 {
 	if (isCopy == false) { SetTexture("copyBlock_2.png"); }
 	worldTransform.Update();
-	if (isCopyMode) { CopyblockShadow->SetPosition(input->GetMousePosition()); }
-
+	if (isCopyMode) { copyBlockShadow->SetPosition(input->GetMousePosition()); }
 }
 
 void CopyBlock::Draw()
 {
-	if (isCopyMode) {
-		Sprite::PreDraw(DirectXCommon::GetInstance()->GetCommandList());
-		CopyblockShadow->Draw(); 
-		Sprite::PostDraw();
-	}
 	model->Draw(worldTransform, *ViewProjection::GetInstance(), textureHandle);
 }
 
-void CopyBlock::OnCollision(RayCollider* Collider) { if (input->IsTriggerMouse(0)) { isCopyMode = true; }}
+void CopyBlock::OnCollision(RayCollider* Collider) { if (input->IsTriggerMouse(0)) { isCopyMode = true; } }
 #pragma endregion
 
 #pragma region CopyedBlock
@@ -149,7 +145,7 @@ void DestroyBlock::OnCollision(RayCollider* collider)
 
 	if (clickNum == 1) { SetTexture("destroyBlock_2.png"); }
 	if (clickNum == 2) { SetTexture("destroyBlock_1.png"); }
-	
+
 	if (clickNum >= DESTROY_NUM) { isDestroy = true; }
 }
 #pragma endregion

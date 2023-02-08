@@ -13,7 +13,7 @@ void Player::Initialize()
 
 	worldTransform.Initialize();
 	worldTransform.scale_.x = 0.9999f;
-	worldTransform.translation_ = { 76.0f ,-76.0f + epsilon,0 };
+	worldTransform.translation_ = { 76.0f ,-36.0f + epsilon,0 };
 
 	//êeéqä÷åW
 	//ëÃ

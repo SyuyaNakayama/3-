@@ -30,30 +30,30 @@ void BlockManager::Initialize(UINT16 stage)
 	blocks.push_back(move(bgBlock));
 
 	//ç∂â∫
-	unique_ptr<BaseBlock> StopBlock_ = make_unique<StopBlock>();
-	
-	StopBlock_->SetTranslation({ 19,-59,-1 });
-	StopBlock_->SetScale({ 20,20,1 });
-	StopBlock_->SetNum(1);
-	StopBlock_->Initialize();
-	blocks.push_back(move(StopBlock_));
+}	//unique_ptr<BaseBlock> StopBlock_ = make_unique<StopBlock>();
+	//
+	//StopBlock_->SetTranslation({ 19,-59,-1 });
+	//StopBlock_->SetScale({ 20,20,1 });
+	//StopBlock_->SetNum(1);
+	//StopBlock_->Initialize();
+	//blocks.push_back(move(StopBlock_));
 
-	//ç∂è„
-	StopBlock_ = make_unique<StopBlock>();
-	StopBlock_->SetTranslation({ 19,-19,-1 });
-	StopBlock_->SetScale({ 20,20,1 });
-	StopBlock_->SetNum(2);
-	StopBlock_->Initialize();
-	blocks.push_back(move(StopBlock_));
+	////ç∂è„
+	//StopBlock_ = make_unique<StopBlock>();
+	//StopBlock_->SetTranslation({ 19,-19,-1 });
+	//StopBlock_->SetScale({ 20,20,1 });
+	//StopBlock_->SetNum(2);
+	//StopBlock_->Initialize();
+	//blocks.push_back(move(StopBlock_));
 
-	//âEè„
-	StopBlock_ = make_unique<StopBlock>();
-	StopBlock_->SetTranslation({ 59,-19,-1 });
-	StopBlock_->SetScale({ 20,20,1 });
-	StopBlock_->SetNum(3);
-	StopBlock_->Initialize();
-	blocks.push_back(move(StopBlock_));
-}
+	////âEè„
+	//StopBlock_ = make_unique<StopBlock>();
+	//StopBlock_->SetTranslation({ 59,-19,-1 });
+	//StopBlock_->SetScale({ 20,20,1 });
+	//StopBlock_->SetNum(3);
+	//StopBlock_->Initialize();
+	//blocks.push_back(move(StopBlock_));
+
 
 void BlockManager::Update()
 {
