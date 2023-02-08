@@ -1,14 +1,12 @@
 #pragma once
 #include "BaseScene.h"
 #include "Player.h"
-#include "DebugCamera.h"
 #include "Mouse.h"
 
 class GamePlayScene : public BaseScene
 {
 private:
 	Player player_;
-	std::unique_ptr<DebugCamera> debugCamera_;
 	Mouse* mouse = Mouse::GetInstance();
 	Vector3 eyePos[2] = { { 20,-20,-600 },{ 0,0,-1200 } };
 	Vector3 targetPos[2] = { { 20,-20,0 },{ 0,0,0 } };

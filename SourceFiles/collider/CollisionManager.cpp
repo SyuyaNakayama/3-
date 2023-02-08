@@ -1,7 +1,5 @@
 #include "CollisionManager.h"
 #include <cassert>
-#include <imgui.h>
-#include <algorithm>
 using namespace std;
 
 list<BoxCollider*> CollisionManager::boxColliders;

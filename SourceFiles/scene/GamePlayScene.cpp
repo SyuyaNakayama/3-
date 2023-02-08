@@ -1,9 +1,7 @@
 #include "GamePlayScene.h"
 #include "GameScene.h"
-#include "ImGuiManager.h"
 #include "CollisionManager.h"
 #include "Quaternion.h"
-#include <imgui.h>
 
 void GamePlayScene::Initialize()
 {
@@ -12,7 +10,6 @@ void GamePlayScene::Initialize()
 	viewProjection->up = { 0,1,0 };
 	viewProjection->eye = RotateVector(eyePos[0], CubeQuaternion::Get());
 	viewProjection->target = RotateVector(targetPos[0], CubeQuaternion::Get());
-	debugCamera_ = std::make_unique<DebugCamera>(WinApp::kWindowWidth, WinApp::kWindowHeight);
 	gameScene = GameScene::GetInstance();
 	mouse->Initialize();
 	blockManager->Initialize();
@@ -22,17 +19,8 @@ void GamePlayScene::Initialize()
 
 void GamePlayScene::Update()
 {
-	imguiManager->PrintVector("stagePlaneInter", *StagePlane::GetInstance()->GetInter());
-	imguiManager->PrintVector("stagePlaneNormal", StagePlane::GetInstance()->GetNormal());
-	if (input->TriggerKey(DIK_R))
-	{
-		gameScene->SetNextScene(Scene::Play);
-	}
-	if (input->TriggerKey(DIK_T))
-	{
-		*stage = 0;
-		gameScene->SetNextScene(Scene::Title);
-	}
+	if (input->TriggerKey(DIK_R)) { gameScene->SetNextScene(Scene::Play); }
+	if (input->TriggerKey(DIK_T)) { gameScene->SetNextScene(Scene::Title); }
 
 	// ステージクリア時
 	if (GoalBlock::IsGoal())
@@ -67,12 +55,6 @@ void GamePlayScene::Update()
 
 	// 当たり判定
 	CollisionManager::CheckAllCollisions();
-
-	debugCamera_->Update();
-
-#ifdef _DEBUG
-	//*viewProjection = debugCamera_->GetViewProjection();
-#endif // _DEBUG
 }
 
 void GamePlayScene::Draw()
