@@ -1,10 +1,10 @@
-#include <imgui.h>
 #include <fstream>
 #include <sstream>
 #include <array>
+#include <cassert>
+#include "GameScene.h"
 #include "BlockManager.h"
 #include "Quaternion.h"
-#include "ImGuiManager.h"
 using namespace std;
 
 BlockManager* BlockManager::GetInstance()
@@ -18,13 +18,14 @@ void BlockManager::Initialize(UINT16 stage)
 	Clear();
 	switch (stage)
 	{
-	case 0: LoadMap("title.txt", 0); break;
-	case 1: LoadMap("tutorial.txt", 1); break;
-	case 2: LoadMap("stage1.txt", 2); break;
-	case 3: LoadMap("stage2.txt", 3); break;
-	case 4: LoadMap("stage3.txt", 4); break;
-	case 5: LoadMap("clear.txt", 5); break;
+	case 0: LoadMap("title.txt"); break;
+	case 1: LoadMap("tutorial.txt"); break;
+	case 2: LoadMap("stage1.txt"); break;
+	case 3: LoadMap("stage2.txt"); break;
+	case 4: LoadMap("stage3.txt"); break;
+	case 5: LoadMap("clear.txt"); break;
 	}
+
 	StagePlane::GetInstance()->Initialize();
 	unique_ptr<BaseBlock> bgBlock = make_unique<BgBlock>();
 	bgBlock->Initialize();
@@ -74,28 +75,28 @@ void BlockManager::Update()
 
 void BlockManager::Draw() { for (const unique_ptr<BaseBlock>& block : blocks) { block->Draw(); } }
 
-void BlockManager::LoadMap(const std::string& fileName, UINT16 faceNum)
+void BlockManager::LoadMap(const std::string& fileName)
 {
 	fstream file;
 	file.open("Resources/stages/" + fileName);
 	assert(file.is_open());
 
 	string line, key;
-	Quaternion rotQ = CubeQuaternion::Get(faceNum);
-	for (UINT16 y = 0; y < STAGE_SIZE;)
+	Quaternion rotQ = CubeQuaternion::Get();
+	for (UINT16 y = 0; y < 40;)
 	{
 		getline(file, line);
 		if (line.empty()) { continue; }
 		istringstream lineStream(line);
 
-		for (UINT16 x = 0; x < STAGE_SIZE; x++)
+		for (UINT16 x = 0; x < 40; x++)
 		{
 			int temp;
 			lineStream >> temp;
 			Vector3 pos = { 2.0f * x - 39.0f,-2.0f * y + 39.0f,-39.0f };
 			Vector3 rotVec{};
 			if (temp == (int)BlockType::Button) { rotVec = RotateVector(Vector3(-PI / 2.0f, 0, 0), rotQ); }
-			if (temp == (int)BlockType::Ladder) { rotVec.y = PI - PI / 2.0f * (float)(faceNum - 1); }
+			if (temp == (int)BlockType::Ladder) { rotVec.y = PI - PI / 2.0f * (float)(*GameScene::GetStage() - 1); }
 			CreateBlock(RotateVector(pos, rotQ), rotVec, (BlockType)temp);
 			getline(lineStream, key, ',');
 		}

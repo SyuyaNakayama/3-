@@ -12,7 +12,7 @@ protected:
 	static UINT16* nowStage;
 public:
 	virtual ~BaseBlock() { delete model; }
-	virtual void Initialize() { model = Model::Create(); }
+	virtual void Initialize();
 	virtual void Update() {};
 	virtual void Draw() = 0;
 	virtual bool IsDestroy() { return false; }
@@ -21,7 +21,6 @@ public:
 	virtual void SetScale(Vector3 scale) {}
 	virtual std::unique_ptr<BaseBlock> NewBlockCreate() { return nullptr; }
 	virtual void SetNum(int num) {};
-	static void SetStage(UINT16* stage) { nowStage = stage; }
 	void SetTexture(const std::string& fileName) { textureHandle = TextureManager::Load("blockTextures/" + fileName); }
 };
 
@@ -143,7 +142,6 @@ class StagePlane : public PlaneCollider
 public:
 	static StagePlane* GetInstance();
 	void Initialize();
-	void SetStage(UINT16* stage) { nowStage = stage; }
 	void Rotation(Quaternion rotQ) { normal = RotateVector(normal, rotQ); }
 };
 

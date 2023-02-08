@@ -1,11 +1,16 @@
-#include <imgui.h>
 #include "Block.h"
-#include "ImGuiManager.h"
 #include "CollisionManager.h"
 #include "Mouse.h"
+#include "GameScene.h"
 
 #pragma region BaseBlock
 UINT16* BaseBlock::nowStage = nullptr;
+
+void BaseBlock::Initialize()
+{
+	nowStage = GameScene::GetStage();
+	model = Model::Create();
+}
 
 void BaseBlockCollider::Initialize()
 {
@@ -145,6 +150,7 @@ StagePlane* StagePlane::GetInstance()
 
 void StagePlane::Initialize()
 {
+	nowStage = GameScene::GetStage();
 	distance = 39.0f;
 	normal = RotateVector({ 0,0,-1 }, CubeQuaternion::Get(*nowStage));
 	SetCollisionAttribute(CollisionAttribute::StagePlane);

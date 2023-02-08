@@ -1,12 +1,11 @@
 #include "Player.h"
-#include "ImGuiManager.h"
 #include "CollisionManager.h"
-#include <imgui.h>
 #include "Quaternion.h"
+#include "GameScene.h"
 
 void Player::Initialize()
 {
-	Quaternion rotQ = CubeQuaternion::Get(*nowStage);
+	Quaternion rotQ = CubeQuaternion::Get();
 	worldTransform.translation_ = RotateVector({ 36.0f ,-35.0f + epsilon,-39.0f }, rotQ);
 	moveSpd = RotateVector(moveSpd, rotQ);
 	direction = Direction::Left;
@@ -79,7 +78,7 @@ void Player::Update()
 	{
 		// プレイヤーが向いている方向を求める
 		Vector3 dVec = { -1,0,0 }; // 向き判別に使うベクトル
-		dVec = RotateVector(dVec, CubeQuaternion::Get(*nowStage));
+		dVec = RotateVector(dVec, CubeQuaternion::Get());
 		float dot = Vector3Dot(dVec, moveSpd); // 向き判別ベクトルとプレイヤー移動速度ベクトルの内積を取る
 		if (dot < 0.0f) { direction = Direction::Right; }
 		if (dot > 0.0f) { direction = Direction::Left; }
@@ -87,7 +86,7 @@ void Player::Update()
 
 	// 進んでる方向によってキャラの向きを変える
 	std::array<float, 3> r = { PI / 2.0f,1.5f * PI,PI };
-	worldTransform.rotation_.y = r[(size_t)direction] - PI / 2.0f * (*nowStage - 1);
+	worldTransform.rotation_.y = r[(size_t)direction] - PI / 2.0f * (*GameScene::GetStage() - 1);
 
 	WalkMotion();
 

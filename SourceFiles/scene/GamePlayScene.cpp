@@ -8,7 +8,6 @@
 void GamePlayScene::Initialize()
 {
 	stage = GameScene::GetStage();
-	player_.SetStage(stage);
 	player_.Initialize();
 	viewProjection->up = { 0,1,0 };
 	viewProjection->eye = RotateVector(eyePos[0],CubeQuaternion::Get());
@@ -17,8 +16,6 @@ void GamePlayScene::Initialize()
 	preEyePos = eyePos[1];
 	gameScene = GameScene::GetInstance();
 	mouse->Initialize();
-	BaseBlock::SetStage(stage);
-	StagePlane::GetInstance()->SetStage(stage);
 	blockManager->Initialize(*stage);
 	Button::SetUseCount(0);
 }
@@ -53,7 +50,6 @@ void GamePlayScene::Update()
 			GoalBlock::SetIsGoal(false); // カメラ補間終了
 			isCameraLerp = false;
 			Button::SetUseCount(0);
-			StagePlane* p = StagePlane::GetInstance();
 		}
 	}
 	// カメラズームアウト

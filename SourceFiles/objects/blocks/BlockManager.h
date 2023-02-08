@@ -8,10 +8,9 @@ class BlockManager
 {
 private:
 	enum class BlockType { None, Normal, Move, Copy, Destroy, Ladder, Button, NonCollisionNormal, Goal };
-	static const UINT16 STAGE_SIZE = 40;
 
 	std::list<std::unique_ptr<BaseBlock>> blocks;
-	void LoadMap(const std::string& fileName, UINT16 faceNum);
+	void LoadMap(const std::string& fileName);
 	void CreateBlock(Vector3 pos, Vector3 rot, BlockType type);
 	BlockManager() = default;
 public:

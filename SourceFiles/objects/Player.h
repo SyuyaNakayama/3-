@@ -37,14 +37,12 @@ private:
 	float oldPosX = 0.0f;
 	bool isInitialize = false;
 	Input* input = nullptr;
-	UINT16* nowStage = nullptr;
 
 	void WalkMotion();	// ï‡Ç≠ÉÇÅ[ÉVÉáÉì
 public:
 	void Initialize();
 	void Update();
 	void Draw();
-	void SetStage(UINT16* stage) { nowStage = stage; }
 	void OnCollision(BoxCollider* boxCollider);
 	void OnCollision(IncludeCollider* includeCollider);
 };
