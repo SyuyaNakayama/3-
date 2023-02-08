@@ -2,6 +2,10 @@
 #include "BaseScene.h"
 #include "Player.h"
 #include "Mouse.h"
+#include "HideBlock.h"
+#include "Sprite.h"
+#include "Skydome.h"
+#include "DebugCamera.h"
 
 class GamePlayScene : public BaseScene
 {
@@ -16,6 +20,17 @@ private:
 	UINT16* stage = nullptr;
 	bool isCameraScroll = false;
 
+	std::unique_ptr<DebugCamera> debugCamera;
+
+	HideBlock hideBlock1_;
+	HideBlock hideBlock2_;
+	HideBlock hideBlock3_;
+
+	uint16_t textureHandle_ = 0;
+	Sprite* UI = nullptr;
+	Sprite* back = nullptr;
+	Skydome* skydome_ = nullptr;
+	
 public:
 	void Initialize() override;
 	void Finalize() {};

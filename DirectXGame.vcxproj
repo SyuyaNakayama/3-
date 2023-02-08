@@ -151,11 +151,8 @@
     <None Include="Resources\shaders\Sprite.hlsli" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="imgui\imgui.vcxproj">
-      <Project>{aeb46ce2-7e04-41a7-9c7d-2dd82e23a1c4}</Project>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
+    <ClInclude Include="SourceFiles\objects\Skydome.h" />
+    <ClInclude Include="SourceFiles\objects\blocks\HideBlock.h" />
     <ClInclude Include="SourceFiles\2d\ImGuiManager.h" />
     <ClInclude Include="SourceFiles\2d\Sprite.h" />
     <ClInclude Include="SourceFiles\3d\AxisIndicator.h" />
@@ -206,6 +203,7 @@
     <ClInclude Include="SourceFiles\scene\TitleScene.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="SourceFiles\objects\blocks\HideBlock.cpp" />
     <ClCompile Include="SourceFiles\2d\ImGuiManager.cpp" />
     <ClCompile Include="SourceFiles\3d\ParticleManager.cpp" />
     <ClCompile Include="SourceFiles\audio\SoundManager.cpp" />
@@ -221,6 +219,7 @@
     <ClCompile Include="SourceFiles\math\Quaternion.cpp" />
     <ClCompile Include="SourceFiles\math\Vector3.cpp" />
     <ClCompile Include="SourceFiles\scene\ClearScene.cpp" />
+    <ClCompile Include="SourceFiles\objects\Skydome.cpp" />
     <ClCompile Include="SourceFiles\scene\GameScene.cpp" />
     <ClCompile Include="SourceFiles\objects\blocks\Block.cpp" />
     <ClCompile Include="SourceFiles\objects\blocks\BlockManager.cpp" />
@@ -230,6 +229,11 @@
     <ClCompile Include="SourceFiles\objects\Player.cpp" />
     <ClCompile Include="SourceFiles\scene\SceneFactory.cpp" />
     <ClCompile Include="SourceFiles\scene\TitleScene.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="imgui\imgui.vcxproj">
+      <Project>{aeb46ce2-7e04-41a7-9c7d-2dd82e23a1c4}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
