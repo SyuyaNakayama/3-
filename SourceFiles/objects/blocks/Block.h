@@ -9,7 +9,7 @@ class BaseBlock
 protected:
 	Model* model = nullptr;
 	uint32_t textureHandle = 0;
-	int num_;
+	int num_ = 0;
 public:
 	virtual ~BaseBlock() { delete model; }
 	virtual void Initialize() = 0;
@@ -23,6 +23,7 @@ public:
 	void SetTexture(const std::string& fileName);
 
 	void SetNum(int num) { num_ = num; }
+	int GetNum() { return num_; }
 };
 
 class BaseBlockCollider : public virtual BaseBlock, public BoxCollider

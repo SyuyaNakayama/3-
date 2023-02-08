@@ -78,7 +78,12 @@ void BlockManager::Update()
 
 void BlockManager::Draw()
 {
-	for (const unique_ptr<BaseBlock>& block : blocks) { block->Draw(); }
+	uint16_t num;
+	for (const unique_ptr<BaseBlock>& block : blocks)
+	{
+		uint16_t num = block->GetNum();
+		if (num == 0) { block->Draw(); }
+	}
 }
 
 void BlockManager::LoadMap(const std::string& fileName, UINT16 faceNum)
