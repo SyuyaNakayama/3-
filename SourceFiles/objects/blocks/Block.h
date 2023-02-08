@@ -170,6 +170,6 @@ public:
 	bool IsDestroy() { return isDestroy; }
 	void Initialize();
 	void Update();
-	//void Draw() {}
+	void Draw() {}
 	void SetNum(int num) { num_ = num; }
 };
