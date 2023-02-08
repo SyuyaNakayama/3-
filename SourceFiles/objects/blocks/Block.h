@@ -28,13 +28,14 @@ class BaseBlockCollider : public virtual BaseBlock, public BoxCollider
 {
 protected:
 	Input* input = Input::GetInstance();
+	int num_ = 0;
 
 public:
 	virtual void Initialize();
 	~BaseBlockCollider() = default;
 	void SetTranslation(Vector3 translation) { worldTransform.translation_ = translation; }
 	void SetScale(Vector3 scale) { worldTransform.scale_ = scale; }
-	void Draw() { model->Draw(worldTransform, *ViewProjection::GetInstance(), textureHandle); }
+	void Draw(); //{ model->Draw(worldTransform, *ViewProjection::GetInstance(), textureHandle); }
 };
 
 class NonCollisionNormalBlock : public BaseBlock
@@ -161,7 +162,7 @@ class StopBlock : public BaseBlockCollider
 {
 private:
 	bool isDestroy = false;
-	int num_;
+	//int num_ = 0;
 public:
 	bool IsDestroy() { return isDestroy; }
 	void Initialize();

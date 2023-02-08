@@ -12,17 +12,16 @@ void HideBlock::Initialize(Vector3 pos, Vector3 rot)
 	
 }
 
+void HideBlock::SetTransfer(Vector3 pos, Vector3 rot)
+{
+    worldTransform_.translation_ = pos;
+    worldTransform_.rotation_ = rot;
+}
+
 void HideBlock::Update(uint16_t useCount,uint16_t setNum)
 {
-    input = Input::GetInstance();
-    //if (input->PushKey(DIK_1))
-    //{
-    //    worldTransform_.rotation_.z += 0.2f;
-    //    worldTransform_.scale_.x -= 0.2f;
-    //    worldTransform_.scale_.y -= 0.2f;
-    //    //worldTransform.scale.z -= 0.01f;
-    //    worldTransform_.Update();
-    //}
+    
+
 
     if (setNum == useCount)
     {

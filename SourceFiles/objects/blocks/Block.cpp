@@ -3,6 +3,14 @@
 #include "Mouse.h"
 #include "GameScene.h"
 
+void BaseBlockCollider::Draw()
+{
+	if(num_ == 0)
+	{
+		model->Draw(worldTransform, *ViewProjection::GetInstance(), textureHandle);
+	}
+}
+
 #pragma region BaseBlock
 UINT16* BaseBlock::nowStage = nullptr;
 

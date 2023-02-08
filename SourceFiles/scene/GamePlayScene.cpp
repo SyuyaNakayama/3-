@@ -16,7 +16,7 @@ void GamePlayScene::Initialize()
 	mouse->Initialize();
 	blockManager->Initialize();
 	GoalBlock::SetIsGoal(false);
-	Button::SetUseCount(1);
+	Button::SetUseCount(0);
 	debugCamera = std::make_unique<DebugCamera>(1280, 720);
 
 	hideBlock1_.Initialize({ -20,-20,-40.5 }, { 0,0,0 });
@@ -57,12 +57,40 @@ void GamePlayScene::Update()
 				isCameraLerp = false;
 				Button::SetUseCount(0);
 				isCameraScroll = false;
+				//ステージをクリアしたらflagを戻す
+				hideBlock1_.SetFlag();
+				hideBlock2_.SetFlag();
+				hideBlock3_.SetFlag();
 			}
 		}
 		else { gameScene->SetNextScene(Scene::Clear); }
 	}
 	// カメラズームアウト
 	if (Button::GetUseCount() >= 1 && !isCameraLerp) { if (CameraLerp()) { return; } }
+
+	switch (*stage)
+	{
+	case 1://チュートリアル　手前
+		hideBlock1_.SetTransfer({-20, -20, -40.5}, { 0,0,0 });
+		hideBlock2_.SetTransfer({ -20,20,-40.5 }, { 0,0,0 });
+		hideBlock3_.SetTransfer({ 20,20,-40.5 }, { 0,0,0 });
+		break;
+	case 2://ステージ1 右
+		hideBlock1_.SetTransfer({ 40.5, -20, -20 }, { 0,90 * PI / 180,0 });
+		hideBlock2_.SetTransfer({ 40.5,20,-20 }, { 0,90 * PI / 180,0 });
+		hideBlock3_.SetTransfer({ 40.5,20,20 }, { 0,90 * PI / 180,0 });
+		break;
+	case 3://ステージ2　奥
+		hideBlock1_.SetTransfer({ 20, -20, 40.5 }, { 0,0,0 });
+		hideBlock2_.SetTransfer({ 20,20,40.5 }, { 0,0,0 });
+		hideBlock3_.SetTransfer({ -20,20,40.5 }, { 0,0,0 });
+		break;
+	case 4://ステージ3　左
+		hideBlock1_.SetTransfer({ -40.5,-20, 20 }, { 0,90 * PI / 180,0 });
+		hideBlock2_.SetTransfer({ -40.5,20,20 }, { 0,90 * PI / 180,0 });
+		hideBlock3_.SetTransfer({ -40.5,20,-20 }, { 0,90 * PI / 180,0 });
+		break;
+	}
 
 	hideBlock1_.Update(Button::GetUseCount(), 1);
 	hideBlock2_.Update(Button::GetUseCount(), 2);
@@ -73,8 +101,8 @@ void GamePlayScene::Update()
 	skydome_->Update();
 	// 当たり判定
 	CollisionManager::CheckAllCollisions();
-	debugCamera->Update();
-	*viewProjection = debugCamera->GetViewProjection();
+	/*debugCamera->Update();
+	*viewProjection = debugCamera->GetViewProjection();*/
 }
 
 void GamePlayScene::Draw()
@@ -84,18 +112,19 @@ void GamePlayScene::Draw()
 	Model::PreDraw(cmdList);
 
 	blockManager->Draw();
+	
 	player_.Draw();
 	hideBlock1_.Draw();
 	hideBlock2_.Draw();
 	hideBlock3_.Draw();
-	skydome_->Draw();
+	//skydome_->Draw();
 	// 3Dオブジェクト描画後処理
 	Model::PostDraw();
 
 	// スプライト描画
 	Sprite::PreDraw(cmdList);
 
-	UI->Draw();
+	//UI->Draw();
 
 	Sprite::PostDraw();
 }
