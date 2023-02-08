@@ -23,10 +23,98 @@ void GamePlayScene::Initialize()
 	hideBlock2_.Initialize({ -20,20,-40.5 }, { 0,0,0 });
 	hideBlock3_.Initialize({ 20,20,-40.5 }, { 0,0,0 });
 
-	textureHandle_ = TextureManager::Load("white1x1.png");
+	textureHandle_ = TextureManager::Load("UI/UIBack.png");
 	UI = Sprite::Create(textureHandle_, { 0,0 });
-	UI->SetSize({ 300,800 });
-	UI->SetColor({ 0,0,0,1 });
+	UI->SetSize({ 285,720 });
+	UI->SetPosition({ 995,0 });
+	//ステージ数
+	{
+
+		textureHandleTuto_ = TextureManager::Load("UI/tutorial.png");
+		UITuto = Sprite::Create(textureHandleTuto_, { 0,0 });
+		UITuto->SetSize({ 285,100 });
+		UITuto->SetPosition({ 995,0 });
+
+		textureHandleStage1_ = TextureManager::Load("UI/stage1.png");
+		UIStage1 = Sprite::Create(textureHandleStage1_, { 0,0 });
+		UIStage1->SetSize({ 285,100 });
+		UIStage1->SetPosition({ 995,0 });
+
+		textureHandleStage2_ = TextureManager::Load("UI/stage2.png");
+		UIStage2 = Sprite::Create(textureHandleStage2_, { 0,0 });
+		UIStage2->SetSize({ 285,100 });
+		UIStage2->SetPosition({ 995,0 });
+
+		textureHandleStage3_ = TextureManager::Load("UI/stage3.png");
+		UIStage3 = Sprite::Create(textureHandleStage3_, { 0,0 });
+		UIStage3->SetSize({ 285,100 });
+		UIStage3->SetPosition({ 995,0 });
+	}
+	//イラスト説明
+	{
+		textureHandleDdMark_ = TextureManager::Load("UI/ddMark.png");
+		UIDdMark = Sprite::Create(textureHandleDdMark_, { 0,0 });
+		UIDdMark->SetSize({ 285,150 });
+		UIDdMark->SetPosition({ 995,100 });
+
+		textureHandleButtonMark_ = TextureManager::Load("UI/buttonMark.png");
+		UIButtonMark = Sprite::Create(textureHandleButtonMark_, { 0,0 });
+		UIButtonMark->SetSize({ 285,150 });
+		UIButtonMark->SetPosition({ 995,100 });
+
+		textureHandleLadderMark_ = TextureManager::Load("UI/ladderMark.png");
+		UILadderMark = Sprite::Create(textureHandleLadderMark_, { 0,0 });
+		UILadderMark->SetSize({ 285,150 });
+		UILadderMark->SetPosition({ 995,100 });
+
+		textureHandleDestroyMark_ = TextureManager::Load("UI/destroyMark.png");
+		UIDestroyMark = Sprite::Create(textureHandleDestroyMark_, { 0,0 });
+		UIDestroyMark->SetSize({ 285,150 });
+		UIDestroyMark->SetPosition({ 995,100 });
+
+		textureHandleCopyMark_ = TextureManager::Load("UI/copyMark.png");
+		UICopyMark = Sprite::Create(textureHandleCopyMark_, { 0,0 });
+		UICopyMark->SetSize({ 285,150 });
+		UICopyMark->SetPosition({ 995,100 });
+
+		textureHandleGoalMark_ = TextureManager::Load("UI/goalMark.png");
+		UIGoalMark = Sprite::Create(textureHandleGoalMark_, { 0,0 });
+		UIGoalMark->SetSize({ 285,150 });
+		UIGoalMark->SetPosition({ 995,100 });
+	}
+	//テキスト説明
+	{
+
+		textureHandleDdText_ = TextureManager::Load("UI/ddText.png");
+		UIDdText = Sprite::Create(textureHandleDdText_, { 0,0 });
+		UIDdText->SetSize({ 285,400 });
+		UIDdText->SetPosition({ 995,250 });
+
+		textureHandleButtonText_ = TextureManager::Load("UI/buttonText.png");
+		UIButtonText = Sprite::Create(textureHandleButtonText_, { 0,0 });
+		UIButtonText->SetSize({ 285,400 });
+		UIButtonText->SetPosition({ 995,250 });
+
+		textureHandleLadderText_ = TextureManager::Load("UI/ladderText.png");
+		UILadderText = Sprite::Create(textureHandleLadderText_, { 0,0 });
+		UILadderText->SetSize({ 285,400 });
+		UILadderText->SetPosition({ 995,250 });
+
+		textureHandleDestroyText_ = TextureManager::Load("UI/destroyText.png");
+		UIDestroyText = Sprite::Create(textureHandleDestroyText_, { 0,0 });
+		UIDestroyText->SetSize({ 285,400 });
+		UIDestroyText->SetPosition({ 995,250 });
+
+		textureHandleCopyText_ = TextureManager::Load("UI/copyText.png");
+		UICopyText = Sprite::Create(textureHandleCopyText_, { 0,0 });
+		UICopyText->SetSize({ 285,400 });
+		UICopyText->SetPosition({ 995,250 });
+
+		textureHandleGoalText_ = TextureManager::Load("UI/goalText.png");
+		UIGoalText = Sprite::Create(textureHandleGoalText_, { 0,0 });
+		UIGoalText->SetSize({ 285,400 });
+		UIGoalText->SetPosition({ 995,250 });
+	}
 
 	skydome_ = new Skydome();
 	skydome_->Initialize();
@@ -74,7 +162,7 @@ void GamePlayScene::Update()
 	// 当たり判定
 	CollisionManager::CheckAllCollisions();
 	debugCamera->Update();
-	*viewProjection = debugCamera->GetViewProjection();
+	//*viewProjection = debugCamera->GetViewProjection();
 }
 
 void GamePlayScene::Draw()
@@ -96,6 +184,13 @@ void GamePlayScene::Draw()
 	Sprite::PreDraw(cmdList);
 
 	UI->Draw();
+
+	
+	UITuto->Draw();
+	
+
+	UIDdMark->Draw();
+	UIDdText->Draw();
 
 	Sprite::PostDraw();
 }
