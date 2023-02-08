@@ -17,7 +17,7 @@ void GamePlayScene::Initialize()
 	mouse->Initialize();
 	blockManager->Initialize();
 	GoalBlock::SetIsGoal(false);
-	Button::SetUseCount(0);
+	Button::SetUseCount(1);
 }
 
 void GamePlayScene::Update()
@@ -37,10 +37,11 @@ void GamePlayScene::Update()
 	// ステージクリア時
 	if (GoalBlock::IsGoal())
 	{
-		if (*stage <= 3|| isCameraLerp)
+		if (*stage <= 3 || isCameraScroll)
 		{
 			if (isCameraLerp)
 			{
+				isCameraScroll = true;
 				if (ChangeNextStage()) { return; } // カメラ補間中
 				t = 0; isCameraLerp = false;
 			}
@@ -52,12 +53,10 @@ void GamePlayScene::Update()
 				GoalBlock::SetIsGoal(false); // カメラ補間終了
 				isCameraLerp = false;
 				Button::SetUseCount(0);
+				isCameraScroll = false;
 			}
 		}
-		else
-		{
-			gameScene->SetNextScene(Scene::Clear);
-		}
+		else { gameScene->SetNextScene(Scene::Clear); }
 	}
 	// カメラズームアウト
 	if (Button::GetUseCount() >= 1 && !isCameraLerp) { if (CameraLerp()) { return; } }

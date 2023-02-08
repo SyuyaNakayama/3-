@@ -16,6 +16,7 @@ private:
 	float t = 0; // •âŠÔ‚Ég‚¤•Ï”
 	float dt = 0.015f; // t‚Ì‘‰Á—Ê
 	UINT16* stage = nullptr;
+	bool isCameraScroll = false;
 
 public:
 	void Initialize() override;
