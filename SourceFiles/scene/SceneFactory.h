@@ -1,7 +1,7 @@
 #pragma once
 #include "BaseScene.h"
 
-enum class Scene { Null, Title, Play, GameOver, Clear };
+enum class Scene { Null, Title, Play, Clear };
 
 class SceneFactory
 {

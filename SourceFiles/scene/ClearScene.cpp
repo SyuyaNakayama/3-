@@ -1,18 +1,18 @@
-#include "TitleScene.h"
+#include "ClearScene.h"
 #include "GameScene.h"
 #include "Quaternion.h"
 
-void TitleScene::Initialize()
+void ClearScene::Initialize()
 {
-	*GameScene::GetStage() = 0;
+	*GameScene::GetStage() = 5;
 	gameScene = GameScene::GetInstance();
 	viewProjection->target = {};
-	viewProjection->eye = { 0,1200,0 };
+	viewProjection->eye = { 0,-1200,0 };
 	viewProjection->up = upVector;
 	BlockManager::GetInstance()->Initialize();
 }
 
-void TitleScene::Update()
+void ClearScene::Update()
 {
 	Quaternion rotaQ = { std::cos(cameraUpAngle / 2.0f) ,Vector3(0,1,0) * std::sin(cameraUpAngle / 2.0f) };
 	viewProjection->up = RotateVector(Vector3(-1, 0, 0), rotaQ);
@@ -23,10 +23,10 @@ void TitleScene::Update()
 		upRotSpd = 0.075f;
 	}
 	if (!isNextScene) { return; }
-	if (timer.CountDown()) { *GameScene::GetStage()=1; gameScene->SetNextScene(Scene::Play); }
+	if (timer.CountDown()) { gameScene->SetNextScene(Scene::Title); }
 }
 
-void TitleScene::Draw()
+void ClearScene::Draw()
 {
 	Model::PreDraw(cmdList);
 	blockManager->Draw();

@@ -10,13 +10,13 @@ void GamePlayScene::Initialize()
 	stage = GameScene::GetStage();
 	player_.Initialize();
 	viewProjection->up = { 0,1,0 };
-	viewProjection->eye = RotateVector(eyePos[0],CubeQuaternion::Get());
+	viewProjection->eye = RotateVector(eyePos[0], CubeQuaternion::Get());
 	viewProjection->target = RotateVector(targetPos[0], CubeQuaternion::Get());
 	debugCamera_ = std::make_unique<DebugCamera>(WinApp::kWindowWidth, WinApp::kWindowHeight);
-	preEyePos = eyePos[1];
 	gameScene = GameScene::GetInstance();
 	mouse->Initialize();
-	blockManager->Initialize(*stage);
+	blockManager->Initialize();
+	GoalBlock::SetIsGoal(false);
 	Button::SetUseCount(0);
 }
 
@@ -24,32 +24,39 @@ void GamePlayScene::Update()
 {
 	imguiManager->PrintVector("stagePlaneInter", *StagePlane::GetInstance()->GetInter());
 	imguiManager->PrintVector("stagePlaneNormal", StagePlane::GetInstance()->GetNormal());
-	if(input->TriggerKey(DIK_R))
+	if (input->TriggerKey(DIK_R))
 	{
 		gameScene->SetNextScene(Scene::Play);
 	}
-	if(input->TriggerKey(DIK_T))
+	if (input->TriggerKey(DIK_T))
 	{
-		stage = 0;
+		*stage = 0;
 		gameScene->SetNextScene(Scene::Title);
 	}
 
 	// ステージクリア時
 	if (GoalBlock::IsGoal())
 	{
-		if (isCameraLerp)
+		if (*stage <= 3|| isCameraLerp)
 		{
-			if (ChangeNextStage()) { return; } // カメラ補間中
-			t = 0; isCameraLerp = false;
+			if (isCameraLerp)
+			{
+				if (ChangeNextStage()) { return; } // カメラ補間中
+				t = 0; isCameraLerp = false;
+			}
+			// カメラズームイン
+			if (!isCameraLerp)
+			{
+				if (CameraLerp(true)) { return; }
+				player_.Initialize();
+				GoalBlock::SetIsGoal(false); // カメラ補間終了
+				isCameraLerp = false;
+				Button::SetUseCount(0);
+			}
 		}
-		// カメラズームイン
-		if (!isCameraLerp)
+		else
 		{
-			if (CameraLerp(true)) { return; }
-			player_.Initialize();
-			GoalBlock::SetIsGoal(false); // カメラ補間終了
-			isCameraLerp = false;
-			Button::SetUseCount(0);
+			gameScene->SetNextScene(Scene::Clear);
 		}
 	}
 	// カメラズームアウト
@@ -109,13 +116,14 @@ bool GamePlayScene::ChangeNextStage()
 	if (t == 0.0f)
 	{
 		blockManager->Clear();
-		blockManager->Initialize(++*stage);
+		++* stage;
+		blockManager->Initialize();
 		blockManager->Update();
 	}
 	t += dt;
 	if (t > 1.0f) { t = 1.0f; }
 	Quaternion rotNextQ =
 		Slerp(Quaternion::Normalize(CubeQuaternion::Get(*stage - 1)), Quaternion::Normalize(CubeQuaternion::Get(*stage)), t);
-	viewProjection->eye = RotateVector(preEyePos, rotNextQ);
+	viewProjection->eye = RotateVector(eyePos[1], rotNextQ);
 	return t < 1.0f;
 }

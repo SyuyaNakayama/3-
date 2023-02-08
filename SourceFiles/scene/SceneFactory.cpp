@@ -1,6 +1,7 @@
 #include "SceneFactory.h"
 #include "TitleScene.h"
 #include "GamePlayScene.h"
+#include "ClearScene.h"
 #include <cassert>
 
 SceneFactory* SceneFactory::GetInstance()
@@ -21,8 +22,8 @@ BaseScene* SceneFactory::CreateScene(Scene scene)
     case Scene::Play:
         newScene = new GamePlayScene();
         break;
-    case Scene::GameOver:
     case Scene::Clear:
+        newScene = new ClearScene;
         break;
     }
     

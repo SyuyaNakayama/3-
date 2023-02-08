@@ -1,7 +1,6 @@
 #pragma once
 #include "Block.h"
 #include <list>
-#include <array>
 #include <memory>
 
 class BlockManager
@@ -17,7 +16,7 @@ public:
 	BlockManager(const BlockManager& obj) = delete;
 	static BlockManager* GetInstance();
 
-	void Initialize(UINT16 stage);
+	void Initialize();
 	void Update();
 	void Draw();
 	void Clear() { blocks.clear(); }

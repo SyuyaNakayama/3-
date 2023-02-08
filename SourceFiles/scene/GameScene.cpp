@@ -1,7 +1,7 @@
 ﻿#include "GameScene.h"
 #include "Quaternion.h"
 
-UINT16 GameScene::stage = 4;
+UINT16 GameScene::stage = 3;
 
 void GameScene::Initialize()
 {

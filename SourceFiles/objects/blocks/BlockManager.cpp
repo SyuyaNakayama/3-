@@ -13,10 +13,10 @@ BlockManager* BlockManager::GetInstance()
 	return &instance;
 }
 
-void BlockManager::Initialize(UINT16 stage)
+void BlockManager::Initialize()
 {
 	Clear();
-	switch (stage)
+	switch (*GameScene::GetStage())
 	{
 	case 0: LoadMap("title.txt"); break;
 	case 1: LoadMap("tutorial.txt"); break;

@@ -193,6 +193,7 @@
     <ClInclude Include="SourceFiles\math\Vector3.h" />
     <ClInclude Include="SourceFiles\math\Vector4.h" />
     <ClInclude Include="SourceFiles\scene\BaseScene.h" />
+    <ClInclude Include="SourceFiles\scene\ClearScene.h" />
     <ClInclude Include="SourceFiles\scene\FadeManager.h" />
     <ClInclude Include="SourceFiles\scene\GameScene.h" />
     <ClInclude Include="SourceFiles\objects\blocks\Block.h" />
@@ -219,6 +220,7 @@
     <ClCompile Include="SourceFiles\base\main.cpp" />
     <ClCompile Include="SourceFiles\math\Quaternion.cpp" />
     <ClCompile Include="SourceFiles\math\Vector3.cpp" />
+    <ClCompile Include="SourceFiles\scene\ClearScene.cpp" />
     <ClCompile Include="SourceFiles\scene\GameScene.cpp" />
     <ClCompile Include="SourceFiles\objects\blocks\Block.cpp" />
     <ClCompile Include="SourceFiles\objects\blocks\BlockManager.cpp" />

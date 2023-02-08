@@ -2,7 +2,7 @@
 #include "BaseScene.h"
 #include "Timer.h"
 
-class TitleScene : public BaseScene
+class ClearScene : public BaseScene
 {
 private:
 	float cameraUpAngle = 0;

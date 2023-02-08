@@ -11,11 +11,10 @@ private:
 	std::unique_ptr<DebugCamera> debugCamera_;
 	Mouse* mouse = Mouse::GetInstance();
 	Vector3 eyePos[2] = { { 20,-20,-600 },{ 0,0,-1200 } };
-	Vector3 preEyePos{}; // ƒJƒƒ‰•âŠÔ‘O‚Ìeye‚ÌêŠ
 	Vector3 targetPos[2] = { { 20,-20,0 },{ 0,0,0 } };
 	bool isCameraLerp = false;
 	float t = 0; // •âŠÔ‚Ég‚¤•Ï”
-	float dt = 0.01f; // t‚Ì‘‰Á—Ê
+	float dt = 0.015f; // t‚Ì‘‰Á—Ê
 	UINT16* stage = nullptr;
 
 public:
