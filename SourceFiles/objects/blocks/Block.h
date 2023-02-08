@@ -21,7 +21,8 @@ public:
 	virtual void SetRotation(Vector3 rotation) {}
 	virtual void SetScale(Vector3 scale) {}
 	virtual std::unique_ptr<BaseBlock> NewBlockCreate() { return nullptr; }
-	virtual void SpriteDraw() {};
+	virtual void SpriteDraw() {}
+	virtual void SetNum(int num_) {}
 	void SetTexture(const std::string& fileName) { textureHandle = TextureManager::Load("blockTextures/" + fileName); }
 };
 
@@ -169,5 +170,6 @@ public:
 	bool IsDestroy() { return isDestroy; }
 	void Initialize();
 	void Update();
+	//void Draw() {}
 	void SetNum(int num) { num_ = num; }
 };

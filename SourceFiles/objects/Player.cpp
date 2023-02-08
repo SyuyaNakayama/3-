@@ -137,7 +137,7 @@ void Player::OnCollision(BoxCollider* boxCollider)
 
 	float playerTopPosition = BoxCollider::GetWorldPosition().y + GetRadius().y;
 
-	if (blockTopPosition - playerTopPosition <= epsilon)
+	if (blockTopPosition - playerTopPosition <= epsilon + 0.3f)
 	{
 		// 高さ1マスならジャンプ
 		jump.StartJump(0.5f, blockTopPosition + epsilon + GetRadius().y);

@@ -17,6 +17,8 @@ void GamePlayScene::Initialize()
 	blockManager->Initialize();
 	GoalBlock::SetIsGoal(false);
 	debugCamera = std::make_unique<DebugCamera>(1280, 720);
+	
+	Button::SetUseCount(0);
 
 	hideBlock1_.Initialize({ -20,-20,-40.5 }, { 0,0,0 });
 	hideBlock2_.Initialize({ -20,20,-40.5 }, { 0,0,0 });
@@ -52,6 +54,7 @@ void GamePlayScene::Update()
 				GoalBlock::SetIsGoal(false); // ƒJƒƒ‰•âŠÔI—¹
 				isCameraLerp = false;
 				isCameraScroll = false;
+				Button::SetUseCount(0);
 			}
 		}
 		else { gameScene->SetNextScene(Scene::Clear); }
