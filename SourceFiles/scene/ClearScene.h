@@ -1,6 +1,7 @@
 #pragma once
 #include "BaseScene.h"
 #include "Timer.h"
+#include <memory>
 
 class ClearScene : public BaseScene
 {
@@ -10,6 +11,9 @@ private:
 	float upRotSpd = 0.005f;
 	bool isNextScene = false;
 	Timer timer = 60;
+	std::unique_ptr<Sprite> sprite;
+	Timer animeTimer = 30;
+	UINT16 animeFrame = 0;
 
 public:
 	void Initialize() override;
