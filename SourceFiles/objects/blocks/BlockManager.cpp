@@ -53,6 +53,7 @@ void BlockManager::Initialize()
 		StopBlock_->Initialize();
 		blocks.push_back(move(StopBlock_));
 	}
+
 	hideBlock1_.Initialize();
 	hideBlock2_.Initialize();
 	hideBlock3_.Initialize();
@@ -79,7 +80,6 @@ void BlockManager::Initialize()
 		hideBlock3_.SetTransfer({ -40.5,20,-20 }, { 1,20,20 });
 		break;
 	}
-	
 }
 
 void BlockManager::Update()
@@ -114,7 +114,6 @@ void BlockManager::Draw()
 	hideBlock1_.Draw();
 	hideBlock2_.Draw();
 	hideBlock3_.Draw();
-	
 }
 
 void BlockManager::LoadMap(const std::string& fileName)

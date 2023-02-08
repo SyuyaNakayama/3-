@@ -27,7 +27,6 @@ private:
 	HideBlock hideBlock3_;*/
 
 	uint16_t textureHandle_ = 0;
-	Sprite* UI = nullptr;
 	Sprite* back = nullptr;
 	Skydome* skydome_ = nullptr;
 	

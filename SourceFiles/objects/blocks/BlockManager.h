@@ -25,5 +25,6 @@ public:
 	void Initialize();
 	void Update();
 	void Draw();
+	void SpriteDraw() { for (const std::unique_ptr<BaseBlock>& block : blocks) { block->SpriteDraw(); } };
 	void Clear() { blocks.clear(); }
 };

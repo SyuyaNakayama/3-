@@ -81,6 +81,9 @@ void CopyBlock::Initialize()
 	SetTexture("copyBlock.png");
 	normal = RotateVector({ 0,0,-1 },CubeQuaternion::Get(*nowStage));
 	SetVertices();
+	copyBlockShadow = Sprite::Create(TextureManager::Load("BlockTextures/copy2.png"), { 0,0 });
+	copyBlockShadow->SetAnchorPoint({ 0.5f,0.5f });
+	copyBlockShadow->SetSize({ 20,20 });
 }
 
 std::unique_ptr<BaseBlock> CopyBlock::NewBlockCreate()
@@ -103,6 +106,7 @@ void CopyBlock::Update()
 {
 	if (!isCopy) { SetTexture("copyBlock_2.png"); }
 	worldTransform.Update();
+	if (isCopyMode) { copyBlockShadow->SetPosition(input->GetMousePosition()); }
 }
 
 void CopyedBlock::Initialize()

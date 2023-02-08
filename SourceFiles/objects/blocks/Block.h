@@ -2,6 +2,7 @@
 #include "Model.h"
 #include "Collider.h"
 #include "Input.h"
+#include "Sprite.h"
 #include "Quaternion.h"
 
 class BaseBlock
@@ -20,7 +21,8 @@ public:
 	virtual void SetRotation(Vector3 rotation) {}
 	virtual void SetScale(Vector3 scale) {}
 	virtual std::unique_ptr<BaseBlock> NewBlockCreate() { return nullptr; }
-	virtual void SetNum(int num) {};
+	virtual void SpriteDraw() {}
+	virtual void SetNum(int num_) {}
 	void SetTexture(const std::string& fileName) { textureHandle = TextureManager::Load("blockTextures/" + fileName); }
 };
 
@@ -72,10 +74,12 @@ class CopyBlock : public BaseBlockCollider, public PolygonCollider
 private:
 	bool isCopyMode = false;
 	bool isCopy = true;
+	Sprite* copyBlockShadow = nullptr;
 public:
 	std::unique_ptr<BaseBlock> NewBlockCreate();
 	void Initialize();
 	void Update();
+	void SpriteDraw() { if (isCopyMode) { copyBlockShadow->Draw(); } }
 	void OnCollision(RayCollider* Collider) { if (input->IsTriggerMouse(0)) { isCopyMode = true; } }
 };
 
@@ -167,5 +171,6 @@ public:
 	bool IsDestroy() { return isDestroy; }
 	void Initialize();
 	void Update();
+	void Draw() {}
 	void SetNum(int num) { num_ = num; }
 };

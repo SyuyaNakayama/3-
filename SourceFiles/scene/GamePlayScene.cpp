@@ -17,15 +17,11 @@ void GamePlayScene::Initialize()
 	mouse->Initialize();
 	blockManager->Initialize();
 	GoalBlock::SetIsGoal(false);
-	Button::SetUseCount(0);
 	debugCamera = std::make_unique<DebugCamera>(1280, 720);
-
 	
+	Button::SetUseCount(0);
 
 	textureHandle_ = TextureManager::Load("white1x1.png");
-	UI = Sprite::Create(textureHandle_, { 0,0 });
-	UI->SetSize({ 300,800 });
-	UI->SetColor({ 0,0,0,1 });
 
 	skydome_ = new Skydome();
 	skydome_->Initialize();
@@ -56,10 +52,8 @@ void GamePlayScene::Update()
 				player_.Initialize();
 				GoalBlock::SetIsGoal(false); // カメラ補間終了
 				isCameraLerp = false;
-				Button::SetUseCount(0);
 				isCameraScroll = false;
-				
-				
+				Button::SetUseCount(0);
 			}
 		}
 		else { gameScene->SetNextScene(Scene::Clear); }
@@ -74,12 +68,15 @@ void GamePlayScene::Update()
 	skydome_->Update();
 	// 当たり判定
 	CollisionManager::CheckAllCollisions();
-	/*debugCamera->Update();
-	*viewProjection = debugCamera->GetViewProjection();*/
+	debugCamera->Update();
+	//*viewProjection = debugCamera->GetViewProjection();
 }
 
 void GamePlayScene::Draw()
 {
+	Sprite::PreDraw(cmdList);
+	blockManager->SpriteDraw();
+	Sprite::PostDraw();
 	// 3Dモデルの描画
 	// 3Dオブジェクト描画前処理
 	Model::PreDraw(cmdList);
