@@ -10,15 +10,15 @@ void GamePlayScene::Initialize()
 	player_.SetStage(&stage);
 	player_.Initialize();
 	viewProjection->up = { 0,1,0 };
-	viewProjection->eye = eyePos[0];
-	viewProjection->target = targetPos[0];
+	viewProjection->eye = RotateVector(eyePos[0],CubeQuaternion::Get(stage));
+	viewProjection->target = RotateVector(targetPos[0], CubeQuaternion::Get(stage));
 	debugCamera_ = std::make_unique<DebugCamera>(WinApp::kWindowWidth, WinApp::kWindowHeight);
 	preEyePos = eyePos[1];
 	gameScene = GameScene::GetInstance();
 	mouse->Initialize();
 	BaseBlock::SetStage(&stage);
 	StagePlane::GetInstance()->SetStage(&stage);
-	blockManager->Initialize(1);
+	blockManager->Initialize(stage);
 	//Button::SetUseCount(3);
 }
 
@@ -26,6 +26,10 @@ void GamePlayScene::Update()
 {
 	imguiManager->PrintVector("stagePlaneInter", *StagePlane::GetInstance()->GetInter());
 	imguiManager->PrintVector("stagePlaneNormal", StagePlane::GetInstance()->GetNormal());
+	if(input->TriggerKey(DIK_R))
+	{
+		gameScene->SetNextScene(Scene::Play);
+	}
 	// ステージクリア時
 	if (GoalBlock::IsGoal())
 	{

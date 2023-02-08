@@ -15,6 +15,7 @@ BlockManager* BlockManager::GetInstance()
 
 void BlockManager::Initialize(UINT16 stage)
 {
+	Clear();
 	switch (stage)
 	{
 	case 0: LoadMap("title.txt", 0); break;
