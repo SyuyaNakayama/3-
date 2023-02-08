@@ -1,15 +1,15 @@
 #include "HideBlock.h"
 #include <Input.h>
 #include "GameScene.h"
+#include <imgui.h>
+#include "Block.h"
 
-void HideBlock::Initialize(Vector3 pos,)
+void HideBlock::Initialize()
 {
 	hideBlock = Model::CreateFromOBJ("Hblock");
 	worldTransform_.Initialize();
-	/*worldTransform_.scale_ = { 0.5f,0.511f,0.511f };*/
 	worldTransform_.scale_ = { 20,20,1 };
-	worldTransform_.translation_ = { pos.x,pos.y,pos.z };
-    worldTransform_.rotation_ = { 0,0,0 };
+    isHide = true;
 }
 
 void HideBlock::SetTransfer(Vector3 pos, Vector3 scale)
@@ -29,10 +29,8 @@ void HideBlock::Update(uint16_t useCount,uint16_t setNum)
             worldTransform_.rotation_.z += 0.2f;
             worldTransform_.scale_.x -= 0.2f;
             worldTransform_.scale_.y -= 0.2f;
-            //worldTransform.scale.z -= 0.01f;
             worldTransform_.Update();
         }
-
     }
     else
     {
@@ -43,21 +41,16 @@ void HideBlock::Update(uint16_t useCount,uint16_t setNum)
             worldTransform_.scale_.z -= 0.2f;
             worldTransform_.Update();
         }
-
-        /*if (worldTransform_.scale_.z <= 0)
-        {
-            isHide = false;
-            worldTransform_.scale_.z = 20.0f;
-            worldTransform_.scale_.y = 20.0f;
-            worldTransform_.rotation_ = rot;
-        }*/
     }
     
-    
-
     if (worldTransform_.scale_.y <= 0)
     {
         isHide = false;
+    }
+ 
+    if(GoalBlock::IsGoal() == true) //次のステージへ行く時に角度を直す
+    {
+        worldTransform_.rotation_ = {0,0,0}; 
     }
     
     worldTransform_.Update();

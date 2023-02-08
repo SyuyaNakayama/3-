@@ -53,12 +53,9 @@ void BlockManager::Initialize()
 		StopBlock_->Initialize();
 		blocks.push_back(move(StopBlock_));
 	}
-	hideBlock1_.Initialize({ -20,-20,-40.5 });
-	hideBlock2_.Initialize({ -20,20,-40.5 });
-	hideBlock3_.Initialize({ 20,20,-40.5 });
-	hideBlock1_.SetFlag();
-	hideBlock2_.SetFlag();
-	hideBlock3_.SetFlag();
+	hideBlock1_.Initialize();
+	hideBlock2_.Initialize();
+	hideBlock3_.Initialize();
 	switch (*GameScene::GetStage())
 	{
 	case 1://チュートリアル　手前

@@ -12,9 +12,8 @@ private:
 	Vector3 rot;
 	Input* input = nullptr;
 public:
-	void Initialize(Vector3 pos);
-	void SetTransfer(Vector3 pos, Vector3 rot);
-	bool SetFlag() { return isHide = true; }
+	void Initialize();
+	void SetTransfer(Vector3 pos, Vector3 scale);
 	void Update(uint16_t useCount,uint16_t setNum);
 	void Draw();
 };
