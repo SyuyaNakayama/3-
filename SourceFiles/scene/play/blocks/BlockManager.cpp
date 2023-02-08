@@ -16,7 +16,8 @@ void BlockManager::Initialize(UINT16 stage)
 	{
 	case 0: LoadMap("title.txt", 0); break;
 	case 1: LoadMap("tutorial.txt", 1); break;
-	case 2: LoadMap("stage1.txt", 2); break;
+	case 2: LoadMap("stageDeb.txt", 2); break;
+	//case 2: LoadMap("stage1.txt", 2); break;
 	case 3: LoadMap("stage2.txt", 3); break;
 	case 4: LoadMap("stage3.txt", 4); break;
 	case 5: LoadMap("clear.txt", 5); break;
@@ -26,15 +27,39 @@ void BlockManager::Initialize(UINT16 stage)
 	bgBlock->SetTranslation({ 40,-40,40 });
 	bgBlock->Initialize();
 	blocks.push_back(move(bgBlock));
+
+	//左下
+	unique_ptr<BaseBlock> StopBlock_ = make_unique<StopBlock>();
+	
+	StopBlock_->SetTranslation({ 19,-59,-1 });
+	StopBlock_->SetScale({ 20,20,1 });
+	StopBlock_->SetNum(1);
+	StopBlock_->Initialize();
+	blocks.push_back(move(StopBlock_));
+
+	//左上
+	StopBlock_ = make_unique<StopBlock>();
+	StopBlock_->SetTranslation({ 19,-19,-1 });
+	StopBlock_->SetScale({ 20,20,1 });
+	StopBlock_->SetNum(2);
+	StopBlock_->Initialize();
+	blocks.push_back(move(StopBlock_));
+
+	//右上
+	StopBlock_ = make_unique<StopBlock>();
+	StopBlock_->SetTranslation({ 59,-19,-1 });
+	StopBlock_->SetScale({ 20,20,1 });
+	StopBlock_->SetNum(3);
+	StopBlock_->Initialize();
+	blocks.push_back(move(StopBlock_));
 }
 
 void BlockManager::Update()
 {
+
 	// 破壊されたブロックの排除
 	blocks.remove_if([](const unique_ptr<BaseBlock>& block) { return block->IsDestroy(); });
-
 	
-
 	// コピーされたブロックの追加
 	unique_ptr<BaseBlock> newBlock;
 	for (const unique_ptr<BaseBlock>& block : blocks)
@@ -47,6 +72,8 @@ void BlockManager::Update()
 	}
 
 	for (const unique_ptr<BaseBlock>& block : blocks) { block->Update(); }
+
+	ImGui::Text("count:%d", Button::useCount);
 }
 
 void BlockManager::Draw()

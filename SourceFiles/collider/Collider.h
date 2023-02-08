@@ -78,7 +78,6 @@ private:
 public:
 	IncludeCollider();
 	virtual ~IncludeCollider();
-
 	virtual Vector3 GetWorldPosition() { return worldTransform.GetWorldPosition(); }
 	static float GetIncludeRadius() { return includeRadius; }
 	void SetUseAxis(Axis axis, bool isUse) { isUseAxis[(size_t)axis] = isUse; }
