@@ -7,19 +7,20 @@
 
 void GamePlayScene::Initialize()
 {
-	player_.SetStage(&stage);
+	stage = GameScene::GetStage();
+	player_.SetStage(stage);
 	player_.Initialize();
 	viewProjection->up = { 0,1,0 };
-	viewProjection->eye = RotateVector(eyePos[0],CubeQuaternion::Get(stage));
-	viewProjection->target = RotateVector(targetPos[0], CubeQuaternion::Get(stage));
+	viewProjection->eye = RotateVector(eyePos[0],CubeQuaternion::Get());
+	viewProjection->target = RotateVector(targetPos[0], CubeQuaternion::Get());
 	debugCamera_ = std::make_unique<DebugCamera>(WinApp::kWindowWidth, WinApp::kWindowHeight);
 	preEyePos = eyePos[1];
 	gameScene = GameScene::GetInstance();
 	mouse->Initialize();
-	BaseBlock::SetStage(&stage);
-	StagePlane::GetInstance()->SetStage(&stage);
-	blockManager->Initialize(stage);
-	//Button::SetUseCount(3);
+	BaseBlock::SetStage(stage);
+	StagePlane::GetInstance()->SetStage(stage);
+	blockManager->Initialize(*stage);
+	Button::SetUseCount(0);
 }
 
 void GamePlayScene::Update()
@@ -30,6 +31,12 @@ void GamePlayScene::Update()
 	{
 		gameScene->SetNextScene(Scene::Play);
 	}
+	if(input->TriggerKey(DIK_T))
+	{
+		stage = 0;
+		gameScene->SetNextScene(Scene::Title);
+	}
+
 	// ステージクリア時
 	if (GoalBlock::IsGoal())
 	{
@@ -82,7 +89,7 @@ bool GamePlayScene::CameraLerp(bool isFlip)
 {
 	t += dt;
 	if (t > 1.0f) { t = 1.0f; }
-	Quaternion rotQ = CubeQuaternion::Get(stage);
+	Quaternion rotQ = CubeQuaternion::Get();
 	Vector3 eye_lerp[2]{}, target_lerp[2]{};
 	for (size_t i = 0; i < 2; i++)
 	{
@@ -106,15 +113,13 @@ bool GamePlayScene::ChangeNextStage()
 	if (t == 0.0f)
 	{
 		blockManager->Clear();
-		blockManager->Initialize(++stage);
+		blockManager->Initialize(++*stage);
 		blockManager->Update();
 	}
 	t += dt;
 	if (t > 1.0f) { t = 1.0f; }
-	UINT16 nowStage = stage;
-	if (nowStage >= 6) { nowStage = 0; }
 	Quaternion rotNextQ =
-		Slerp(Quaternion::Normalize(CubeQuaternion::Get(stage - 1)), Quaternion::Normalize(CubeQuaternion::Get(nowStage)), t);
+		Slerp(Quaternion::Normalize(CubeQuaternion::Get(*stage - 1)), Quaternion::Normalize(CubeQuaternion::Get(*stage)), t);
 	viewProjection->eye = RotateVector(preEyePos, rotNextQ);
 	return t < 1.0f;
 }

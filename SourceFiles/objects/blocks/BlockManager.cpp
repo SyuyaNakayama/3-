@@ -45,7 +45,7 @@ void BlockManager::Initialize(UINT16 stage)
 	//for (size_t i = 0; i < stopBlock.size(); i++)
 	//{
 	//	unique_ptr<BaseBlock> StopBlock_ = make_unique<StopBlock>();
-	//	StopBlock_->SetTranslation(RotateVector(stopBlock[i], CubeQuaternion::Get(stage)));
+	//	StopBlock_->SetTranslation(RotateVector(stopBlock[i], CubeQuaternion::Get()));
 	//	StopBlock_->SetScale(stopBlockScale[stage % 2 == 0]);
 	//	StopBlock_->SetNum(i + 1);
 	//	StopBlock_->Initialize();

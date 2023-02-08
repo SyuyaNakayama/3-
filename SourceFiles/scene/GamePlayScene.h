@@ -16,7 +16,7 @@ private:
 	bool isCameraLerp = false;
 	float t = 0; // •âŠÔ‚Ég‚¤•Ï”
 	float dt = 0.01f; // t‚Ì‘‰Á—Ê
-	UINT16 stage = 1;
+	UINT16* stage = nullptr;
 
 public:
 	void Initialize() override;

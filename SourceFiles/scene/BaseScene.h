@@ -18,7 +18,6 @@ protected:
 	ID3D12GraphicsCommandList* cmdList = DirectXCommon::GetInstance()->GetCommandList();
 	ImGuiManager* imguiManager = ImGuiManager::GetInstance();
 	BlockManager* blockManager = BlockManager::GetInstance();
-	UINT16 stage = 2;
 
 public:
 	virtual ~BaseScene() = default;

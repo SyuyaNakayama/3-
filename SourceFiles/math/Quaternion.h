@@ -63,5 +63,6 @@ class CubeQuaternion
 public:
 	CubeQuaternion() = delete;
 	static void Create();
-	static Quaternion Get(unsigned short faceNum) { return quaternions[faceNum]; }
+	static Quaternion Get();
+	static Quaternion Get(unsigned short stage) { return quaternions[stage]; };
 };

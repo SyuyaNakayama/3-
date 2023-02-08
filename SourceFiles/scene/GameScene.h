@@ -34,6 +34,7 @@ public: // メンバ関数
 	void SetNextScene(Scene nextScene, bool isUseFade = true);
 	static GameScene* GetInstance();
 	GameScene(const GameScene& obj) = delete;
+	static UINT16* GetStage() { return &stage; }
 private: // メンバ変数
 	GameScene() = default;
 
@@ -46,4 +47,5 @@ private: // メンバ変数
 	Audio* audio = Audio::GetInstance();
 	DirectXCommon* dxCommon = DirectXCommon::GetInstance();
 	ViewProjection* viewProjection = ViewProjection::GetInstance();
+	static UINT16 stage;
 };

@@ -1,6 +1,4 @@
 #include "TitleScene.h"
-#include "TextureManager.h"
-#include "GamePlayScene.h"
 #include "GameScene.h"
 #include "Quaternion.h"
 

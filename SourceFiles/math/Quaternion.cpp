@@ -1,5 +1,6 @@
 #include "Quaternion.h"
 #include "MathUtility.h"
+#include "GameScene.h"
 #include <cmath>
 using namespace MathUtility;
 
@@ -144,4 +145,9 @@ void CubeQuaternion::Create()
 		}
 		quaternions[i] = rotQ;
 	}
+}
+
+Quaternion CubeQuaternion::Get()
+{
+	return quaternions[*GameScene::GetStage()];
 }

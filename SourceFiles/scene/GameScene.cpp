@@ -1,6 +1,8 @@
 ﻿#include "GameScene.h"
 #include "Quaternion.h"
 
+UINT16 GameScene::stage = 4;
+
 void GameScene::Initialize()
 {
 	// 入力の初期化
