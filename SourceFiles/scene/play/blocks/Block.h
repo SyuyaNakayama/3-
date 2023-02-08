@@ -2,6 +2,7 @@
 #include "Model.h"
 #include "Collider.h"
 #include "Input.h"
+#include "Sprite.h"
 
 class BaseBlock
 {
@@ -70,10 +71,12 @@ class CopyBlock : public BaseBlockCollider, public PolygonCollider
 private:
 	bool isCopyMode = false;
 	bool isCopy = true;
+	Sprite * CopyblockShadow=nullptr;
 public:
 	std::unique_ptr<BaseBlock> NewBlockCreate();
 	void Initialize();
 	void Update();
+	void Draw();
 	void OnCollision(RayCollider* Collider);
 };
 

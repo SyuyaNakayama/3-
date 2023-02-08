@@ -2,6 +2,8 @@
 #include "ViewProjection.h"
 #include "ImGuiManager.h"
 #include <imgui.h>
+#include "Input.h"
+#include "DirectXCommon.h"
 
 #pragma region BaseBlock
 void BaseBlock::Initialize() { model = Model::Create(); }
@@ -74,6 +76,7 @@ void CopyBlock::Initialize()
 	SetTexture("copyBlock.png");
 	SetVertices();
 	normal = { 0,0,-1 };
+	CopyblockShadow = Sprite::Create(TextureManager::Load("BlockTextures/copy2.png"),{0,0});
 }
 
 std::unique_ptr<BaseBlock> CopyBlock::NewBlockCreate()
@@ -95,6 +98,18 @@ void CopyBlock::Update()
 {
 	if (isCopy == false) { SetTexture("copyBlock_2.png"); }
 	worldTransform.Update();
+	if (isCopyMode) { CopyblockShadow->SetPosition(input->GetMousePosition()); }
+
+}
+
+void CopyBlock::Draw()
+{
+	if (isCopyMode) {
+		Sprite::PreDraw(DirectXCommon::GetInstance()->GetCommandList());
+		CopyblockShadow->Draw(); 
+		Sprite::PostDraw();
+	}
+	model->Draw(worldTransform, *ViewProjection::GetInstance(), textureHandle);
 }
 
 void CopyBlock::OnCollision(RayCollider* Collider) { if (input->IsTriggerMouse(0)) { isCopyMode = true; }}

@@ -30,7 +30,7 @@ void GameScene::Initialize()
 	viewProjection->farZ = 1500.0f;
 
 	// シーンの生成
-	SetNextScene(Scene::Play, false);
+	SetNextScene(Scene::Title, false);
 	imguiManager->Initialize();
 	fadeManager_.Initialize();
 	BlockManager::GetInstance()->Initialize(0);
