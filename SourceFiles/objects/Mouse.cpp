@@ -23,10 +23,12 @@ void Mouse::Update()
 	// マウスレイの方向
 	direction = posFar - posNear;
 	direction.normalize();
+
 }
 
 void Mouse::Initialize()
 {
+
 	matViewPort.m[0][0] = (float)WinApp::kWindowWidth / 2;
 	matViewPort.m[1][1] = -(float)WinApp::kWindowHeight / 2;
 	matViewPort.m[3][0] = (float)WinApp::kWindowWidth / 2;
@@ -34,4 +36,6 @@ void Mouse::Initialize()
 
 	SetCollisionAttribute(CollisionAttribute::MouseRay);
 	SetCollisionMask(CollisionMask::MouseRay);
+
+
 }

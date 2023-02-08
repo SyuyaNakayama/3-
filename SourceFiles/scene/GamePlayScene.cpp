@@ -74,6 +74,9 @@ void GamePlayScene::Update()
 
 void GamePlayScene::Draw()
 {
+	Sprite::PreDraw(cmdList);
+	blockManager->SpriteDraw();
+	Sprite::PostDraw();
 	// 3Dモデルの描画
 	// 3Dオブジェクト描画前処理
 	Model::PreDraw(cmdList);

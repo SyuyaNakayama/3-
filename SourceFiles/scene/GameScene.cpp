@@ -29,7 +29,7 @@ void GameScene::Initialize()
 	CubeQuaternion::Create();
 
 	// シーンの生成
-	SetNextScene(Scene::Play, false);
+	SetNextScene(Scene::Title, false);
 	imguiManager->Initialize();
 	fadeManager_.Initialize();
 }
