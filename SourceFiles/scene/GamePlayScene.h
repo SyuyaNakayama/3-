@@ -39,6 +39,7 @@ private:
 	uint16_t textureHandleDestroyText_ = 0;
 	uint16_t textureHandleCopyText_ = 0;
 	uint16_t textureHandleGoalText_ = 0;
+	uint16_t textureHandleUIback_ = 0;
 
 	Sprite* UI = nullptr;
 	Sprite* UITuto = nullptr;
@@ -57,6 +58,7 @@ private:
 	Sprite* UIDestroyText = nullptr;
 	Sprite* UICopyText = nullptr;
 	Sprite* UIGoalText = nullptr;
+	Sprite* UIback = nullptr;
 	Sprite* back = nullptr;
 	Skydome* skydome_ = nullptr;
 	

@@ -64,6 +64,7 @@ private:
 	void DragBox();
 
 public:
+	static bool isExplanation;
 	void Initialize();
 	void Update();
 	void OnCollision(RayCollider* Collider) { if (Input::GetInstance()->IsTriggerMouse(0)) { isDrag = true; } }
@@ -76,6 +77,7 @@ private:
 	bool isCopy = true;
 	Sprite* copyBlockShadow = nullptr;
 public:
+	static bool isExplanation;
 	std::unique_ptr<BaseBlock> NewBlockCreate();
 	void Initialize();
 	void Update();

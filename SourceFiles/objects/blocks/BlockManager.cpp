@@ -8,6 +8,8 @@
 
 using namespace std;
 
+
+
 BlockManager* BlockManager::GetInstance()
 {
 	static BlockManager instance;
@@ -80,6 +82,9 @@ void BlockManager::Initialize()
 		hideBlock3_.SetTransfer({ -40.5,20,-20 }, { 1,20,20 });
 		break;
 	}
+
+	MoveBlock::isExplanation = false;
+	CopyBlock::isExplanation = false;
 }
 
 void BlockManager::Update()

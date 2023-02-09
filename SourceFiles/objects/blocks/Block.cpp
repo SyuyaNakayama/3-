@@ -62,7 +62,11 @@ void MoveBlock::DragBox()
 	worldTransform.translation_ = *StagePlane::GetInstance()->GetInter();
 
 	// ƒNƒŠƒbƒN‚ª—£‚³‚ê‚½‚Æ‚«
-	if (!input->IsPressMouse(0)) { isDrag = false; }
+	if (!input->IsPressMouse(0))
+	{
+		isDrag = false; 
+		isExplanation = true;
+	}
 }
 
 void MoveBlock::Update()
@@ -104,7 +108,11 @@ std::unique_ptr<BaseBlock> CopyBlock::NewBlockCreate()
 
 void CopyBlock::Update()
 {
-	if (!isCopy) { SetTexture("copyBlock_2.png"); }
+	if (!isCopy) 
+	{ 
+		isExplanation = true;
+		SetTexture("copyBlock_2.png"); 
+	}
 	worldTransform.Update();
 	if (isCopyMode) { copyBlockShadow->SetPosition(input->GetMousePosition()); }
 }

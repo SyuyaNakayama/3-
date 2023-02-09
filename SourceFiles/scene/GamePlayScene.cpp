@@ -6,6 +6,9 @@
 #include "ViewProjection.h"
 #include <imgui.h>
 
+bool MoveBlock::isExplanation;
+bool CopyBlock::isExplanation;
+
 void GamePlayScene::Initialize()
 {
 	stage = GameScene::GetStage();
@@ -150,6 +153,29 @@ void GamePlayScene::Update()
 	}
 	// カメラズームアウト
 	if (Button::GetUseCount() >= 1 && !isCameraLerp) { if (CameraLerp()) { return; } }
+	switch (*stage)
+	{
+	case 1:
+		UIDdMark->SetPosition({ 995,100 });
+		UIDestroyMark->SetPosition({ 995,100 });
+		UICopyMark->SetPosition({ 995,100 });
+		break;
+	case 2:
+		UIDdMark->SetPosition({ 995,100 });
+		UIDestroyMark->SetPosition({ 995,300 });
+		UICopyMark->SetPosition({ 995,500 });
+		break;
+	case 3:
+		UIDdMark->SetPosition({ 995,100 });
+		UIDestroyMark->SetPosition({ 995,300 });
+		UICopyMark->SetPosition({ 995,500 });
+		break;
+	case 4:
+		UIDdMark->SetPosition({ 995,100 });
+		UIDestroyMark->SetPosition({ 995,300 });
+		UICopyMark->SetPosition({ 995,500 });
+		break;
+	}
 
 
 	mouse->Update();
@@ -181,9 +207,74 @@ void GamePlayScene::Draw()
 	// スプライト描画
 	Sprite::PreDraw(cmdList);
 	
-	UITuto->Draw();
-	UIDdMark->Draw();
-	UIDdText->Draw();
+	UI->Draw();
+	UI->SetColor({ 0.7f,0.7f,0.7f,1 });
+	switch (*stage)
+	{
+#pragma region チュートリアル
+	case 1:
+		UITuto->Draw();
+		switch (Button::GetUseCount())
+		{
+		case 0:
+
+			if (MoveBlock::isExplanation == true)
+			{
+				UIButtonMark->Draw();
+				UIButtonText->Draw();
+			}
+			else
+			{
+				UIDdMark->Draw();
+				UIDdText->Draw();
+			}
+
+			break;
+		case 1:
+			UILadderMark->Draw();
+			UILadderText->Draw();
+			break;
+		case 2:
+			UIDestroyMark->Draw();
+			UIDestroyText->Draw();
+			break;
+		case 3:
+			if(CopyBlock::isExplanation == true)
+			{
+				UIGoalMark->Draw();
+				UIGoalText->Draw();
+			}
+			else
+			{
+				UICopyMark->Draw();
+				UICopyText->Draw();
+			}
+			break;
+		}
+		break;
+#pragma endregion
+	case 2:
+
+		UIStage1->Draw();
+		UIDdMark->Draw();
+		UIDestroyMark->Draw();
+		UICopyMark->Draw();
+		break;
+	case 3:
+		UIStage2->Draw();
+		UIDdMark->Draw();
+		UIDestroyMark->Draw();
+		UICopyMark->Draw();
+		break;
+	case 4:
+		UIStage3->Draw();
+		UIDdMark->Draw();
+		UIDestroyMark->Draw();
+		UICopyMark->Draw();
+		break;
+	}
+
+	
 
 	Sprite::PostDraw();
 }
